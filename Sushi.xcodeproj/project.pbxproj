@@ -1,0 +1,1007 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2AC2D9E14BFE58A42955DD0F /* Pods_Sushi_SushiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E4AE337EF37E1B11BF1E89 /* Pods_Sushi_SushiUITests.framework */; };
+		849B471B29F0E888002E4C60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471A29F0E888002E4C60 /* AppDelegate.swift */; };
+		849B471D29F0E888002E4C60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471C29F0E888002E4C60 /* SceneDelegate.swift */; };
+		849B471F29F0E888002E4C60 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471E29F0E888002E4C60 /* ViewController.swift */; };
+		849B472229F0E888002E4C60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 849B472029F0E888002E4C60 /* Main.storyboard */; };
+		849B472429F0E889002E4C60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 849B472329F0E889002E4C60 /* Assets.xcassets */; };
+		849B472729F0E889002E4C60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 849B472529F0E889002E4C60 /* LaunchScreen.storyboard */; };
+		849B473229F0E889002E4C60 /* SushiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B473129F0E889002E4C60 /* SushiTests.swift */; };
+		849B473C29F0E889002E4C60 /* SushiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B473B29F0E889002E4C60 /* SushiUITests.swift */; };
+		849B473E29F0E889002E4C60 /* SushiUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B473D29F0E889002E4C60 /* SushiUITestsLaunchTests.swift */; };
+		849B474B29F10E01002E4C60 /* MenuInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B474A29F10E01002E4C60 /* MenuInfoView.swift */; };
+		849B474D29F10E0A002E4C60 /* MenuInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B474C29F10E0A002E4C60 /* MenuInfoView.xib */; };
+		849B475029F10E44002E4C60 /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B474F29F10E44002E4C60 /* NibOwnerLoadable.swift */; };
+		849B475229F10E4C002E4C60 /* GlobalUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B475129F10E4C002E4C60 /* GlobalUtil.swift */; };
+		849B475429F10E54002E4C60 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B475329F10E54002E4C60 /* Extension.swift */; };
+		849B475B29F11C8D002E4C60 /* MenuTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B475929F11C8D002E4C60 /* MenuTitleCollectionViewCell.swift */; };
+		849B475C29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B475A29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib */; };
+		849B475E29F11D8A002E4C60 /* NGSCustomizableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B475D29F11D8A002E4C60 /* NGSCustomizableButton.swift */; };
+		849B476029F11E2D002E4C60 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B475F29F11E2D002E4C60 /* MenuViewController.swift */; };
+		849B476229F11E75002E4C60 /* MenuViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B476129F11E75002E4C60 /* MenuViews.swift */; };
+		849B476529F12123002E4C60 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B476429F12123002E4C60 /* MenuViewModel.swift */; };
+		849B476929F12612002E4C60 /* RoundCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B476829F12612002E4C60 /* RoundCornersView.swift */; };
+		849B476C29F1272A002E4C60 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B476B29F1272A002E4C60 /* MenuModel.swift */; };
+		849B476F29F1344E002E4C60 /* SushiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B476D29F1344E002E4C60 /* SushiCollectionViewCell.swift */; };
+		849B477029F1344E002E4C60 /* SushiCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B476E29F1344E002E4C60 /* SushiCollectionViewCell.xib */; };
+		849FB4DD29F2195B002340F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4DB29F2195B002340F9 /* LoginViewController.swift */; };
+		849FB4E029F21B1C002340F9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4DF29F21B1C002340F9 /* BaseViewController.swift */; };
+		849FB4E429F2274F002340F9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4E329F2274F002340F9 /* LoginViewModel.swift */; };
+		849FB4E629F22765002340F9 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4E529F22765002340F9 /* LoginModel.swift */; };
+		849FB4EE29F23FF9002340F9 /* SuShiSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */; };
+		849FB4F029F24151002340F9 /* Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4EF29F24151002340F9 /* Validations.swift */; };
+		849FB4F229F27A44002340F9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849FB4F129F27A44002340F9 /* LoginViewController.xib */; };
+		849FB4F429F280FA002340F9 /* SystemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4F329F280FA002340F9 /* SystemInfo.swift */; };
+		84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */; };
+		84A5FAB229F6157100781C03 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB129F6157100781C03 /* FireBaseManager.swift */; };
+		84A5FAB429F6352500781C03 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB329F6352500781C03 /* ToastView.swift */; };
+		84C0EB5829F28F0B00B7D2CE /* AddSushiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */; };
+		84C0EB5929F28F0B00B7D2CE /* AddSushiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */; };
+		84C0EB5B29F28FE600B7D2CE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5A29F28FE600B7D2CE /* CameraView.swift */; };
+		84C0EB5D29F2900100B7D2CE /* CameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0EB5C29F2900100B7D2CE /* CameraView.xib */; };
+		84C0EB5F29F2967000B7D2CE /* AddSushiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5E29F2967000B7D2CE /* AddSushiViewModel.swift */; };
+		B9E5FCDD0539B79B73547A2E /* Pods_Sushi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1789481A2B1D64D36D2B93 /* Pods_Sushi.framework */; };
+		C07CC5796BFB25B329B0C5D7 /* Pods_SushiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381382C7FC6030484D9A4C99 /* Pods_SushiTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		849B472E29F0E889002E4C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 849B470F29F0E888002E4C60 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 849B471629F0E888002E4C60;
+			remoteInfo = Sushi;
+		};
+		849B473829F0E889002E4C60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 849B470F29F0E888002E4C60 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 849B471629F0E888002E4C60;
+			remoteInfo = Sushi;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2E1789481A2B1D64D36D2B93 /* Pods_Sushi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sushi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33E4AE337EF37E1B11BF1E89 /* Pods_Sushi_SushiUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sushi_SushiUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		381382C7FC6030484D9A4C99 /* Pods_SushiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SushiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38AA86006685883A7C423889 /* Pods-SushiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SushiTests.release.xcconfig"; path = "Target Support Files/Pods-SushiTests/Pods-SushiTests.release.xcconfig"; sourceTree = "<group>"; };
+		5470DC83A478BDA252752B8B /* Pods-SushiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SushiTests.debug.xcconfig"; path = "Target Support Files/Pods-SushiTests/Pods-SushiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7144797BA434190504EF2093 /* Pods-Sushi-SushiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi-SushiUITests.release.xcconfig"; path = "Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests.release.xcconfig"; sourceTree = "<group>"; };
+		849B471729F0E888002E4C60 /* Sushi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sushi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		849B471A29F0E888002E4C60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		849B471C29F0E888002E4C60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		849B471E29F0E888002E4C60 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		849B472129F0E888002E4C60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		849B472329F0E889002E4C60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		849B472629F0E889002E4C60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		849B472829F0E889002E4C60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		849B472D29F0E889002E4C60 /* SushiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SushiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		849B473129F0E889002E4C60 /* SushiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SushiTests.swift; sourceTree = "<group>"; };
+		849B473729F0E889002E4C60 /* SushiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SushiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		849B473B29F0E889002E4C60 /* SushiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SushiUITests.swift; sourceTree = "<group>"; };
+		849B473D29F0E889002E4C60 /* SushiUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SushiUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		849B474A29F10E01002E4C60 /* MenuInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInfoView.swift; sourceTree = "<group>"; };
+		849B474C29F10E0A002E4C60 /* MenuInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuInfoView.xib; sourceTree = "<group>"; };
+		849B474F29F10E44002E4C60 /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
+		849B475129F10E4C002E4C60 /* GlobalUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalUtil.swift; sourceTree = "<group>"; };
+		849B475329F10E54002E4C60 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		849B475929F11C8D002E4C60 /* MenuTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		849B475A29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTitleCollectionViewCell.xib; sourceTree = "<group>"; };
+		849B475D29F11D8A002E4C60 /* NGSCustomizableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NGSCustomizableButton.swift; sourceTree = "<group>"; };
+		849B475F29F11E2D002E4C60 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		849B476129F11E75002E4C60 /* MenuViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViews.swift; sourceTree = "<group>"; };
+		849B476429F12123002E4C60 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		849B476829F12612002E4C60 /* RoundCornersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundCornersView.swift; sourceTree = "<group>"; };
+		849B476B29F1272A002E4C60 /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
+		849B476D29F1344E002E4C60 /* SushiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SushiCollectionViewCell.swift; sourceTree = "<group>"; };
+		849B476E29F1344E002E4C60 /* SushiCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SushiCollectionViewCell.xib; sourceTree = "<group>"; };
+		849FB4DB29F2195B002340F9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		849FB4DF29F21B1C002340F9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		849FB4E329F2274F002340F9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		849FB4E529F22765002340F9 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuShiSingleton.swift; sourceTree = "<group>"; };
+		849FB4EF29F24151002340F9 /* Validations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validations.swift; sourceTree = "<group>"; };
+		849FB4F129F27A44002340F9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		849FB4F329F280FA002340F9 /* SystemInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemInfo.swift; sourceTree = "<group>"; };
+		84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84A5FAB129F6157100781C03 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
+		84A5FAB329F6352500781C03 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSushiViewController.swift; sourceTree = "<group>"; };
+		84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddSushiViewController.xib; sourceTree = "<group>"; };
+		84C0EB5A29F28FE600B7D2CE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		84C0EB5C29F2900100B7D2CE /* CameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraView.xib; sourceTree = "<group>"; };
+		84C0EB5E29F2967000B7D2CE /* AddSushiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSushiViewModel.swift; sourceTree = "<group>"; };
+		9C885B475CDE0C1EBF986587 /* Pods-Sushi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi.debug.xcconfig"; path = "Target Support Files/Pods-Sushi/Pods-Sushi.debug.xcconfig"; sourceTree = "<group>"; };
+		B76EC51EFCEFA6B4455C0384 /* Pods-Sushi-SushiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi-SushiUITests.debug.xcconfig"; path = "Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		C85A19EA684BBF897C4BEBEF /* Pods-Sushi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi.release.xcconfig"; path = "Target Support Files/Pods-Sushi/Pods-Sushi.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		849B471429F0E888002E4C60 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9E5FCDD0539B79B73547A2E /* Pods_Sushi.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849B472A29F0E889002E4C60 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C07CC5796BFB25B329B0C5D7 /* Pods_SushiTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849B473429F0E889002E4C60 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AC2D9E14BFE58A42955DD0F /* Pods_Sushi_SushiUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		849B470E29F0E888002E4C60 = {
+			isa = PBXGroup;
+			children = (
+				849B471929F0E888002E4C60 /* Sushi */,
+				849B473029F0E889002E4C60 /* SushiTests */,
+				849B473A29F0E889002E4C60 /* SushiUITests */,
+				849B471829F0E888002E4C60 /* Products */,
+				F4EDA92F7F576E2BA06B9944 /* Pods */,
+				FA2CAA6DB9E342DE13B7FBE2 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		849B471829F0E888002E4C60 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				849B471729F0E888002E4C60 /* Sushi.app */,
+				849B472D29F0E889002E4C60 /* SushiTests.xctest */,
+				849B473729F0E889002E4C60 /* SushiUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		849B471929F0E888002E4C60 /* Sushi */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4E729F2277B002340F9 /* Menu */,
+				849FB4E829F22780002340F9 /* Login */,
+				84C0EB5129F28BA700B7D2CE /* Add */,
+				849B475529F10E6A002E4C60 /* Tool */,
+				849B471A29F0E888002E4C60 /* AppDelegate.swift */,
+				849B471C29F0E888002E4C60 /* SceneDelegate.swift */,
+				849B471E29F0E888002E4C60 /* ViewController.swift */,
+				849B472329F0E889002E4C60 /* Assets.xcassets */,
+				849B472529F0E889002E4C60 /* LaunchScreen.storyboard */,
+				84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */,
+				849B472829F0E889002E4C60 /* Info.plist */,
+			);
+			path = Sushi;
+			sourceTree = "<group>";
+		};
+		849B473029F0E889002E4C60 /* SushiTests */ = {
+			isa = PBXGroup;
+			children = (
+				849B473129F0E889002E4C60 /* SushiTests.swift */,
+			);
+			path = SushiTests;
+			sourceTree = "<group>";
+		};
+		849B473A29F0E889002E4C60 /* SushiUITests */ = {
+			isa = PBXGroup;
+			children = (
+				849B473B29F0E889002E4C60 /* SushiUITests.swift */,
+				849B473D29F0E889002E4C60 /* SushiUITestsLaunchTests.swift */,
+			);
+			path = SushiUITests;
+			sourceTree = "<group>";
+		};
+		849B474E29F10E0E002E4C60 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				849B472029F0E888002E4C60 /* Main.storyboard */,
+				849B476129F11E75002E4C60 /* MenuViews.swift */,
+				849B474A29F10E01002E4C60 /* MenuInfoView.swift */,
+				849B474C29F10E0A002E4C60 /* MenuInfoView.xib */,
+				849B475929F11C8D002E4C60 /* MenuTitleCollectionViewCell.swift */,
+				849B475A29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib */,
+				849B476D29F1344E002E4C60 /* SushiCollectionViewCell.swift */,
+				849B476E29F1344E002E4C60 /* SushiCollectionViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		849B475529F10E6A002E4C60 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4EF29F24151002340F9 /* Validations.swift */,
+				849B474F29F10E44002E4C60 /* NibOwnerLoadable.swift */,
+				849B475129F10E4C002E4C60 /* GlobalUtil.swift */,
+				849B475329F10E54002E4C60 /* Extension.swift */,
+				849B475D29F11D8A002E4C60 /* NGSCustomizableButton.swift */,
+				849B476829F12612002E4C60 /* RoundCornersView.swift */,
+				849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */,
+				849FB4F329F280FA002340F9 /* SystemInfo.swift */,
+				84A5FAB129F6157100781C03 /* FireBaseManager.swift */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		849B475829F11A91002E4C60 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4DF29F21B1C002340F9 /* BaseViewController.swift */,
+				849B475F29F11E2D002E4C60 /* MenuViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		849B476329F12113002E4C60 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				849B476429F12123002E4C60 /* MenuViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		849B476A29F1271E002E4C60 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				849B476B29F1272A002E4C60 /* MenuModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		849FB4E729F2277B002340F9 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				849B476329F12113002E4C60 /* ViewModel */,
+				849B475829F11A91002E4C60 /* ViewController */,
+				849B474E29F10E0E002E4C60 /* View */,
+				849B476A29F1271E002E4C60 /* Model */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		849FB4E829F22780002340F9 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4EA29F22790002340F9 /* ViewModel */,
+				849FB4E929F22787002340F9 /* ViewController */,
+				849FB4EC29F2279F002340F9 /* Model */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		849FB4E929F22787002340F9 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4DB29F2195B002340F9 /* LoginViewController.swift */,
+				849FB4F129F27A44002340F9 /* LoginViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		849FB4EA29F22790002340F9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4E329F2274F002340F9 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		849FB4EC29F2279F002340F9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4E529F22765002340F9 /* LoginModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		84C0EB5129F28BA700B7D2CE /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				84C0EB5229F28BB700B7D2CE /* ViewModel */,
+				84C0EB5329F28BBD00B7D2CE /* ViewController */,
+				84C0EB5429F28BC400B7D2CE /* View */,
+				84C0EB5529F28BC700B7D2CE /* Model */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		84C0EB5229F28BB700B7D2CE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84C0EB5E29F2967000B7D2CE /* AddSushiViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		84C0EB5329F28BBD00B7D2CE /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */,
+				84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		84C0EB5429F28BC400B7D2CE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84A5FAB329F6352500781C03 /* ToastView.swift */,
+				84C0EB5A29F28FE600B7D2CE /* CameraView.swift */,
+				84C0EB5C29F2900100B7D2CE /* CameraView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84C0EB5529F28BC700B7D2CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F4EDA92F7F576E2BA06B9944 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9C885B475CDE0C1EBF986587 /* Pods-Sushi.debug.xcconfig */,
+				C85A19EA684BBF897C4BEBEF /* Pods-Sushi.release.xcconfig */,
+				B76EC51EFCEFA6B4455C0384 /* Pods-Sushi-SushiUITests.debug.xcconfig */,
+				7144797BA434190504EF2093 /* Pods-Sushi-SushiUITests.release.xcconfig */,
+				5470DC83A478BDA252752B8B /* Pods-SushiTests.debug.xcconfig */,
+				38AA86006685883A7C423889 /* Pods-SushiTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FA2CAA6DB9E342DE13B7FBE2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2E1789481A2B1D64D36D2B93 /* Pods_Sushi.framework */,
+				33E4AE337EF37E1B11BF1E89 /* Pods_Sushi_SushiUITests.framework */,
+				381382C7FC6030484D9A4C99 /* Pods_SushiTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		849B471629F0E888002E4C60 /* Sushi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 849B474129F0E889002E4C60 /* Build configuration list for PBXNativeTarget "Sushi" */;
+			buildPhases = (
+				F392F51E3E5DFB8394D3A1FF /* [CP] Check Pods Manifest.lock */,
+				849B471329F0E888002E4C60 /* Sources */,
+				849B471429F0E888002E4C60 /* Frameworks */,
+				849B471529F0E888002E4C60 /* Resources */,
+				F5D64E2E385B7CC389AC7400 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sushi;
+			productName = Sushi;
+			productReference = 849B471729F0E888002E4C60 /* Sushi.app */;
+			productType = "com.apple.product-type.application";
+		};
+		849B472C29F0E889002E4C60 /* SushiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 849B474429F0E889002E4C60 /* Build configuration list for PBXNativeTarget "SushiTests" */;
+			buildPhases = (
+				25F7BA40156382F2901418C9 /* [CP] Check Pods Manifest.lock */,
+				849B472929F0E889002E4C60 /* Sources */,
+				849B472A29F0E889002E4C60 /* Frameworks */,
+				849B472B29F0E889002E4C60 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				849B472F29F0E889002E4C60 /* PBXTargetDependency */,
+			);
+			name = SushiTests;
+			productName = SushiTests;
+			productReference = 849B472D29F0E889002E4C60 /* SushiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		849B473629F0E889002E4C60 /* SushiUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 849B474729F0E889002E4C60 /* Build configuration list for PBXNativeTarget "SushiUITests" */;
+			buildPhases = (
+				B8C69CA265C44B6FBF8016D8 /* [CP] Check Pods Manifest.lock */,
+				849B473329F0E889002E4C60 /* Sources */,
+				849B473429F0E889002E4C60 /* Frameworks */,
+				849B473529F0E889002E4C60 /* Resources */,
+				BFD0AE0D9662014173024697 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				849B473929F0E889002E4C60 /* PBXTargetDependency */,
+			);
+			name = SushiUITests;
+			productName = SushiUITests;
+			productReference = 849B473729F0E889002E4C60 /* SushiUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		849B470F29F0E888002E4C60 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					849B471629F0E888002E4C60 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					849B472C29F0E889002E4C60 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 849B471629F0E888002E4C60;
+					};
+					849B473629F0E889002E4C60 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 849B471629F0E888002E4C60;
+					};
+				};
+			};
+			buildConfigurationList = 849B471229F0E888002E4C60 /* Build configuration list for PBXProject "Sushi" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 849B470E29F0E888002E4C60;
+			productRefGroup = 849B471829F0E888002E4C60 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				849B471629F0E888002E4C60 /* Sushi */,
+				849B472C29F0E889002E4C60 /* SushiTests */,
+				849B473629F0E889002E4C60 /* SushiUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		849B471529F0E888002E4C60 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				849B472729F0E889002E4C60 /* LaunchScreen.storyboard in Resources */,
+				849B474D29F10E0A002E4C60 /* MenuInfoView.xib in Resources */,
+				84C0EB5D29F2900100B7D2CE /* CameraView.xib in Resources */,
+				849B472429F0E889002E4C60 /* Assets.xcassets in Resources */,
+				849B475C29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib in Resources */,
+				849B472229F0E888002E4C60 /* Main.storyboard in Resources */,
+				849FB4F229F27A44002340F9 /* LoginViewController.xib in Resources */,
+				84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */,
+				849B477029F1344E002E4C60 /* SushiCollectionViewCell.xib in Resources */,
+				84C0EB5929F28F0B00B7D2CE /* AddSushiViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849B472B29F0E889002E4C60 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849B473529F0E889002E4C60 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		25F7BA40156382F2901418C9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SushiTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B8C69CA265C44B6FBF8016D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Sushi-SushiUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BFD0AE0D9662014173024697 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F392F51E3E5DFB8394D3A1FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Sushi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5D64E2E385B7CC389AC7400 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sushi/Pods-Sushi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sushi/Pods-Sushi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sushi/Pods-Sushi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		849B471329F0E888002E4C60 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				849B475229F10E4C002E4C60 /* GlobalUtil.swift in Sources */,
+				849B476029F11E2D002E4C60 /* MenuViewController.swift in Sources */,
+				849B471F29F0E888002E4C60 /* ViewController.swift in Sources */,
+				849B476529F12123002E4C60 /* MenuViewModel.swift in Sources */,
+				84C0EB5F29F2967000B7D2CE /* AddSushiViewModel.swift in Sources */,
+				849B475429F10E54002E4C60 /* Extension.swift in Sources */,
+				849FB4E629F22765002340F9 /* LoginModel.swift in Sources */,
+				849B474B29F10E01002E4C60 /* MenuInfoView.swift in Sources */,
+				849B476929F12612002E4C60 /* RoundCornersView.swift in Sources */,
+				849FB4E029F21B1C002340F9 /* BaseViewController.swift in Sources */,
+				84A5FAB229F6157100781C03 /* FireBaseManager.swift in Sources */,
+				849B471B29F0E888002E4C60 /* AppDelegate.swift in Sources */,
+				849FB4F429F280FA002340F9 /* SystemInfo.swift in Sources */,
+				849B476229F11E75002E4C60 /* MenuViews.swift in Sources */,
+				849B471D29F0E888002E4C60 /* SceneDelegate.swift in Sources */,
+				849B476C29F1272A002E4C60 /* MenuModel.swift in Sources */,
+				84A5FAB429F6352500781C03 /* ToastView.swift in Sources */,
+				849B475E29F11D8A002E4C60 /* NGSCustomizableButton.swift in Sources */,
+				84C0EB5B29F28FE600B7D2CE /* CameraView.swift in Sources */,
+				84C0EB5829F28F0B00B7D2CE /* AddSushiViewController.swift in Sources */,
+				849FB4DD29F2195B002340F9 /* LoginViewController.swift in Sources */,
+				849FB4EE29F23FF9002340F9 /* SuShiSingleton.swift in Sources */,
+				849B475B29F11C8D002E4C60 /* MenuTitleCollectionViewCell.swift in Sources */,
+				849B476F29F1344E002E4C60 /* SushiCollectionViewCell.swift in Sources */,
+				849FB4E429F2274F002340F9 /* LoginViewModel.swift in Sources */,
+				849FB4F029F24151002340F9 /* Validations.swift in Sources */,
+				849B475029F10E44002E4C60 /* NibOwnerLoadable.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849B472929F0E889002E4C60 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				849B473229F0E889002E4C60 /* SushiTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849B473329F0E889002E4C60 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				849B473C29F0E889002E4C60 /* SushiUITests.swift in Sources */,
+				849B473E29F0E889002E4C60 /* SushiUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		849B472F29F0E889002E4C60 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 849B471629F0E888002E4C60 /* Sushi */;
+			targetProxy = 849B472E29F0E889002E4C60 /* PBXContainerItemProxy */;
+		};
+		849B473929F0E889002E4C60 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 849B471629F0E888002E4C60 /* Sushi */;
+			targetProxy = 849B473829F0E889002E4C60 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		849B472029F0E888002E4C60 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				849B472129F0E888002E4C60 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		849B472529F0E889002E4C60 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				849B472629F0E889002E4C60 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		849B473F29F0E889002E4C60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		849B474029F0E889002E4C60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		849B474229F0E889002E4C60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C885B475CDE0C1EBF986587 /* Pods-Sushi.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MM8C3J2A56;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sushi/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "是否授权使用相机？";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要使用您的相册";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xxx.hira.230420.Sushi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		849B474329F0E889002E4C60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C85A19EA684BBF897C4BEBEF /* Pods-Sushi.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MM8C3J2A56;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sushi/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "是否授权使用相机？";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要使用您的相册";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xxx.hira.230420.Sushi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		849B474529F0E889002E4C60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5470DC83A478BDA252752B8B /* Pods-SushiTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MM8C3J2A56;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xxx.hira.230420.SushiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sushi.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Sushi";
+			};
+			name = Debug;
+		};
+		849B474629F0E889002E4C60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38AA86006685883A7C423889 /* Pods-SushiTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MM8C3J2A56;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xxx.hira.230420.SushiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sushi.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Sushi";
+			};
+			name = Release;
+		};
+		849B474829F0E889002E4C60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B76EC51EFCEFA6B4455C0384 /* Pods-Sushi-SushiUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MM8C3J2A56;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xxx.hira.230420.SushiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Sushi;
+			};
+			name = Debug;
+		};
+		849B474929F0E889002E4C60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7144797BA434190504EF2093 /* Pods-Sushi-SushiUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MM8C3J2A56;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xxx.hira.230420.SushiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Sushi;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		849B471229F0E888002E4C60 /* Build configuration list for PBXProject "Sushi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				849B473F29F0E889002E4C60 /* Debug */,
+				849B474029F0E889002E4C60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		849B474129F0E889002E4C60 /* Build configuration list for PBXNativeTarget "Sushi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				849B474229F0E889002E4C60 /* Debug */,
+				849B474329F0E889002E4C60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		849B474429F0E889002E4C60 /* Build configuration list for PBXNativeTarget "SushiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				849B474529F0E889002E4C60 /* Debug */,
+				849B474629F0E889002E4C60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		849B474729F0E889002E4C60 /* Build configuration list for PBXNativeTarget "SushiUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				849B474829F0E889002E4C60 /* Debug */,
+				849B474929F0E889002E4C60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 849B470F29F0E888002E4C60 /* Project object */;
+}

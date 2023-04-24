@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraView" customModule="Sushi" customModuleProvider="target">
+            <connections>
+                <outlet property="albumButton" destination="Wfg-Er-eAN" id="ZIq-4u-aju"/>
+                <outlet property="cameraButton" destination="Krx-2f-4cK" id="mMF-eC-OXZ"/>
+                <outlet property="cancelButton" destination="olO-4g-ctV" id="CpT-Sn-bjc"/>
+                <outlet property="mView" destination="iN0-l3-epB" id="ktr-jA-3QV"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="CameraView" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oin-sR-K2w">
+                    <rect key="frame" x="0.0" y="477" width="375" height="190"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Krx-2f-4cK" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="8" y="0.0" width="359" height="57"/>
+                            <color key="backgroundColor" white="0.92703874143835618" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Krx-2f-4cK" secondAttribute="height" multiplier="359:57" id="4FJ-bb-lJ3"/>
+                                <constraint firstAttribute="width" secondItem="Krx-2f-4cK" secondAttribute="height" multiplier="639:65" id="KCe-Rx-rjx"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="20"/>
+                            <state key="normal" title="开启相机拍摄">
+                                <color key="titleColor" systemColor="linkColor"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundRatio">
+                                    <real key="value" value="0.20000000000000001"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="4FJ-bb-lJ3"/>
+                                    <exclude reference="KCe-Rx-rjx"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=compact">
+                                <mask key="constraints">
+                                    <include reference="KCe-Rx-rjx"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular">
+                                <mask key="constraints">
+                                    <include reference="4FJ-bb-lJ3"/>
+                                </mask>
+                            </variation>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fJk-BQ-ilN">
+                            <rect key="frame" x="8" y="57" width="359" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="3sq-Kb-xWa"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wfg-Er-eAN" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="8" y="58" width="359" height="57"/>
+                            <color key="backgroundColor" white="0.92703874143835618" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Wfg-Er-eAN" secondAttribute="height" multiplier="359:57" id="M62-YQ-FGL"/>
+                                <constraint firstAttribute="width" secondItem="Wfg-Er-eAN" secondAttribute="height" multiplier="639:65" id="Zl3-b0-DfF"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="20"/>
+                            <state key="normal" title="从相簿中选择">
+                                <color key="titleColor" systemColor="linkColor"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundRatio">
+                                    <real key="value" value="0.20000000000000001"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="M62-YQ-FGL"/>
+                                    <exclude reference="Zl3-b0-DfF"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=compact">
+                                <mask key="constraints">
+                                    <include reference="Zl3-b0-DfF"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular">
+                                <mask key="constraints">
+                                    <include reference="M62-YQ-FGL"/>
+                                </mask>
+                            </variation>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="olO-4g-ctV" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="8" y="123" width="359" height="57"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="olO-4g-ctV" secondAttribute="height" multiplier="359:57" id="6z7-xf-ZXH"/>
+                                <constraint firstAttribute="width" secondItem="olO-4g-ctV" secondAttribute="height" multiplier="639:65" id="dZB-0L-ofK"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="PingFangTC-Medium" family="PingFang TC" pointSize="20"/>
+                            <state key="normal" title="取消">
+                                <color key="titleColor" systemColor="linkColor"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundRatio">
+                                    <real key="value" value="0.20000000000000001"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="6z7-xf-ZXH"/>
+                                    <exclude reference="dZB-0L-ofK"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=compact">
+                                <mask key="constraints">
+                                    <include reference="dZB-0L-ofK"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular">
+                                <mask key="constraints">
+                                    <include reference="6z7-xf-ZXH"/>
+                                </mask>
+                            </variation>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Wfg-Er-eAN" firstAttribute="leading" secondItem="Krx-2f-4cK" secondAttribute="leading" id="2fi-xt-khm"/>
+                        <constraint firstItem="Krx-2f-4cK" firstAttribute="top" secondItem="Oin-sR-K2w" secondAttribute="top" id="4cn-3d-V8g"/>
+                        <constraint firstItem="fJk-BQ-ilN" firstAttribute="trailing" secondItem="Krx-2f-4cK" secondAttribute="trailing" id="FJ0-lb-ByL"/>
+                        <constraint firstAttribute="width" secondItem="Oin-sR-K2w" secondAttribute="height" multiplier="667:200" id="LWz-ti-Xsv"/>
+                        <constraint firstItem="fJk-BQ-ilN" firstAttribute="top" secondItem="Krx-2f-4cK" secondAttribute="bottom" id="Mu7-l4-yAP"/>
+                        <constraint firstItem="Wfg-Er-eAN" firstAttribute="top" secondItem="fJk-BQ-ilN" secondAttribute="bottom" id="NIv-4c-axY"/>
+                        <constraint firstItem="olO-4g-ctV" firstAttribute="leading" secondItem="Wfg-Er-eAN" secondAttribute="leading" id="TeI-gb-NNw"/>
+                        <constraint firstItem="olO-4g-ctV" firstAttribute="top" secondItem="Wfg-Er-eAN" secondAttribute="bottom" constant="8" id="USK-PJ-8Nd"/>
+                        <constraint firstItem="Krx-2f-4cK" firstAttribute="centerX" secondItem="Oin-sR-K2w" secondAttribute="centerX" id="dC8-G7-edr"/>
+                        <constraint firstItem="fJk-BQ-ilN" firstAttribute="leading" secondItem="Krx-2f-4cK" secondAttribute="leading" id="exD-94-KJH"/>
+                        <constraint firstItem="Krx-2f-4cK" firstAttribute="width" secondItem="Oin-sR-K2w" secondAttribute="width" multiplier="359:375" id="kPT-r7-zr3"/>
+                        <constraint firstAttribute="width" secondItem="Oin-sR-K2w" secondAttribute="height" multiplier="375:190" id="o24-Ge-fnr"/>
+                        <constraint firstItem="olO-4g-ctV" firstAttribute="trailing" secondItem="Wfg-Er-eAN" secondAttribute="trailing" id="wBD-7i-u8l"/>
+                        <constraint firstItem="Wfg-Er-eAN" firstAttribute="trailing" secondItem="Krx-2f-4cK" secondAttribute="trailing" id="ycA-ei-hgC"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="LWz-ti-Xsv"/>
+                            <exclude reference="o24-Ge-fnr"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=compact">
+                        <mask key="constraints">
+                            <include reference="LWz-ti-Xsv"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular">
+                        <mask key="constraints">
+                            <include reference="o24-Ge-fnr"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.19634713688557626" colorSpace="custom" customColorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Oin-sR-K2w" secondAttribute="bottom" id="5al-Qi-xP2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Oin-sR-K2w" secondAttribute="trailing" id="9Km-TG-kCE"/>
+                <constraint firstItem="Oin-sR-K2w" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="p0g-av-38Y"/>
+            </constraints>
+            <point key="canvasLocation" x="-154.27286356821591" y="88.799999999999997"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
