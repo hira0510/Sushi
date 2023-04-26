@@ -36,6 +36,20 @@ class BaseViewController: UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         pan.delegate = self
     }
+    
+    func removeToast() {
+        for view in self.view.subviews {
+            if view.isKind(of: ToastView.self) {
+                view.removeFromSuperview()
+            }
+        }
+    }
+    
+    func addToast(txt: String) {
+        let toastView = ToastView(frame: self.view.frame, text: txt)
+        toastView.type = .sending
+        self.view.addSubview(toastView)
+    }
 }
 
 extension BaseViewController: UIGestureRecognizerDelegate {

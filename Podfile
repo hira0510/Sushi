@@ -8,12 +8,12 @@ target 'Sushi' do
   # Pods for Sushi
   pod 'RxSwift', '5.1.1'
   pod 'RxCocoa', '5.1.1'
-  pod 'RxDataSources'
-  pod 'Firebase/Analytics'
-  pod 'Firebase/Database'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Storage'
-  pod 'Firebase/Firestore'
+  pod 'RxDataSources', '4.0.1'
+  pod 'Firebase/Analytics', '10.8.0'
+  pod 'Firebase/Database', '10.8.0'
+  pod 'Firebase/Auth', '10.8.0'
+  pod 'Firebase/Storage', '10.8.0'
+  pod 'Firebase/Firestore', '10.8.0'
   pod 'Kingfisher', '5.13.4'
 
   target 'SushiTests' do

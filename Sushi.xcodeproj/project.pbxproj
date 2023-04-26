@@ -43,6 +43,7 @@
 		84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */; };
 		84A5FAB229F6157100781C03 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB129F6157100781C03 /* FireBaseManager.swift */; };
 		84A5FAB429F6352500781C03 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB329F6352500781C03 /* ToastView.swift */; };
+		84AA819529F7A2C3009DA56D /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */; };
 		84C0EB5829F28F0B00B7D2CE /* AddSushiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */; };
 		84C0EB5929F28F0B00B7D2CE /* AddSushiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */; };
 		84C0EB5B29F28FE600B7D2CE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5A29F28FE600B7D2CE /* CameraView.swift */; };
@@ -115,6 +116,7 @@
 		84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84A5FAB129F6157100781C03 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
 		84A5FAB329F6352500781C03 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip4Sequence.swift; sourceTree = "<group>"; };
 		84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSushiViewController.swift; sourceTree = "<group>"; };
 		84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddSushiViewController.xib; sourceTree = "<group>"; };
 		84C0EB5A29F28FE600B7D2CE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */,
 				849FB4F329F280FA002340F9 /* SystemInfo.swift */,
 				84A5FAB129F6157100781C03 /* FireBaseManager.swift */,
+				84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -627,6 +630,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				849B475229F10E4C002E4C60 /* GlobalUtil.swift in Sources */,
+				84AA819529F7A2C3009DA56D /* Zip4Sequence.swift in Sources */,
 				849B476029F11E2D002E4C60 /* MenuViewController.swift in Sources */,
 				849B471F29F0E888002E4C60 /* ViewController.swift in Sources */,
 				849B476529F12123002E4C60 /* MenuViewModel.swift in Sources */,

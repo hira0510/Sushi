@@ -20,8 +20,8 @@ class MenuTitleCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func cellConfig(_ model: MenuModel, _ select: Bool) {
-        mLabel.text = model.title
+    func cellConfig(_ model: MenuModel, _ select: Bool, _ isEng: Bool) {
+        mLabel.text = isEng ? model.titleEng: model.title
         bgView.backgroundColor = select ? UIColor(hexString: model.color): .white
     }
 }

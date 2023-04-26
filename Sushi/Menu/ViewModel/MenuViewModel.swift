@@ -11,12 +11,14 @@ import RxSwift
 
 class MenuViewModel: NSObject {
     
+    var orient: UIDeviceOrientation = .unknown
     var selectItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var sushiCollectionFrame: BehaviorRelay<CGRect> = BehaviorRelay<CGRect>(value: .zero)
     var menuCollectionFrame: BehaviorRelay<CGRect> = BehaviorRelay<CGRect>(value: .zero)
     var menuModel: BehaviorRelay<[MenuModel]> = BehaviorRelay<[MenuModel]>(value: [])
-    var orient: UIDeviceOrientation = .portrait
     var isLogin: BehaviorRelay<IsLoginModel> = BehaviorRelay<IsLoginModel>(value: .init())
+    var isEng: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    var isNotEdit: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: true)
     
     func request() -> Observable<Bool> {
         let firebaseManager = FireBaseManager()
@@ -28,6 +30,35 @@ class MenuViewModel: NSObject {
                 
                 observer.onNext(true)
                 observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+        return json
+    }
+    
+    func delData(_ type: WhiteType) -> Observable<Bool> {
+        
+        let firebaseManager = FireBaseManager()
+        let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
+            firebaseManager.delDatabase(type: type) { suc in
+                guard let _ = suc else { return }
+                observer.onNext(true)
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+        return json
+    }
+    
+    func delStorageImg(_ index: Int) -> Observable<Bool> {
+        let firebaseManager = FireBaseManager()
+        let title = menuModel.value[selectItem.value].sushi[index].title
+        let json: Observable<Bool> = Observable.create { [weak self] (observer) -> Disposable in
+            guard let `self` = self else { return Disposables.create() }
+            firebaseManager.delStorageImg(title) { _ in
+                observer.onNext(true)
+                observer.onCompleted()
+                print("刪除圖片\(title)")
             }
             return Disposables.create()
         }
@@ -47,7 +78,7 @@ class MenuViewModel: NSObject {
         case .landscapeLeft, .landscapeRight: return 3
         case .portrait, .portraitUpsideDown: return 2
         default:
-            self.orient =  GlobalUtil.isPortrait() ? .portrait: .landscapeLeft
+            self.orient = GlobalUtil.isPortrait() ? .portrait: .landscapeLeft
             return getColumn()
         }
     }

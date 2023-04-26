@@ -13,6 +13,11 @@ class LoginViewController: BaseViewController {
     
     private let viewModel = LoginViewModel()
     
+    @IBOutlet weak var previousBtn: UIButton! {
+        didSet {
+            previousBtn.addTarget(self, action: #selector(previousBack), for: .touchUpInside)
+        }
+    }
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var accountLabel: UILabel!
     @IBOutlet weak var accountTextField: UITextField! {

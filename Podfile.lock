@@ -802,14 +802,14 @@ PODS:
   - RxSwift (5.1.1)
 
 DEPENDENCIES:
-  - Firebase/Analytics
-  - Firebase/Auth
-  - Firebase/Database
-  - Firebase/Firestore
-  - Firebase/Storage
+  - Firebase/Analytics (= 10.8.0)
+  - Firebase/Auth (= 10.8.0)
+  - Firebase/Database (= 10.8.0)
+  - Firebase/Firestore (= 10.8.0)
+  - Firebase/Storage (= 10.8.0)
   - Kingfisher (= 5.13.4)
   - RxCocoa (= 5.1.1)
-  - RxDataSources
+  - RxDataSources (= 4.0.1)
   - RxSwift (= 5.1.1)
 
 SPEC REPOS:
@@ -875,6 +875,6 @@ SPEC CHECKSUMS:
   RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: 32973bd81154d87de90606b8ce7c804c1d0eba51
+PODFILE CHECKSUM: e1b77f2d76709be41c680c443f4256b8e2877e80
 
 COCOAPODS: 1.12.0

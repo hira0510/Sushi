@@ -17,6 +17,7 @@
                 <outlet property="loginBtn" destination="7Xg-5F-YG2" id="zfz-tK-pyJ"/>
                 <outlet property="passwordLabel" destination="XBe-NE-Khj" id="h4G-T2-cIB"/>
                 <outlet property="passwordTextField" destination="peJ-zG-ngc" id="r4a-bG-e8h"/>
+                <outlet property="previousBtn" destination="Nhx-w3-R9A" id="clW-PK-IVy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -178,19 +179,32 @@
                         </mask>
                     </variation>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nhx-w3-R9A">
+                    <rect key="frame" x="5" y="25" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Nhx-w3-R9A" secondAttribute="height" multiplier="1:1" id="vH2-Kz-YTZ"/>
+                    </constraints>
+                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="arrowshape.turn.up.left.fill" catalog="system"/>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.1615493881" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="TwI-y1-EcU" secondAttribute="trailing" id="0r5-5W-TOj"/>
                 <constraint firstItem="TwI-y1-EcU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ByL-HH-ESp"/>
+                <constraint firstItem="Nhx-w3-R9A" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="ByX-Cp-rH7"/>
                 <constraint firstAttribute="bottom" secondItem="TwI-y1-EcU" secondAttribute="bottom" id="RSH-ED-Sdr"/>
                 <constraint firstItem="TwI-y1-EcU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YC4-m6-LSe"/>
+                <constraint firstItem="Nhx-w3-R9A" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="50:375" id="pvY-SI-dep"/>
+                <constraint firstItem="Nhx-w3-R9A" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="5" id="yCG-Mj-kT9"/>
             </constraints>
-            <point key="canvasLocation" x="130.28169014084509" y="-11.450381679389313"/>
+            <point key="canvasLocation" x="128.80000000000001" y="-12.143928035982009"/>
         </view>
     </objects>
     <resources>
+        <image name="arrowshape.turn.up.left.fill" catalog="system" width="128" height="104"/>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -24,6 +24,7 @@ class MenuViewController: BaseViewController {
         super.viewDidLoad()
         request()
         views.setupCollectionView(self)
+        views.clickDeleteItemBtn(self)
         setupUI()
     }
     
@@ -49,12 +50,27 @@ class MenuViewController: BaseViewController {
         views.addNewBtn.addTarget(self, action: #selector(clickAddNewBtn), for: .touchUpInside)
     }
     
-    private func request() {
+    func request() {
         viewModel.request().subscribe(onNext: { [weak self] (result) in
             guard let `self` = self, result else { return }
             self.views.menuCollectionView.reloadData()
             self.views.sushiCollectionView.reloadData()
         }).disposed(by: bag)
+    }
+    
+    func delData(_ index: Int) -> Observable<Int> {
+        let menu = viewModel.menuModel.value[viewModel.selectItem.value].menu
+        let title = viewModel.menuModel.value[viewModel.selectItem.value].sushi[index].title
+        
+        let json: Observable<Int> = Observable.create { [weak self] (observer) -> Disposable in
+            guard let `self` = self else { return Disposables.create() }
+            Observable.zip(self.viewModel.delData(.titleEng(menu, title)), self.viewModel.delData(.money(menu, title)), self.viewModel.delData(.img(menu, title)), self.viewModel.delStorageImg(index)).subscribe(onNext: { _, _, _, _ in
+                observer.onNext(index)
+                observer.onCompleted()
+            }).disposed(by: bag)
+            return Disposables.create()
+        }
+        return json
     }
     
     @objc func clickLoginBtn() {
@@ -101,12 +117,12 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuTitleCollectionViewCell", for: indexPath) as! MenuTitleCollectionViewCell
             let model = viewModel.menuModel.value
             guard model.count > indexPath.item else { return cell }
-            cell.cellConfig(model[indexPath.item], index == indexPath.item)
+            cell.cellConfig(model[indexPath.item], index == indexPath.item, viewModel.isEng.value)
             return cell
         case .sushi:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiCollectionViewCell", for: indexPath) as! SushiCollectionViewCell
             guard model.count > index else { return cell }
-            cell.cellConfig(model: model[index].sushi[indexPath.item])
+            cell.cellConfig(model: model[index].sushi[indexPath.item], isEng: viewModel.isEng.value)
             return cell
         }
     }
@@ -116,7 +132,15 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch type {
         case .menu:
             viewModel.selectItem.accept(indexPath.item)
-        case .sushi: break
+        case .sushi:
+            if viewModel.isNotEdit.value {
+                let model = viewModel.menuModel.value
+                let index = viewModel.selectItem.value
+                print(model[index].sushi[indexPath.item].title)
+            } else {
+                let cell = collectionView.cellForItem(at: indexPath) as! SushiCollectionViewCell
+                cell.backgroundColor = .gray
+            }
         }
     }
     

@@ -57,32 +57,42 @@ class AddSushiViewController: BaseViewController {
             nameTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
                 [weak self] (_) in
                 guard let `self` = self else { return }
-                self.nameTextField.resignFirstResponder()
+                self.nameEngTextField.becomeFirstResponder()
+            }).disposed(by: bag)
+        }
+    }
+    @IBOutlet weak var nameEngTextField: UITextField! {
+        didSet {
+            nameEngTextField.rx.text.orEmpty.bind(to: viewModel.mNameEng).disposed(by: bag)
+            nameEngTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
+                [weak self] (_) in
+                guard let `self` = self else { return }
+                self.priceTextField.becomeFirstResponder()
+            }).disposed(by: bag)
+        }
+    }
+    
+    @IBOutlet weak var priceTextField: UITextField! {
+        didSet {
+            priceTextField.rx.text.orEmpty.bind(to: viewModel.mPrice).disposed(by: bag)
+            priceTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
+                [weak self] (_) in
+                guard let `self` = self else { return }
+                self.priceTextField.resignFirstResponder()
             }).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var sendBtn: NGSCustomizableButton! {
         didSet {
-            Observable.combineLatest(viewModel.mName, viewModel.mImage) { name, img -> Bool in
-                return !name.isEmpty && img != UIImage()
+            Observable.combineLatest(viewModel.mName, viewModel.mNameEng, viewModel.mPrice, viewModel.mImage) { name, nameEng, price, img -> Bool in
+                return !name.isEmpty && !nameEng.isEmpty && !price.isEmpty && img != UIImage(named: "noImg")!
             }.map { $0 }.bind(to: sendBtn.rx.isEnabled).disposed(by: bag)
             
             sendBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
-                
-                let toastView = ToastView(frame: self.view.frame, text: "新增中...")
-                toastView.type = .sending
-                self.view.addSubview(toastView)
-                
-                let index = menuPickerView.selectedRow(inComponent: 0)
-                FireBaseManager().writeSushi(self.menuStrAry[index].menu, self.viewModel.mName.value, self.viewModel.mImage.value) { [weak self] model in
-                    guard let `self` = self else { return }
-                    self.removeToast()
-                    let toastView = ToastView(frame: self.view.frame, text: "新增成功")
-                    toastView.type = .sending
-                    self.view.addSubview(toastView)
-                }
+                self.addToast(txt: "新增中...")
+                self.addStorageImage()
             }.disposed(by: bag)
         }
     }
@@ -95,12 +105,24 @@ class AddSushiViewController: BaseViewController {
         self.view.endEditing(true)
     }
     
-    private func removeToast() {
-        for view in self.view.subviews {
-            if view.isKind(of: ToastView.self) {
-                view.removeFromSuperview()
-            }
-        }
+    private func addStorageImage() {
+        viewModel.addStorageImg().subscribe(onNext: { [weak self] (imgUrl) in
+            guard let `self` = self, !imgUrl.isEmpty else { return }
+            self.addRequset(imgUrl)
+        }).disposed(by: bag)
+    }
+    
+    private func addRequset(_ imgUrl: String) {
+        let index = menuPickerView.selectedRow(inComponent: 0)
+        
+        let menu = self.menuStrAry[index].menu
+        let title = self.viewModel.mName.value
+        
+        Observable.zip(viewModel.addData(.titleEng(menu, title)), viewModel.addData(.money(menu, title)), viewModel.addData(.img(menu, title), imgUrl: imgUrl)).subscribe(onNext: { [weak self] _, _, imgUrl in
+            guard let `self` = self else { return }
+            self.removeToast()
+            self.addToast(txt: "新增成功")
+        }).disposed(by: bag)
     }
     
     /// 點擊相機

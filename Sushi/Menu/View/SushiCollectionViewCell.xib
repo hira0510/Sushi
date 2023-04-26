@@ -30,6 +30,13 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tLH-ze-9Ys">
+                        <rect key="frame" x="130" y="110" width="0.0" height="0.0"/>
+                        <color key="backgroundColor" white="0.31173513986013984" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="0.84765625" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -37,6 +44,8 @@
             <constraints>
                 <constraint firstItem="gfp-y9-5bJ" firstAttribute="top" secondItem="aCH-fW-4de" secondAttribute="bottom" id="AQB-BN-oWz"/>
                 <constraint firstAttribute="trailing" secondItem="gfp-y9-5bJ" secondAttribute="trailing" constant="5" id="Bec-sM-Cqk"/>
+                <constraint firstItem="tLH-ze-9Ys" firstAttribute="trailing" secondItem="aCH-fW-4de" secondAttribute="trailing" id="Feg-Np-RRj"/>
+                <constraint firstItem="tLH-ze-9Ys" firstAttribute="bottom" secondItem="aCH-fW-4de" secondAttribute="bottom" id="MsY-ib-Mgw"/>
                 <constraint firstAttribute="trailing" secondItem="aCH-fW-4de" secondAttribute="trailing" id="OVg-D4-DGb"/>
                 <constraint firstItem="aCH-fW-4de" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="U3j-FV-Oep"/>
                 <constraint firstItem="gfp-y9-5bJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Zxz-Ba-Z4H"/>
@@ -47,6 +56,7 @@
             <connections>
                 <outlet property="mImageView" destination="aCH-fW-4de" id="55f-Sb-Kuz"/>
                 <outlet property="mLabel" destination="gfp-y9-5bJ" id="r1a-ya-XCi"/>
+                <outlet property="moneyLabel" destination="tLH-ze-9Ys" id="e0B-5Q-hJ8"/>
             </connections>
             <point key="canvasLocation" x="114.50381679389312" y="18.661971830985916"/>
         </collectionViewCell>

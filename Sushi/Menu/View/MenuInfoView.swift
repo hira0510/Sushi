@@ -13,8 +13,10 @@ class MenuInfoView: UIView, NibOwnerLoadable {
     @IBInspectable var numColor: UIColor = .black
     @IBInspectable var bgColor: UIColor = .orange
     @IBInspectable var title: String = ""
+    @IBInspectable var titleEng: String = ""
     @IBInspectable var num: String = "0"
     @IBInspectable var unit: String = ""
+    @IBInspectable var unitEng: String = ""
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var numLabel: UILabel!
@@ -40,6 +42,11 @@ class MenuInfoView: UIView, NibOwnerLoadable {
         numLabel.text = num
         numLabel.textColor = numColor
         self.backgroundColor = bgColor
+    }
+    
+    public func updateUI(isEng: Bool) {
+        titleLabel.text = isEng ? titleEng: title
+        unitLabel.text = isEng ? unitEng: unit
     }
     
     override func layoutSubviews() {

@@ -97,24 +97,33 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleEng" value="Menu"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rJc-uy-IvP">
                                                 <rect key="frame" x="0.0" y="68" width="70" height="63.5"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUE-vr-XW0">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUE-vr-XW0" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="6.5" width="70" height="50.5"/>
                                                         <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Language"/>
-                                                        <buttonConfiguration key="configuration" style="plain" subtitle="Language">
-                                                            <fontDescription key="subtitleFontDescription" type="system" pointSize="10"/>
-                                                        </buttonConfiguration>
+                                                        <state key="normal" title="Language">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <state key="selected" title="中文">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="8"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                                                <integer key="value" value="8"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="PressMask" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                 </subviews>
@@ -142,6 +151,8 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="unitEng" value="Discs"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleEng" value="Number"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zsk-FB-edY" customClass="MenuInfoView" customModule="Sushi" customModuleProvider="target">
@@ -163,6 +174,11 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleEng">
+                                                        <string key="value">Reserve
+delivery time</string>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="unitEng" value="min"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                         </subviews>
@@ -245,13 +261,80 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="PressMask" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="lastBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="huI-Mk-IiF">
+                                        <rect key="frame" x="10" y="10" width="110" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0UW-i0-7MR">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
+                                                <color key="backgroundColor" white="0.89439466779999999" alpha="0.57581313779999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="Olr-4B-0b0"/>
+                                                    <constraint firstAttribute="width" secondItem="0UW-i0-7MR" secondAttribute="height" multiplier="5:3" id="zFm-wZ-0N2"/>
+                                                </constraints>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="刪除">
+                                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVb-jH-OKF" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                                                <rect key="frame" x="60" y="0.0" width="50" height="30"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="7Cy-q2-zEf"/>
+                                                    <constraint firstAttribute="width" secondItem="OVb-jH-OKF" secondAttribute="height" multiplier="50:30" id="aII-Ds-pE2"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="編輯">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" title="取消">
+                                                    <color key="titleColor" systemColor="systemBlueColor"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="BgSel">
+                                                        <color key="value" white="0.89439466779999999" alpha="0.57581313779999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="0UW-i0-7MR" firstAttribute="leading" secondItem="huI-Mk-IiF" secondAttribute="leading" id="0Vg-vw-1fU"/>
+                                            <constraint firstItem="OVb-jH-OKF" firstAttribute="centerY" secondItem="0UW-i0-7MR" secondAttribute="centerY" id="2Fd-Fx-Md5"/>
+                                            <constraint firstItem="0UW-i0-7MR" firstAttribute="centerY" secondItem="huI-Mk-IiF" secondAttribute="centerY" id="9hQ-Jg-btE"/>
+                                            <constraint firstItem="OVb-jH-OKF" firstAttribute="top" secondItem="0UW-i0-7MR" secondAttribute="top" id="LZp-0r-Z0p"/>
+                                            <constraint firstItem="OVb-jH-OKF" firstAttribute="bottom" secondItem="0UW-i0-7MR" secondAttribute="bottom" id="t4J-CO-olL"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Ib3-fD-kvJ" firstAttribute="trailing" secondItem="290-eh-uE1" secondAttribute="trailing" constant="-10" id="8zi-Ta-5fa"/>
                                     <constraint firstItem="290-eh-uE1" firstAttribute="top" secondItem="ncK-oV-pNa" secondAttribute="top" id="AgF-Kv-k8U"/>
+                                    <constraint firstItem="huI-Mk-IiF" firstAttribute="leading" secondItem="ncK-oV-pNa" secondAttribute="leading" constant="10" id="Ibf-vr-87X"/>
                                     <constraint firstItem="Ib3-fD-kvJ" firstAttribute="bottom" secondItem="290-eh-uE1" secondAttribute="bottom" constant="-10" id="Pt1-zI-yjD"/>
                                     <constraint firstAttribute="trailing" secondItem="OiY-lX-Rtp" secondAttribute="trailing" id="Tr3-La-JKQ"/>
+                                    <constraint firstItem="huI-Mk-IiF" firstAttribute="top" secondItem="ncK-oV-pNa" secondAttribute="top" constant="10" id="ayr-ao-kIa"/>
                                     <constraint firstItem="OiY-lX-Rtp" firstAttribute="top" secondItem="290-eh-uE1" secondAttribute="bottom" id="bzP-9i-Q3O"/>
                                     <constraint firstItem="Ib3-fD-kvJ" firstAttribute="height" secondItem="ncK-oV-pNa" secondAttribute="height" multiplier="50:322" id="gAV-1I-Lw3"/>
                                     <constraint firstAttribute="trailing" secondItem="290-eh-uE1" secondAttribute="trailing" id="lNH-yp-TF6"/>
@@ -286,29 +369,39 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="V42-dV-9T4">
                                         <rect key="frame" x="10" y="8" width="224" height="40"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2jd-7P-gmZ">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2jd-7P-gmZ" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="107" height="40"/>
                                                 <color key="backgroundColor" systemColor="linkColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="◀︎上一頁"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="◀︎上一頁"/>
+                                                <state key="selected" title="Previous"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                                        <integer key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8M-Ce-LEp">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8M-Ce-LEp" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
                                                 <rect key="frame" x="117" y="0.0" width="107" height="40"/>
                                                 <color key="backgroundColor" systemColor="linkColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="下一頁►"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="下一頁▶︎"/>
+                                                <state key="normal" title="下一頁▶︎"/>
+                                                <state key="selected" title="Next"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                                        <integer key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
@@ -330,47 +423,60 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HIq-bA-brU">
                                         <rect key="frame" x="244" y="10" width="333" height="38"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7IZ-wD-XkR">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7IZ-wD-XkR" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="104.5" height="38"/>
                                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="點餐紀錄"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="點餐紀錄">
-                                                    <fontDescription key="titleFontDescription" type="system" pointSize="19"/>
-                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <state key="normal" title="點餐紀錄">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" title="Order Record"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                                        <integer key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lH-rO-aRM">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lH-rO-aRM" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
                                                 <rect key="frame" x="114.5" y="0.0" width="104" height="38"/>
                                                 <color key="backgroundColor" red="0.20392156862745098" green="0.65149694055944052" blue="0.22421082287810226" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="服務鈕"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="服務鈕">
-                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <state key="normal" title="服務鈕">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" title="Service"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                                        <integer key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwq-lK-C5e">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwq-lK-C5e" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
                                                 <rect key="frame" x="228.5" y="0.0" width="104.5" height="38"/>
                                                 <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="結帳"/>
-                                                <buttonConfiguration key="configuration" style="gray" title="結帳">
-                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <state key="normal" title="結帳">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" title="Checkout"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                                        <integer key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
@@ -485,6 +591,8 @@
                     <connections>
                         <outlet property="addNewBtn" destination="Ib3-fD-kvJ" id="EA6-Pk-Zg1"/>
                         <outlet property="checkoutBtn" destination="Rwq-lK-C5e" id="JGD-Dn-vwa"/>
+                        <outlet property="deleteItemBtn" destination="0UW-i0-7MR" id="HRq-Ck-yae"/>
+                        <outlet property="editBtn" destination="OVb-jH-OKF" id="SAi-Qh-Jjn"/>
                         <outlet property="languageInfoBtn" destination="zUE-vr-XW0" id="0Cw-um-Sal"/>
                         <outlet property="loginBtn" destination="J9Z-55-aOT" id="6ex-Ed-hPJ"/>
                         <outlet property="loginLabel" destination="bEH-g4-RGb" id="2Vd-Bi-HaY"/>
@@ -500,7 +608,7 @@
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="-132.06106870229007" y="-45.070422535211272"/>
+            <point key="canvasLocation" x="-132.68365817091455" y="-45.600000000000001"/>
         </scene>
     </scenes>
     <designables>
@@ -514,6 +622,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
