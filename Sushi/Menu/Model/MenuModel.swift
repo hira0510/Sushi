@@ -12,29 +12,6 @@ enum CollectionViewType {
     case sushi
 }
 
-//class SushiModel: NSObject {
-//    var title: String = ""
-//    var img: String = ""
-//
-//    init(_ title: String = "") {
-//        self.title = title
-//        self.img = title
-//    }
-//}
-//
-//class MenuModel: NSObject {
-//    var title: String = ""
-//    var color: UIColor = .clear
-//    var sushi: [SushiModel] = []
-//
-//    init(_ title: String = "", _ color: UIColor = .clear, _ sushiAry: [SushiModel] = []) {
-//        self.title = title
-//        self.color = color
-//        self.sushi = sushiAry
-//    }
-//}
-
-
 class MenuStrModel: NSObject {
     
     var menu: String = ""

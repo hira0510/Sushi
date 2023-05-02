@@ -5,6 +5,7 @@
 import UIKit
 
 enum ToastType {
+    case autoRemove
     case sending
 }
 
@@ -37,6 +38,8 @@ class ToastView: UIView {
             self.addSubview(mImageView)
             label.frame = mImageView.frame
             switch type {
+            case .sending:
+                setupLabel(delay: 0, font: UIFont(name: "PingFangTC-Regular", size: 16.0)!, foregroundColor: UIColor.white)
             default:
                 setupLabel(delay: 2, font: UIFont(name: "PingFangTC-Regular", size: 16.0)!, foregroundColor: UIColor.white)
             }

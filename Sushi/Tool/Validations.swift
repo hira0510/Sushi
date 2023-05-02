@@ -28,7 +28,7 @@ enum RegularExpression: String {
     //帳號英文或數字隨便組合並且4-2000個
     case account = "^[A-Za-z0-9]{4,10}"
     //密碼英文或數字隨便組合並且4-2000個
-    case password = "^[A-Za-z0-9]{4,15}"
+    case password = "^[A-Za-z0-9]{2,15}"
 }
 
 enum AlertMessages: String {

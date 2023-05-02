@@ -13,11 +13,6 @@ class LoginViewController: BaseViewController {
     
     private let viewModel = LoginViewModel()
     
-    @IBOutlet weak var previousBtn: UIButton! {
-        didSet {
-            previousBtn.addTarget(self, action: #selector(previousBack), for: .touchUpInside)
-        }
-    }
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var accountLabel: UILabel!
     @IBOutlet weak var accountTextField: UITextField! {
@@ -38,6 +33,7 @@ class LoginViewController: BaseViewController {
     }
     @IBOutlet weak var loginBtn: UIButton! {
         didSet {
+            loginBtn.setTitle("登入", for: .normal)
             Observable.combineLatest(viewModel.account, viewModel.password) {
                 account, password -> Bool in
                 return !account.isEmpty && !password.isEmpty
@@ -52,7 +48,8 @@ class LoginViewController: BaseViewController {
                      
                     if isValidAccount.success && isValidPsw.success {
                         SuShiSingleton.share().setIsLoginModel(account, password, type)
-                        self.previousBack()
+                        let vc = UIStoryboard.loadBaseNavVC()
+                        SceneDelegate().changeRootVc(vc: vc)
                         self.errorLabel.isHidden = true
                     } else {
                         self.errorLabel.text = isValidAccount.success ? isValidPsw.msg: isValidAccount.msg
@@ -72,8 +69,8 @@ class LoginViewController: BaseViewController {
                 return !self.changeLoginBtn.isSelected
             }.do { [weak self] isSelect in
                 guard let `self` = self else { return }
-                self.accountLabel.text = isSelect ? "員工帳號：": "店舖號碼："
-                self.passwordLabel.text = isSelect ? "員工密碼：": "店舖密碼："
+                self.accountLabel.text = isSelect ? "員工帳號": "店舖號碼"
+                self.passwordLabel.text = isSelect ? "員工密碼": "店舖桌號"
                 self.viewModel.accountType.accept(isSelect ? .administrator: .normal)
             }.bind(to: changeLoginBtn.rx.isSelected).disposed(by: bag)
         }

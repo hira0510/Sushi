@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OrderListView" customModule="Sushi" customModuleProvider="target">
+            <connections>
+                <outlet property="bgView" destination="YjO-us-qaa" id="6bw-Vp-SQp"/>
+                <outlet property="mCollectionView" destination="Wr0-8J-6Tw" id="G0o-oL-0cH"/>
+                <outlet property="mStackView" destination="uff-ZL-rhT" id="AjU-UH-b49"/>
+                <outlet property="openBtn" destination="JZt-Zf-FI6" id="kP6-CY-Q1D"/>
+                <outlet property="orderBtn" destination="9MR-i9-mLc" id="fza-xG-IEp"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YjO-us-qaa" customClass="NGSCustomizableView" customModule="Sushi" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="335" height="70"/>
+                    <color key="backgroundColor" red="0.71894121499999997" green="0.93536931820000002" blue="0.91160402100000004" alpha="0.91698554421768708" colorSpace="custom" customColorSpace="sRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                        <userDefinedRuntimeAttribute type="color" keyPath="BorderColors">
+                            <color key="value" red="0.56077906468531469" green="1" blue="0.91717657342657344" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="BorderEndColor">
+                            <color key="value" red="0.8353638548951049" green="0.97424060314685312" blue="0.45984484265734266" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="BorderHorizontalMode" value="NO"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="BorderDiagonalMode" value="YES"/>
+                        <userDefinedRuntimeAttribute type="color" keyPath="BgEndColor">
+                            <color key="value" red="0.92348666958041958" green="0.92149256993006989" blue="0.75002731643356646" alpha="0.91491284013605445" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="BgHorizontalMode" value="YES"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="BorderWidths">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="uff-ZL-rhT">
+                    <rect key="frame" x="2" y="2" width="303" height="66"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JZt-Zf-FI6" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="30" height="66"/>
+                            <color key="backgroundColor" red="0.71894121499999997" green="0.93536931820000002" blue="0.91160402100000004" alpha="0.8388605442" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="JZt-Zf-FI6" secondAttribute="height" multiplier="5:11" id="4G8-UN-8d1"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="▶︎"/>
+                            <state key="selected" title="◀︎"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="NO"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="NO"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundRatio">
+                                    <real key="value" value="0.10000000000000001"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9MR-i9-mLc" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="30" y="0.0" width="30" height="66"/>
+                            <color key="backgroundColor" red="0.90523929195804198" green="0.35596044580419578" blue="0.35145323426573427" alpha="0.79559948979591832" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="9MR-i9-mLc" secondAttribute="height" multiplier="5:11" id="DXQ-pE-VVN"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="送出">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="selected" title="Send"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundRatio">
+                                    <real key="value" value="0.10000000000000001"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Wr0-8J-6Tw">
+                            <rect key="frame" x="60" y="0.0" width="243" height="66"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5kn-ZQ-Aev">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Wr0-8J-6Tw" firstAttribute="leading" secondItem="9MR-i9-mLc" secondAttribute="trailing" id="0QX-2E-LId"/>
+                        <constraint firstItem="JZt-Zf-FI6" firstAttribute="centerY" secondItem="uff-ZL-rhT" secondAttribute="centerY" id="3ca-Dv-dAJ"/>
+                        <constraint firstItem="9MR-i9-mLc" firstAttribute="top" secondItem="uff-ZL-rhT" secondAttribute="top" id="Pvb-5F-ZrK"/>
+                        <constraint firstItem="9MR-i9-mLc" firstAttribute="leading" secondItem="JZt-Zf-FI6" secondAttribute="trailing" id="Qab-LL-znk"/>
+                        <constraint firstItem="Wr0-8J-6Tw" firstAttribute="top" secondItem="uff-ZL-rhT" secondAttribute="top" id="WgZ-IK-07C"/>
+                        <constraint firstAttribute="bottom" secondItem="JZt-Zf-FI6" secondAttribute="bottom" id="XVw-rv-JuY"/>
+                        <constraint firstItem="JZt-Zf-FI6" firstAttribute="top" secondItem="uff-ZL-rhT" secondAttribute="top" id="bKN-hH-P0T"/>
+                        <constraint firstItem="9MR-i9-mLc" firstAttribute="centerY" secondItem="uff-ZL-rhT" secondAttribute="centerY" id="d1q-N6-lN9"/>
+                        <constraint firstAttribute="bottom" secondItem="9MR-i9-mLc" secondAttribute="bottom" id="i09-pW-RJq"/>
+                        <constraint firstItem="Wr0-8J-6Tw" firstAttribute="centerY" secondItem="uff-ZL-rhT" secondAttribute="centerY" id="qwE-dD-zxZ"/>
+                        <constraint firstItem="JZt-Zf-FI6" firstAttribute="leading" secondItem="uff-ZL-rhT" secondAttribute="leading" id="rDG-bZ-3Xa"/>
+                        <constraint firstAttribute="bottom" secondItem="Wr0-8J-6Tw" secondAttribute="bottom" id="rcE-0I-mlH"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="YjO-us-qaa" secondAttribute="bottom" id="7AT-pN-MKi"/>
+                <constraint firstItem="uff-ZL-rhT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="YtV-33-jtm"/>
+                <constraint firstItem="uff-ZL-rhT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="2" id="enZ-A5-myA"/>
+                <constraint firstItem="YjO-us-qaa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="nOS-u4-7QI"/>
+                <constraint firstAttribute="bottom" secondItem="uff-ZL-rhT" secondAttribute="bottom" constant="2" id="oV8-PM-WzR"/>
+                <constraint firstItem="YjO-us-qaa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="w5H-CK-Ps9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="130.40000000000001" y="-224.88755622188907"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="9MR-i9-mLc">
+            <size key="intrinsicContentSize" width="30" height="26"/>
+        </designable>
+        <designable name="JZt-Zf-FI6">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+    </designables>
+</document>

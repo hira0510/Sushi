@@ -27,6 +27,10 @@ class BaseViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @objc func dismissVc() {
+        self.dismiss(animated: true)
+    }
+    
     /// 加入返回上一頁的手勢
     private func addPanGestureRecognizer() {
         guard let target = self.navigationController?.interactivePopGestureRecognizer?.delegate else { return }
@@ -45,9 +49,9 @@ class BaseViewController: UIViewController {
         }
     }
     
-    func addToast(txt: String) {
+    func addToast(txt: String, type: ToastType = .autoRemove) {
         let toastView = ToastView(frame: self.view.frame, text: txt)
-        toastView.type = .sending
+        toastView.type = type
         self.view.addSubview(toastView)
     }
 }

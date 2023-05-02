@@ -9,61 +9,21 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class MenuViewModel: NSObject {
+class MenuViewModel: BaseViewModel {
     
     var orient: UIDeviceOrientation = .unknown
-    var selectItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var sushiCollectionFrame: BehaviorRelay<CGRect> = BehaviorRelay<CGRect>(value: .zero)
     var menuCollectionFrame: BehaviorRelay<CGRect> = BehaviorRelay<CGRect>(value: .zero)
-    var menuModel: BehaviorRelay<[MenuModel]> = BehaviorRelay<[MenuModel]>(value: [])
-    var isLogin: BehaviorRelay<IsLoginModel> = BehaviorRelay<IsLoginModel>(value: .init())
-    var isEng: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    
     var isNotEdit: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: true)
+    var orderIsOpen: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: true)
     
-    func request() -> Observable<Bool> {
-        let firebaseManager = FireBaseManager()
-        firebaseManager.auth() 
-        let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
-            firebaseManager.ref { [weak self] model in
-                guard let `self` = self, let model = model else { return }
-                self.menuModel.accept(model.data)
-                
-                observer.onNext(true)
-                observer.onCompleted()
-            }
-            return Disposables.create()
-        }
-        return json
-    }
+    var selectItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+    var menuModel: BehaviorRelay<[MenuModel]> = BehaviorRelay<[MenuModel]>(value: [])
+    var orderModel: BehaviorRelay<[SushiModel]> = BehaviorRelay<[SushiModel]>(value: [])
+    var recordModel: BehaviorRelay<[SushiModel]> = BehaviorRelay<[SushiModel]>(value: [])
     
-    func delData(_ type: WhiteType) -> Observable<Bool> {
-        
-        let firebaseManager = FireBaseManager()
-        let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
-            firebaseManager.delDatabase(type: type) { suc in
-                guard let _ = suc else { return }
-                observer.onNext(true)
-                observer.onCompleted()
-            }
-            return Disposables.create()
-        }
-        return json
-    }
-    
-    func delStorageImg(_ index: Int) -> Observable<Bool> {
-        let firebaseManager = FireBaseManager()
-        let title = menuModel.value[selectItem.value].sushi[index].title
-        let json: Observable<Bool> = Observable.create { [weak self] (observer) -> Disposable in
-            guard let `self` = self else { return Disposables.create() }
-            firebaseManager.delStorageImg(title) { _ in
-                observer.onNext(true)
-                observer.onCompleted()
-                print("刪除圖片\(title)")
-            }
-            return Disposables.create()
-        }
-        return json
-    }
+    var orderTimeStr: BehaviorRelay<String> = BehaviorRelay<String>(value: "0")
 
     func getHSpace(_ type: CollectionViewType) -> CGFloat {
         return type == .menu ? 5 : 10

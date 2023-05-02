@@ -10,6 +10,20 @@ import Foundation
 import UIKit
 
 class GlobalUtil {
+    
+    /// 電池那邊的StatusBar高度
+    static func statusBarHeight() -> CGFloat {
+        let defaultH: CGFloat = UIScreen.main.bounds.height >= 812 ? 44 : 0
+        let safeAreaY: CGFloat
+        if #available(iOS 11.0, *) {
+            let scene = UIApplication.shared.connectedScenes.first
+            guard let appDelegate = scene?.delegate as? SceneDelegate else { return defaultH }
+            safeAreaY = appDelegate.window?.safeAreaLayoutGuide.layoutFrame.minY ?? 0
+        } else {
+            safeAreaY = defaultH
+        }
+        return safeAreaY == 0 ? defaultH: safeAreaY
+    }
 
     static func isPortrait() -> Bool {
         let mainBounds = UIScreen.main.bounds
@@ -83,8 +97,9 @@ class GlobalUtil {
     /// - Parameter width: 被計算的寬
     /// - Returns: 回傳CGFloat
     static func calculateWidthHorizontalScaleWithSize(width: CGFloat) -> CGFloat {
-        let scale = width / CGFloat(667)
-        let result = UIScreen.main.bounds.width * scale
+        let scale = width / CGFloat(375)
+        let orient: UIDeviceOrientation = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? .portrait: .landscapeLeft
+        let result = orient.isPortrait ? UIScreen.main.bounds.width * scale : UIScreen.main.bounds.height * scale
         return result
     }
 

@@ -394,25 +394,36 @@ class NGSCustomizableButton: UIButton {
     /// 添加邊框
     private func addGradientBorder() {
         guard BorderWidths > 0 else { return }
+        updateBorder()
+        gradientLayer.addSublayer(borderGradientLayer)
+    }
+    
+    /// 更新邊框範圍
+    private func updateBorder() {
         borderGradientLayer.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
         borderLayer.path = roundCornersMask.path
         borderLayer.lineWidth = BorderWidths * 2
         borderLayer.fillColor = UIColor.clear.cgColor
         borderLayer.strokeColor = UIColor.white.cgColor
         borderGradientLayer.mask = borderLayer
-        gradientLayer.addSublayer(borderGradientLayer)
     }
 
     /// 添加按下時的遮罩
     private func addPressMask() {
         guard PressMask else { return }
-        pressMaskLayer.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
         pressMaskLayer.backgroundColor = PressMaskColor.cgColor
         pressMaskLayer.isHidden = true
+        updatePreMask()
+        self.layer.addSublayer(pressMaskLayer)
+    }
+    
+    /// 更新遮罩範圍
+    func updatePreMask() {
+        guard PressMask else { return }
+        pressMaskLayer.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
         let layer = CAShapeLayer()
         layer.path = roundCornersMask.path
         pressMaskLayer.mask = layer
-        self.layer.addSublayer(pressMaskLayer)
     }
 
     /// 添加按下時的遮罩方法
@@ -427,11 +438,11 @@ class NGSCustomizableButton: UIButton {
     }
     
     /// 旋轉螢幕時更新UI
-    private func orientUpdateSize() {
+    func orientUpdateSize() {
         addCornerRatioMask()
         addShadowLayer()
-        pressMaskLayer.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
-        borderGradientLayer.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
+        updateBorder()
+        updatePreMask()
         gradientLayer.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
     }
 
@@ -463,6 +474,7 @@ class NGSCustomizableButton: UIButton {
             self.setTitle(self.title(for: .selected), for: State(rawValue: 5))
             self.setTitleColor(self.titleColor(for: .normal), for: State(rawValue: 1))
             self.setTitleColor(self.titleColor(for: .selected), for: State(rawValue: 5))
+//            addCornerRatioMask()
             addGradientBg()
             addShadowLayer()
             addGradientBorder()

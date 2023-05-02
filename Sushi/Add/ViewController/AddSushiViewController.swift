@@ -8,27 +8,29 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import RxDataSources
 import Kingfisher
+
+protocol AddSushiVcProtocol: AnyObject {
+    func requestSuc()
+}
+
+enum AddSushiVcType {
+    case add
+    case edit
+}
 
 class AddSushiViewController: BaseViewController {
     
+    internal var editModel: (menu: String, data: SushiModel?) = (menu: "", data: nil)
     internal var menuStrAry: [MenuStrModel] = []
+    internal weak var delegate: AddSushiVcProtocol?
     private let viewModel = AddSushiViewModel()
-    private let stringPickerAdapter = RxPickerViewStringAdapter<[String]>(
-        components: [],
-        numberOfComponents: { _,_,_  in 1 },
-        numberOfRowsInComponent: { (_, _, items, _) -> Int in
-            return items.count},
-        titleForRow: { (_, _, items, row, _) -> String? in
-            return items[row]}
-    )
     
     @IBOutlet weak var menuPickerView: UIPickerView! {
         didSet {
             let strAry = menuStrAry.map { $0.title }
             Observable.just(strAry)
-                .bind(to: menuPickerView.rx.items(adapter: stringPickerAdapter))
+                .bind(to: menuPickerView.rx.items(adapter: viewModel.stringPickerAdapter))
                 .disposed(by: bag)
         }
     }
@@ -53,7 +55,7 @@ class AddSushiViewController: BaseViewController {
     
     @IBOutlet weak var nameTextField: UITextField! {
         didSet {
-            nameTextField.rx.text.orEmpty.bind(to: viewModel.mName).disposed(by: bag)
+            _ = nameTextField.rx.textInput <-> viewModel.mName
             nameTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
                 [weak self] (_) in
                 guard let `self` = self else { return }
@@ -61,9 +63,10 @@ class AddSushiViewController: BaseViewController {
             }).disposed(by: bag)
         }
     }
+    
     @IBOutlet weak var nameEngTextField: UITextField! {
         didSet {
-            nameEngTextField.rx.text.orEmpty.bind(to: viewModel.mNameEng).disposed(by: bag)
+            _ = nameEngTextField.rx.textInput <-> viewModel.mNameEng
             nameEngTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
                 [weak self] (_) in
                 guard let `self` = self else { return }
@@ -74,7 +77,7 @@ class AddSushiViewController: BaseViewController {
     
     @IBOutlet weak var priceTextField: UITextField! {
         didSet {
-            priceTextField.rx.text.orEmpty.bind(to: viewModel.mPrice).disposed(by: bag)
+            _ = priceTextField.rx.textInput <-> viewModel.mPrice
             priceTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
                 [weak self] (_) in
                 guard let `self` = self else { return }
@@ -91,22 +94,56 @@ class AddSushiViewController: BaseViewController {
             
             sendBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
-                self.addToast(txt: "新增中...")
-                self.addStorageImage()
+                if self.viewModel.mType == .add {
+                    self.addStorageImage()
+                    self.addToast(txt: "新增中...", type: .sending)
+                } else {
+                    self.editRequset()
+                    self.addToast(txt: "修改中...", type: .sending)
+                }
             }.disposed(by: bag)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupEditUI()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
+    private func setupEditUI() {
+        guard let model = editModel.data, let img = URL(string: model.img) else { return }
+        menuPickerView.isHidden = true
+        
+        viewModel.mType = .edit
+        viewModel.mName.accept(model.title)
+        viewModel.mPrice.accept(model.money)
+        viewModel.mNameEng.accept(model.titleEng)
+        mImageView.kf.setImage(with: img, placeholder: UIImage(named: "noImg"), options: [.transition(.fade(0.5)), .loadDiskFileSynchronously], completionHandler: { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let value):
+                self.viewModel.mTempEditImage.accept(value.image)
+                self.viewModel.mImage.accept(value.image)
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        })
+    }
+    
     private func addStorageImage() {
-        viewModel.addStorageImg().subscribe(onNext: { [weak self] (imgUrl) in
+        guard viewModel.mImage.value != viewModel.mTempEditImage.value else {
+            if let img = editModel.data?.img {
+                self.addRequset(img)
+            }
+            return
+        }
+        let name = viewModel.mName.value
+        let img = viewModel.mImage.value
+        viewModel.addStorageImg(name, img).subscribe(onNext: { [weak self] (imgUrl) in
             guard let `self` = self, !imgUrl.isEmpty else { return }
             self.addRequset(imgUrl)
         }).disposed(by: bag)
@@ -115,13 +152,26 @@ class AddSushiViewController: BaseViewController {
     private func addRequset(_ imgUrl: String) {
         let index = menuPickerView.selectedRow(inComponent: 0)
         
-        let menu = self.menuStrAry[index].menu
-        let title = self.viewModel.mName.value
+        let menu = menuStrAry.count > index ? menuStrAry[index].menu: self.editModel.menu
+        let title = viewModel.mName.value
+        let eng = viewModel.mNameEng.value
+        let price = viewModel.mPrice.value
         
-        Observable.zip(viewModel.addData(.titleEng(menu, title)), viewModel.addData(.money(menu, title)), viewModel.addData(.img(menu, title), imgUrl: imgUrl)).subscribe(onNext: { [weak self] _, _, imgUrl in
+        Observable.zip(viewModel.addData(.titleEng(menu, title), price, eng), viewModel.addData(.money(menu, title), price, eng), viewModel.addData(.img(menu, title), price, eng, imgUrl: imgUrl)).subscribe(onNext: { [weak self] _, _, imgUrl in
             guard let `self` = self else { return }
             self.removeToast()
-            self.addToast(txt: "新增成功")
+            self.addToast(txt: self.viewModel.mType == .add ? "新增成功": "修改成功")
+            self.delegate?.requestSuc()
+        }).disposed(by: bag)
+    }
+    
+    private func editRequset() {
+        let menu = self.editModel.menu
+        let title = self.editModel.data?.title ?? ""
+        
+        Observable.zip(self.viewModel.delData(.titleEng(menu, title)), self.viewModel.delData(.money(menu, title)), self.viewModel.delData(.img(menu, title)), self.viewModel.delStorageImg(title)).subscribe(onNext: { [weak self] _, _, _, _ in
+            guard let `self` = self else { return }
+            self.addStorageImage()
         }).disposed(by: bag)
     }
     

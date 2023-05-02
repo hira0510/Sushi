@@ -22,14 +22,9 @@ class MenuViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        StarscreamWebSocketManager.shard.delegate = self
         request()
-        views.setupCollectionView(self)
-        views.clickDeleteItemBtn(self)
         setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        viewModel.isLogin.accept(SuShiSingleton.share().getIsLogin())
     }
     
     /// 設定collection的frame
@@ -46,44 +41,38 @@ class MenuViewController: BaseViewController {
     }
     
     private func setupUI() {
-        views.loginBtn.addTarget(self, action: #selector(clickLoginBtn), for: .touchUpInside)
-        views.addNewBtn.addTarget(self, action: #selector(clickAddNewBtn), for: .touchUpInside)
+        views.orderListView.initView(order: viewModel.orderModel, delegate: self)
+        views.menuInfoViewAddTarget(self)
+        views.setupCollectionView(self)
+        views.deleteItemBtnAddTarget(self)
+        views.recordBtnAddTarget(self)
+        views.addNewBtnAddTarget(self)
+        views.checkoutBtnAddTarget(self)
+        views.serviceBtnAddTarget(self)
     }
     
-    func request() {
+    public func request() {
         viewModel.request().subscribe(onNext: { [weak self] (result) in
-            guard let `self` = self, result else { return }
+            guard let `self` = self, result.count > 0 else { return }
+            self.viewModel.menuModel.accept(result)
             self.views.menuCollectionView.reloadData()
             self.views.sushiCollectionView.reloadData()
         }).disposed(by: bag)
     }
     
-    func delData(_ index: Int) -> Observable<Int> {
+    public func delData(_ index: Int) -> Observable<Int> {
         let menu = viewModel.menuModel.value[viewModel.selectItem.value].menu
         let title = viewModel.menuModel.value[viewModel.selectItem.value].sushi[index].title
         
         let json: Observable<Int> = Observable.create { [weak self] (observer) -> Disposable in
             guard let `self` = self else { return Disposables.create() }
-            Observable.zip(self.viewModel.delData(.titleEng(menu, title)), self.viewModel.delData(.money(menu, title)), self.viewModel.delData(.img(menu, title)), self.viewModel.delStorageImg(index)).subscribe(onNext: { _, _, _, _ in
+            Observable.zip(self.viewModel.delData(.titleEng(menu, title)), self.viewModel.delData(.money(menu, title)), self.viewModel.delData(.img(menu, title)), self.viewModel.delStorageImg(title)).subscribe(onNext: { _, _, _, _ in
                 observer.onNext(index)
                 observer.onCompleted()
             }).disposed(by: bag)
             return Disposables.create()
         }
         return json
-    }
-    
-    @objc func clickLoginBtn() {
-        let vc = UIStoryboard.loadLoginVC()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @objc func clickAddNewBtn() {
-        let model = viewModel.menuModel.value
-        guard model.count > 0 else { return }
-        let menu: [MenuStrModel] = MenuStrModel().getAry(model)
-        let vc = UIStoryboard.loadAddVC(menu: menu)
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -117,12 +106,12 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuTitleCollectionViewCell", for: indexPath) as! MenuTitleCollectionViewCell
             let model = viewModel.menuModel.value
             guard model.count > indexPath.item else { return cell }
-            cell.cellConfig(model[indexPath.item], index == indexPath.item, viewModel.isEng.value)
+            cell.cellConfig(model[indexPath.item], index == indexPath.item)
             return cell
         case .sushi:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiCollectionViewCell", for: indexPath) as! SushiCollectionViewCell
             guard model.count > index else { return cell }
-            cell.cellConfig(model: model[index].sushi[indexPath.item], isEng: viewModel.isEng.value)
+            cell.cellConfig(model: model[index].sushi[indexPath.item])
             return cell
         }
     }
@@ -134,9 +123,16 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             viewModel.selectItem.accept(indexPath.item)
         case .sushi:
             if viewModel.isNotEdit.value {
-                let model = viewModel.menuModel.value
-                let index = viewModel.selectItem.value
-                print(model[index].sushi[indexPath.item].title)
+                let section = viewModel.selectItem.value
+                let model = viewModel.menuModel.value[section]
+                let sushi = model.sushi[indexPath.item]
+                if SuShiSingleton.share().getAccountType() == .administrator {
+                    let vc = UIStoryboard.loadAddVC(delegate: self, edit: (model.menu, sushi))
+                    self.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    let vc = UIStoryboard.loadOrderVC(model: model.sushi[indexPath.item], color: model.color, protocal: self)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             } else {
                 let cell = collectionView.cellForItem(at: indexPath) as! SushiCollectionViewCell
                 cell.backgroundColor = .gray
@@ -168,7 +164,47 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView == views.menuCollectionView {
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         } else {
-            return UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
+            return UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
         }
     }
 }
+extension MenuViewController: OrderVcProtocol {
+    func sendOrder(model: [SushiModel]) {
+        viewModel.orderModel.add(model)
+    }
+}
+
+extension MenuViewController: OrderListCellProtocol {
+    
+    func clickRemoveItem(_ model: SushiModel?) {
+        var tempModel = viewModel.orderModel.value
+        guard let model = model, let index = tempModel.firstIndex(of: model) else { return }
+        tempModel.remove(at: index)
+        viewModel.orderModel.accept(tempModel)
+    }
+    
+    func clickOpenBtn(_ isToOpen: Bool) {
+        viewModel.orderIsOpen.accept(isToOpen)
+    }
+    
+    func clickOrderBtn() {
+        viewModel.recordModel.add(viewModel.orderModel.value)
+        StarscreamWebSocketManager.shard.writeData(viewModel.orderModel.value)
+        
+        addToast(txt: "已送出".twEng())
+        viewModel.orderModel.accept([])
+    }
+}
+
+extension MenuViewController: AddSushiVcProtocol {
+    func requestSuc() {
+        request()
+    }
+}
+
+extension MenuViewController: StarscreamWebSocketManagerProtocol {
+    func getMin(_ str: String) {
+        viewModel.orderTimeStr.accept(str)
+    }
+}
+

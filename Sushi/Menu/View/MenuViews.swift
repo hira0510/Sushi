@@ -8,10 +8,13 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
+import RxGesture
 
 class MenuViews: NSObject {
     public var viewModel: MenuViewModel!
     public var bag: DisposeBag!
+    private var orderListViewRightConstraints: Constraint? = nil
 
     @IBOutlet weak var sushiCollectionView: UICollectionView! {
         didSet {
@@ -22,7 +25,7 @@ class MenuViews: NSObject {
                 return model.count > 0 ? UIColor(hexString: model[index].color) ?? .clear: .clear
             }.map { $0 }.bind(to: sushiCollectionView.rx.backgroundColor).disposed(by: bag)
             
-            Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, viewModel.isEng) { index, _, _ -> Int in
+            Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, SuShiSingleton.share().bindIsEng()) { index, _, _ -> Int in
                 return index
             }.map { $0 }.bind(to: sushiCollectionView.rx.reloadData).disposed(by: bag)
         }
@@ -32,7 +35,7 @@ class MenuViews: NSObject {
         didSet {
             viewModel.selectItem.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag)
             
-            Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, viewModel.isEng) { index, _, _ -> Int in
+            Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, SuShiSingleton.share().bindIsEng()) { index, _, _ -> Int in
                 return index
             }.map { $0 }.bind(to: menuCollectionView.rx.reloadData).disposed(by: bag)
         }
@@ -40,36 +43,45 @@ class MenuViews: NSObject {
     
     @IBOutlet weak var languageInfoBtn: UIButton! {
         didSet {
+            SuShiSingleton.share().bindIsEng().bind(to: languageInfoBtn.rx.isSelected).disposed(by: bag)
             languageInfoBtn.rx.tap.asObservable().map { [weak self] _ -> Bool in
                 guard let `self` = self else { return false }
                 return !self.languageInfoBtn.isSelected
             }.do { [weak self] isSelect in
                 guard let `self` = self else { return }
-                self.viewModel.isEng.accept(isSelect)
-                self.menuInfoView.updateUI(isEng: isSelect)
-                self.plateInfoView.updateUI(isEng: isSelect)
-                self.timeInfoView.updateUI(isEng: isSelect)
+                SuShiSingleton.share().setIsEng(isSelect)
+                self.menuInfoView.updateUI()
+                self.plateInfoView.updateUI()
+                self.timeInfoView.updateUI()
             }.bind(to: languageInfoBtn.rx.isSelected).disposed(by: bag)
         }
     }
-    @IBOutlet weak var menuInfoView: MenuInfoView!
-    @IBOutlet weak var plateInfoView: MenuInfoView!
-    @IBOutlet weak var timeInfoView: MenuInfoView!
+    @IBOutlet weak var menuInfoView: MenuInfoView! {
+        didSet {
+            let isAdmin = SuShiSingleton.share().getAccountType() == .administrator
+            self.menuInfoView.num = isAdmin ? "X": SuShiSingleton.share().getPassword()
+        }
+    }
+    @IBOutlet weak var plateInfoView: MenuInfoView! {
+        didSet {
+            viewModel.recordModel.bind(to: plateInfoView.numLabel.rx.countText).disposed(by: bag)
+        }
+    }
+    @IBOutlet weak var timeInfoView: MenuInfoView! {
+        didSet {
+            viewModel.orderTimeStr.bind(to: timeInfoView.numLabel.rx.text).disposed(by: bag)
+        }
+    }
     
     @IBOutlet weak var loginLabel: UILabel! {
         didSet {
-            viewModel.isLogin.bind(to: loginLabel.rx.labelIsHidden).disposed(by: bag)
-        }
-    }
-    @IBOutlet weak var loginBtn: UIButton! {
-        didSet {
-            viewModel.isLogin.bind(to: loginBtn.rx.btnIsHidden).disposed(by: bag)
+            SuShiSingleton.share().bindIsLogin().bind(to: loginLabel.rx.labelIsHidden).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var previousPageBtn: UIButton! {
         didSet {
-            viewModel.isEng.bind(to: previousPageBtn.rx.isSelected).disposed(by: bag)
+            SuShiSingleton.share().bindIsEng().bind(to: previousPageBtn.rx.isSelected).disposed(by: bag)
             
             previousPageBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
@@ -81,7 +93,7 @@ class MenuViews: NSObject {
     
     @IBOutlet weak var nextPageBtn: UIButton! {
         didSet {
-            viewModel.isEng.bind(to: nextPageBtn.rx.isSelected).disposed(by: bag)
+            SuShiSingleton.share().bindIsEng().bind(to: nextPageBtn.rx.isSelected).disposed(by: bag)
             
             nextPageBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
@@ -93,29 +105,29 @@ class MenuViews: NSObject {
     
     @IBOutlet weak var recordBtn: UIButton! {
         didSet {
-            viewModel.isEng.bind(to: recordBtn.rx.isSelected).disposed(by: bag)
+            SuShiSingleton.share().bindIsEng().bind(to: recordBtn.rx.isSelected).disposed(by: bag)
         }
     }
     @IBOutlet weak var serviceBtn: UIButton! {
         didSet {
-            viewModel.isEng.bind(to: serviceBtn.rx.isSelected).disposed(by: bag)
+            SuShiSingleton.share().bindIsEng().bind(to: serviceBtn.rx.isSelected).disposed(by: bag)
         }
     }
     @IBOutlet weak var checkoutBtn: UIButton! {
         didSet {
-            viewModel.isEng.bind(to: checkoutBtn.rx.isSelected).disposed(by: bag)
+            SuShiSingleton.share().bindIsEng().bind(to: checkoutBtn.rx.isSelected).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var addNewBtn: NGSCustomizableButton! {
         didSet {
-            viewModel.isLogin.bind(to: addNewBtn.rx.addBtnIsHidden).disposed(by: bag)
+            SuShiSingleton.share().bindIsLogin().bind(to: addNewBtn.rx.addBtnIsHidden).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var editBtn: UIButton! {
         didSet {
-            viewModel.isLogin.bind(to: editBtn.rx.addBtnIsHidden).disposed(by: bag)
+            SuShiSingleton.share().bindIsLogin().bind(to: editBtn.rx.addBtnIsHidden).disposed(by: bag)
             viewModel.isNotEdit.bind(to: editBtn.rx.btnIsSelect).disposed(by: bag)
             
             editBtn.rx.tap.asObservable().map { [weak self] _ -> Bool in
@@ -137,24 +149,13 @@ class MenuViews: NSObject {
         }
     }
     
-    func clickDeleteItemBtn(_ vc: MenuViewController) {
-        deleteItemBtn.rx.tap.subscribe { [weak self] event in
-            guard let `self` = self else { return }
-            let indexPathArr = self.sushiCollectionView.indexPathsForSelectedItems ?? []
-            guard indexPathArr.count > 0 else { return }
-            vc.addToast(txt: "刪除中...")
-            
-            Observable.from(indexPathArr).enumerated().flatMap { indexPath -> Observable<Int> in
-                return vc.delData(indexPath.element.item)
-            }.subscribe(onNext: { [weak self] index in
-                guard let `self` = self, index == indexPathArr.last?.item else { return }
-                vc.removeToast()
-                vc.addToast(txt: "刪除成功")
-                vc.request()
-                self.cancelSelect()
-                self.viewModel.isNotEdit.accept(true)
-            }).disposed(by: bag)
-        }.disposed(by: bag)
+    @IBOutlet weak var orderListView: OrderListView! {
+        didSet {
+            bindOrderListViewConstraint()
+            orderListView.snp.makeConstraints { make in
+                orderListViewRightConstraints = make.right.equalToSuperview().offset(0).constraint
+            }
+        }
     }
     
     func setupCollectionView(_ vc: MenuViewController) {
@@ -175,84 +176,100 @@ class MenuViews: NSObject {
             indexPathArr = (self.sushiCollectionView.indexPathsForSelectedItems)!//所有被选中的cell的indexpath
         }
     }
-}
-// MARK: - 綁定Button
-extension Reactive where Base: UIButton {
-    /// 按鈕是否隱藏
-    var btnIsHidden: Binder<IsLoginModel> {
-        get {
-            return Binder(self.base) { btn, loginModel in
-                btn.isHidden = loginModel.isLogin
+    
+    func bindOrderListViewConstraint() {
+        Observable.combineLatest(viewModel.orderModel, viewModel.orderIsOpen) { [weak self] model, isOpen ->  (model: [SushiModel], isOpen: Bool) in
+            guard let `self` = self, model.count > 0 else { return ([], false) }
+            
+            if let collectionView = self.orderListView.mCollectionView {
+                collectionView.isHidden = !isOpen
             }
-        }
-    }
-    var btnIsSelect: Binder<Bool> {
-        get {
-            return Binder(self.base) { btn, bool in
-                btn.isSelected = !bool
+            if let btn = self.orderListView.orderBtn {
+                btn.isHidden = !isOpen
             }
-        }
-    }
-    /// 按鈕是否隱藏
-    var addBtnIsHidden: Binder<IsLoginModel> {
-        get {
-            return Binder(self.base) { btn, loginModel in
-                btn.isHidden = !(loginModel.isLogin && loginModel.type == .administrator)
+            
+            let oneCell = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 70)
+            let allCell = oneCell.rounded(.down) * model.count.toDouble
+            let allCellSpace: Double = (model.count - 1).toDouble * 5
+            let edge = 10.0
+            let tool = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 60) + 2.0
+            let screenW = UIScreen.main.bounds.width
+            let safeArea = UIApplication.safeArea
+            let maxW = screenW - 70 - tool - (viewModel.orient == .portrait ? 0: safeArea.left + safeArea.right)
+            
+            if isOpen {
+                let rightConstant = screenW - (tool + allCell + allCellSpace + edge + 70)
+                let resultContant = allCell + allCellSpace + edge
+                self.orderListViewRightConstraints?.update(offset: rightConstant <= 0 ? 0: rightConstant)
+                self.orderListView.collectionWConstraint?.update(offset: resultContant > maxW ? maxW: resultContant)
+            } else {
+                self.orderListViewRightConstraints?.update(offset: screenW - tool)
+                self.orderListView.collectionWConstraint?.update(offset: 0)
             }
-        }
-    }
-}
-
-// MARK: - 綁定Label
-extension Reactive where Base: UILabel {
-    /// Label是否隱藏
-    var labelIsHidden: Binder<IsLoginModel> {
-        get {
-            return Binder(self.base) { label, loginModel in
-                var text = "Version:\(SystemInfo.getVersion())"
-                if loginModel.type == .administrator {
-                    text += "\nuser:\(loginModel.account)"
-                }
-                label.isHidden = !loginModel.isLogin
-                label.text = text
-            }
-        }
-    }
-}
-
-// MARK: - 綁定UICollectionView
-extension Reactive where Base: UICollectionView {
-    var reloadData: Binder<Any> {
-        get {
-            return Binder(self.base) { collectionView, _ in
-                collectionView.reloadData()
-            }
-        }
+            
+            return (model, isOpen)
+        }.subscribe().disposed(by: bag)
     }
     
-    var allowsMultipleSelection: Binder<Bool> {
-        get {
-            return Binder(self.base) { collectionView, isNotEdit in 
-                collectionView.allowsMultipleSelection = !isNotEdit
-            }
-        }
+    func deleteItemBtnAddTarget(_ baseVc: MenuViewController) {
+        deleteItemBtn.rx.tap.subscribe { [weak self] event in
+            guard let `self` = self else { return }
+            let indexPathArr = self.sushiCollectionView.indexPathsForSelectedItems ?? []
+            guard indexPathArr.count > 0 else { return }
+            baseVc.addToast(txt: "刪除中...", type: .sending)
+            
+            Observable.from(indexPathArr).enumerated().flatMap { indexPath -> Observable<Int> in
+                return baseVc.delData(indexPath.element.item)
+            }.subscribe(onNext: { [weak self] index in
+                guard let `self` = self, index == indexPathArr.last?.item else { return }
+                baseVc.removeToast()
+                baseVc.addToast(txt: "刪除成功")
+                baseVc.request()
+                self.cancelSelect()
+                self.viewModel.isNotEdit.accept(true)
+            }).disposed(by: bag)
+        }.disposed(by: bag)
     }
     
-    var sushiScrollTop: Binder<Int> {
-        get {
-            return Binder(self.base) { collectionView, _ in
-                guard collectionView.visibleCells.count > 0 else { return }
-                collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredVertically, animated: false)
-            }
-        }
+    func menuInfoViewAddTarget(_ baseVc: MenuViewController) {
+        menuInfoView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in 
+            let vc = UIStoryboard.loadWebViewVC(url: "https://www.sushiexpress.com.tw/sushi-express/Menu?c=Gunkan")
+            baseVc.present(vc, animated: true)
+        }).disposed(by: bag)
     }
     
-    var menuScrollIndex: Binder<Int> {
-        get {
-            return Binder(self.base) { collectionView, index in
-                guard collectionView.visibleCells.count > 0 else { return }
-                collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
-            }
-        }
+    func recordBtnAddTarget(_ baseVc: BaseViewController) {
+        recordBtn.rx.tap.subscribe { [weak self] _ in
+            guard let `self` = self else { return }
+            let vc = UIStoryboard.loadRecordVC(model: self.viewModel.recordModel.value)
+            baseVc.navigationController?.pushViewController(vc, animated: true)
+        }.disposed(by: bag)
+    }
+    
+    func addNewBtnAddTarget(_ baseVc: MenuViewController) {
+        addNewBtn.rx.tap.subscribe { [weak self] _ in
+            guard let `self` = self else { return }
+            let model = viewModel.menuModel.value
+            guard model.count > 0 else { return }
+            let menu: [MenuStrModel] = MenuStrModel().getAry(model)
+            let vc = UIStoryboard.loadAddVC(delegate: baseVc, menu: menu)
+            baseVc.navigationController?.pushViewController(vc, animated: true)
+        }.disposed(by: bag)
+    }
+    
+    func checkoutBtnAddTarget(_ baseVc: BaseViewController) {
+        checkoutBtn.rx.tap.subscribe { _ in
+            baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
+            let table = SuShiSingleton.share().getPassword()
+            StarscreamWebSocketManager.shard.writeMsg("桌號\(table) 結帳")
+        }.disposed(by: bag)
+    }
+    
+    func serviceBtnAddTarget(_ baseVc: BaseViewController) {
+        serviceBtn.rx.tap.subscribe { _ in
+            baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
+            let table = SuShiSingleton.share().getPassword()
+            StarscreamWebSocketManager.shard.writeMsg("桌號\(table) 服務")
+        }.disposed(by: bag)
     }
 }
