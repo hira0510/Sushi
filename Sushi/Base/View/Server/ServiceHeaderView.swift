@@ -36,9 +36,6 @@ class ServiceHeaderView: UITableViewHeaderFooterView {
         self.completeBtn.isEnabled = type == .checkout() || !model.timestamp.isZero
         self.completeBtn.isSelected = model.isComplete
         self.isUserInteractionEnabled = !model.isComplete
-        self.completeBtn.setBackgroundColor(UIColor(named: "main_btn_isEnable"), for: .normal)
-        self.completeBtn.setBackgroundColor(UIColor(named: "main_btn_isSelect"), for: .selected)
-        self.completeBtn.setBackgroundColor(UIColor(named: "main_btn_isDisable"), for: .disabled)
     }
     
     @objc private func clickComplete() {

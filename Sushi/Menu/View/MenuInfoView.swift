@@ -8,7 +8,7 @@
 import UIKit
 
 @IBDesignable
-class MenuInfoView: UIView, NibOwnerLoadable {
+class MenuInfoView: BaseView {
     
     @IBInspectable var numColor: UIColor = .black
     @IBInspectable var bgColor: UIColor = .orange
@@ -34,6 +34,12 @@ class MenuInfoView: UIView, NibOwnerLoadable {
         loadNibContent()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layoutIfNeeded()
+        commonInit()
+    }
+    
     private func commonInit() {
         titleLabel.text = title.twEng()
         unitLabel.text = unit.twEng()
@@ -46,12 +52,6 @@ class MenuInfoView: UIView, NibOwnerLoadable {
         titleLabel.text = title.twEng()
         unitLabel.text = unit.twEng()
         numLabel.text = num.twEng()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.layoutIfNeeded()
-        commonInit()
     }
 }
 

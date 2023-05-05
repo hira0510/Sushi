@@ -94,6 +94,9 @@
         </collectionViewCell>
     </objects>
     <designables>
+        <designable name="ucL-Bn-8V7">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
         <designable name="x1T-xu-zH8">
             <size key="intrinsicContentSize" width="180" height="180"/>
         </designable>

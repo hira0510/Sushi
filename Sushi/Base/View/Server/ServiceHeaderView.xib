@@ -15,14 +15,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="nUG-8N-F9g">
-                    <rect key="frame" x="0.0" y="0.0" width="305" height="30"/>
+                    <rect key="frame" x="0.0" y="0.0" width="303" height="30"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqo-Lg-iDa">
-                    <rect key="frame" x="310" y="2.5" width="65" height="25"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqo-Lg-iDa" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                    <rect key="frame" x="308" y="2.5" width="65" height="25"/>
                     <color key="backgroundColor" name="main_btn_isEnable"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="65" id="IdU-0o-ZoL"/>
@@ -37,11 +37,40 @@
                         <color key="titleColor" name="main_btn_isDisable_title"/>
                     </state>
                     <state key="selected" title="已完成">
-                        <color key="titleColor" red="0.3411764705882353" green="0.3411764705882353" blue="0.3411764705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" name="main_btn_isSelect_title"/>
                     </state>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="5"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                        <userDefinedRuntimeAttribute type="color" keyPath="ShadowNorColors">
+                            <color key="value" name="main_btn_isEnable_shadow"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="ShadowOpacitys">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="ShadowBlur">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="size" keyPath="ShadowOffsets">
+                            <size key="value" width="2" height="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="PressMask" value="YES"/>
+                        <userDefinedRuntimeAttribute type="color" keyPath="ShadowDisColors">
+                            <color key="value" name="main_btn_isDisable_shadow"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="BgDis">
+                            <color key="value" name="main_btn_isDisable"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="BgSel">
+                            <color key="value" name="main_btn_isSelect"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="ShadowSelColors">
+                            <color key="value" name="main_btn_isSelect_shadow"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </button>
@@ -54,7 +83,7 @@
                 <constraint firstItem="nUG-8N-F9g" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="JXe-9n-fqF"/>
                 <constraint firstItem="tqo-Lg-iDa" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="VxY-Kz-RF9"/>
                 <constraint firstItem="tqo-Lg-iDa" firstAttribute="leading" secondItem="nUG-8N-F9g" secondAttribute="trailing" constant="5" id="auP-Me-lY1"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="tqo-Lg-iDa" secondAttribute="trailing" id="fPO-R1-Tlv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="tqo-Lg-iDa" secondAttribute="trailing" constant="2" id="fPO-R1-Tlv"/>
                 <constraint firstItem="nUG-8N-F9g" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="r0t-Tk-uUg"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -65,17 +94,30 @@
             <point key="canvasLocation" x="116.79389312977099" y="-301.40845070422534"/>
         </view>
     </objects>
-    <designables>
-        <designable name="tqo-Lg-iDa">
-            <size key="intrinsicContentSize" width="33" height="32"/>
-        </designable>
-    </designables>
     <resources>
+        <namedColor name="main_btn_isDisable">
+            <color red="0.73699998860000004" green="0.75300002099999996" blue="0.76099997760000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isDisable_shadow">
+            <color red="0.68999999759999997" green="0.69400000569999998" blue="0.69800001379999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="main_btn_isDisable_title">
             <color red="0.45899999141693115" green="0.42399999499320984" blue="0.43900001049041748" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main_btn_isEnable">
             <color red="0.68999999761581421" green="0.54100000858306885" blue="0.36500000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isEnable_shadow">
+            <color red="0.41200000050000002" green="0.30199998620000001" blue="0.15299999710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isSelect">
+            <color red="0.063000001013278961" green="0.063000001013278961" blue="0.063000001013278961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isSelect_shadow">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isSelect_title">
+            <color red="0.34099999070167542" green="0.34099999070167542" blue="0.34099999070167542" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

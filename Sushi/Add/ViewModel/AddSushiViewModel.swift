@@ -10,6 +10,15 @@ import RxCocoa
 import RxSwift
 import RxDataSources
 
+protocol AddSushiVcProtocol: AnyObject {
+    func requestSuc()
+}
+
+enum AddSushiVcType {
+    case add
+    case edit
+}
+
 class AddSushiViewModel: BaseViewModel {
     
     public var editModel: (menu: String, data: SushiModel?) = (menu: "", data: nil)

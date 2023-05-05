@@ -27,14 +27,22 @@ class BaseViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    @objc func previousBack() {
-        navigationController?.popViewController(animated: true)
+    // MARK: - public
+    public func removeToast() {
+        for view in self.view.subviews {
+            if view.isKind(of: ToastView.self) {
+                view.removeFromSuperview()
+            }
+        }
     }
     
-    @objc func dismissVc() {
-        self.dismiss(animated: true)
+    public func addToast(txt: String, type: ToastType = .autoRemove) {
+        let toastView = ToastView(frame: self.view.frame, text: txt)
+        toastView.type = type
+        self.view.addSubview(toastView)
     }
     
+    // MARK: - private
     /// 加入返回上一頁的手勢
     private func addPanGestureRecognizer() {
         guard let target = self.navigationController?.interactivePopGestureRecognizer?.delegate else { return }
@@ -45,21 +53,17 @@ class BaseViewController: UIViewController {
         pan.delegate = self
     }
     
-    func removeToast() {
-        for view in self.view.subviews {
-            if view.isKind(of: ToastView.self) {
-                view.removeFromSuperview()
-            }
-        }
+    // MARK: - @objc
+    @objc public func previousBack() {
+        navigationController?.popViewController(animated: true)
     }
     
-    func addToast(txt: String, type: ToastType = .autoRemove) {
-        let toastView = ToastView(frame: self.view.frame, text: txt)
-        toastView.type = type
-        self.view.addSubview(toastView)
+    @objc public func dismissVc() {
+        self.dismiss(animated: true)
     }
 }
 
+// MARK: - 返回手勢
 extension BaseViewController: UIGestureRecognizerDelegate {
 
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -67,7 +71,7 @@ extension BaseViewController: UIGestureRecognizerDelegate {
         let movePoint: CGPoint = pan.translation(in: self.view)
         let absX: CGFloat = abs(movePoint.x)
         let absY: CGFloat = abs(movePoint.y)
-        guard absX > absY, movePoint.x > 0, (self.navigationController?.children.count ?? 0) > 1 else { return false }
+        guard absX > absY, movePoint.x > 0, unwrap(self.navigationController?.children.count, 0) > 1 else { return false }
         return true
     }
 }

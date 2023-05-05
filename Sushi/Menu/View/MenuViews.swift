@@ -32,7 +32,7 @@ class MenuViews: NSObject {
             SuShiSingleton.share().bindIsCheckout().bind(to: sushiCollectionView.rx.allowsSelection).disposed(by: bag)
             //點擊menu選擇頁面＆拿到api時變更背景色
             Observable.combineLatest(viewModel.selectItem, viewModel.menuModel) { index, model -> UIColor in
-                return model.count > 0 ? UIColor(hexString: model[index].color) ?? .clear: .clear
+                return model.count > 0 ? unwrap(UIColor(hexString: model[index].color), .clear) : .clear
             }.map { $0 }.bind(to: sushiCollectionView.rx.backgroundColor).disposed(by: bag)
             //點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
             Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, SuShiSingleton.share().bindIsEng()) { index, _, _ -> Int in
@@ -129,7 +129,7 @@ class MenuViews: NSObject {
             //監聽有新資料會出現紅點
             UserDefaults.standard.rx.observe(Bool.self, "recordHintIsHidden").subscribe(onNext: { [weak self] isHidden in
                 guard let `self` = self else { return }
-                self.recordView.updateUI(isHidden: isHidden ?? true)
+                self.recordView.updateUI(isHidden: unwrap(isHidden, true))
             }).disposed(by: bag)
         }
     }
@@ -140,7 +140,7 @@ class MenuViews: NSObject {
             //監聽有新資料會出現紅點
             UserDefaults.standard.rx.observe(Bool.self, "serviceHintIsHidden").subscribe(onNext: { [weak self] isHidden in
                 guard let `self` = self else { return }
-                self.serviceView.updateUI(isHidden: isHidden ?? true)
+                self.serviceView.updateUI(isHidden: unwrap(isHidden, true))
             }).disposed(by: bag)
         }
     }
@@ -151,7 +151,7 @@ class MenuViews: NSObject {
             //監聽有新資料會出現紅點
             UserDefaults.standard.rx.observe(Bool.self, "checkoutHintIsHidden").subscribe(onNext: { [weak self] isHidden in
                 guard let `self` = self else { return }
-                self.checkoutView.updateUI(isHidden: isHidden ?? true)
+                self.checkoutView.updateUI(isHidden: unwrap(isHidden, true))
             }).disposed(by: bag)
         }
     }
@@ -223,7 +223,7 @@ class MenuViews: NSObject {
     /// 送達時間更新
     @objc func timerReciprocal() {
         //找出最久的時間顯示在螢幕
-        let maxTimeStamp = self.viewModel.orderTimeDic.value.getSortValue.first ?? 0
+        let maxTimeStamp = unwrap(self.viewModel.orderTimeDic.value.getSortValue.first, 0)
         guard maxTimeStamp > GlobalUtil.getCurrentTime() else {
             self.viewModel.orderTimeStr.accept("0")
             self.orderTimer?.invalidate()
@@ -231,12 +231,12 @@ class MenuViews: NSObject {
             return
         }
         let waitMin = ((maxTimeStamp - GlobalUtil.getCurrentTime()) / 60) + 1
-        viewModel.orderTimeStr.accept(waitMin.toInt.toStr)
+        self.viewModel.orderTimeStr.accept(waitMin.toInt.toStr)
     }
     
     /// Server取消選中所有被選中的cell
     func cancelSelect() {
-        var indexPathArr = self.sushiCollectionView.indexPathsForSelectedItems ?? []
+        var indexPathArr = unwrap(self.sushiCollectionView.indexPathsForSelectedItems, [])
         for indexpah in indexPathArr {
             let cell: SushiCollectionViewCell = self.sushiCollectionView.cellForItem(at: indexpah) as!SushiCollectionViewCell
             self.sushiCollectionView.deselectItem(at: indexpah, animated: true)//取消选中的状态
@@ -270,10 +270,10 @@ class MenuViews: NSObject {
                 let rightConstant = screenW - (tool + allCell + allCellSpace + edge + 70)
                 let resultContant = allCell + allCellSpace + edge
                 self.orderListViewRightConstraints?.update(offset: rightConstant <= 0 ? 0: rightConstant)
-                self.orderListView.collectionWConstraint?.update(offset: resultContant > maxW ? maxW: resultContant)
+                self.orderListView.setCollectionWConstraint(resultContant > maxW ? maxW: resultContant)
             } else {
                 self.orderListViewRightConstraints?.update(offset: screenW - tool)
-                self.orderListView.collectionWConstraint?.update(offset: 0)
+                self.orderListView.setCollectionWConstraint(0)
             }
             
             return (model, isOpen)
@@ -284,12 +284,13 @@ class MenuViews: NSObject {
     func deleteItemBtnAddTarget(_ baseVc: MenuViewController) {
         deleteItemBtn.rx.tap.subscribe { [weak self] event in
             guard let `self` = self else { return }
-            let indexPathArr = self.sushiCollectionView.indexPathsForSelectedItems ?? []
+            let indexPathArr = unwrap(self.sushiCollectionView.indexPathsForSelectedItems, [])
             guard indexPathArr.count > 0 else { return }
             baseVc.addToast(txt: "刪除中...", type: .sending)
             
-            Observable.from(indexPathArr).enumerated().flatMap { indexPath -> Observable<Int> in
-                return baseVc.delData(indexPath.element.item)
+            Observable.from(indexPathArr).enumerated().flatMap { [weak self] indexPath -> Observable<Int> in
+                guard let `self` = self else { return Observable.just(-1) }
+                return self.viewModel.delData(indexPath.element.item)
             }.subscribe(onNext: { [weak self] index in
                 guard let `self` = self, index == indexPathArr.last?.item else { return }
                 baseVc.removeToast()
@@ -344,7 +345,7 @@ class MenuViews: NSObject {
             } else if viewModel.recordModel.value.count > 0 {
                 baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
                 let table = SuShiSingleton.share().getPassword()
-                StarscreamWebSocketManager.shard.writeMsg("結帳桌號\(table)")
+                StarscreamWebSocketManager.shard.writeMsg(["桌號": table, "msg": "結帳"])
                 SuShiSingleton.share().setIsCheckout(true)
             }
         }.disposed(by: bag)
@@ -359,7 +360,7 @@ class MenuViews: NSObject {
             } else {
                 baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
                 let table = SuShiSingleton.share().getPassword()
-                StarscreamWebSocketManager.shard.writeMsg("服務桌號\(table)")
+                StarscreamWebSocketManager.shard.writeMsg(["桌號": table, "msg": "服務"])
             }
         }.disposed(by: bag)
     }
@@ -376,35 +377,37 @@ class MenuViews: NSObject {
             }
         }
         
-        //nil這段是為了橫式轉方向寫的
-        var views: UIView
-        if view == nil {
-            switch adminServerView.mType.value {
+        //如果只是為了橫式轉方向就不往下執行
+        guard let views = view else {
+            var views: UIView
+            switch adminServerView.getType() {
             case .service: views = serviceView
             case .record(_): views = recordView
             case .checkout: views = checkoutView
             }
-        } else {
-            views = view!
+            
+            let left = baseVc.view.convert(CGPoint.zero, from: views).x + views.bounds.midX - 20
+            adminServerView.setupConstraints(left)
+            return
         }
         
         if views == recordView {
             let recordModel = viewModel.orderSqlite.readData()
-            adminServerView.mType.accept(.record(recordModel))
+            adminServerView.setupType(.record(recordModel))
             UserDefaults.standard.recordHintIsHidden = true
         } else if views == checkoutView {
             let tableAry = UserDefaults.standard.checkoutTableAry.getSortKey
             let timeAry = UserDefaults.standard.checkoutTableAry.getSortValue
             let recordModel = viewModel.orderSqlite.readUniteData(tableAry: tableAry)
-            adminServerView.mType.accept(.checkout(recordModel, timeAry))
+            adminServerView.setupType(.checkout(recordModel, timeAry))
             UserDefaults.standard.checkoutHintIsHidden = true
         } else if views == serviceView {
             let sortAry = UserDefaults.standard.serviceTableAry.sortAry
-            adminServerView.mType.accept(.service(sortAry))
+            adminServerView.setupType(.service(sortAry))
             UserDefaults.standard.serviceHintIsHidden = true
         }
         
         let left = baseVc.view.convert(CGPoint.zero, from: views).x + views.bounds.midX - 20
-        adminServerView.triangleImgViewConstraints?.update(offset: left)
+        adminServerView.setupConstraints(left)
     }
 }

@@ -7,11 +7,11 @@
 
 import UIKit
 import RxSwift
-import RxCocoa 
+import RxCocoa
 
 // MARK: - 綁定Button
 extension Reactive where Base: UIButton {
-    
+
     var btnIsEnable: Binder<Int> {
         get {
             return Binder(self.base) { btn, count in
@@ -19,7 +19,7 @@ extension Reactive where Base: UIButton {
             }
         }
     }
-    
+
     var btnIsHidden: Binder<IsLoginModel> {
         get {
             return Binder(self.base) { btn, loginModel in
@@ -71,7 +71,7 @@ extension Reactive where Base: UILabel {
             }
         }
     }
-    
+
     var orderText: Binder<Int> {
         get {
             return Binder(self.base) { lebel, count in
@@ -79,7 +79,7 @@ extension Reactive where Base: UILabel {
             }
         }
     }
-    
+
     var countText: Binder<[SushiRecordModel]> {
         get {
             return Binder(self.base) { label, model in
@@ -105,7 +105,7 @@ extension Reactive where Base: UICollectionView {
             }
         }
     }
-    
+
     var allowsMultipleSelection: Binder<Bool> {
         get {
             return Binder(self.base) { collectionView, isNotEdit in
@@ -113,7 +113,7 @@ extension Reactive where Base: UICollectionView {
             }
         }
     }
-    
+
     var allowsSelection: Binder<Bool> {
         get {
             return Binder(self.base) { collectionView, isNotEdit in
@@ -121,7 +121,7 @@ extension Reactive where Base: UICollectionView {
             }
         }
     }
-    
+
     var sushiScrollTop: Binder<Int> {
         get {
             return Binder(self.base) { collectionView, _ in
@@ -130,7 +130,7 @@ extension Reactive where Base: UICollectionView {
             }
         }
     }
-    
+
     var menuScrollIndex: Binder<Int> {
         get {
             return Binder(self.base) { collectionView, index in
@@ -146,29 +146,47 @@ extension Reactive where Base: UITableView {
     var reloadData: Binder<ServerViewType> {
         get {
             return Binder(self.base) { tableView, _ in
-                tableView.reloadData()
+                tableView.toReloadData()
             }
         }
     }
     var reloadDatas: Binder<[SushiRecordModel]> {
         get {
             return Binder(self.base) { tableView, _ in
-                tableView.reloadData()
+                tableView.toReloadData()
             }
         }
     }
 }
 
+// MARK: - Array
 extension BehaviorRelay where Element: RangeReplaceableCollection {
-
-    func addItem(_ element: Element.Element) {
-        var array = self.value
-        array.append(element)
-        self.accept(array)
+    func append(_ subElement: Element.Element) {
+        var newValue = self.value
+        newValue.append(subElement)
+        accept(newValue)
     }
-
+    
     func add(_ element: Element) {
         let array = self.value + element
         self.accept(array)
+    }
+
+    func remove(at index: Element.Index) {
+        var newValue = self.value
+        newValue.remove(at: index)
+        accept(newValue)
+    }
+
+    func removeAll() {
+        var newValue = self.value
+        newValue.removeAll()
+        accept(newValue)
+    }
+    
+    func insert(_ newElement: Element.Element, at index: Element.Index) {
+        var value = self.value
+        value.insert(newElement, at: index)
+        accept(value)
     }
 }

@@ -7,7 +7,7 @@
  
 import UIKit
 
-class CameraView: UIView, NibOwnerLoadable {
+class CameraView: BaseView {
 
     @IBOutlet var mView: UIView!
     @IBOutlet weak var cameraButton: NGSCustomizableButton!
@@ -48,5 +48,4 @@ class CameraView: UIView, NibOwnerLoadable {
     @objc private func didClickCancelBtn() {
         removeFromSuperview()
     }
-
 }

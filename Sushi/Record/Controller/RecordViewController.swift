@@ -26,7 +26,7 @@ class RecordViewController: BaseViewController {
             mTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             mTableView.rowHeight = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 35)
             mTableView.separatorColor = .black
-            mTableView.reloadData()
+            mTableView.toReloadData()
         }
     }
     @IBOutlet weak var previousBtn: UIButton! {
@@ -49,6 +49,7 @@ class RecordViewController: BaseViewController {
         self.viewModel.orderTimer = nil
     }
     
+    // MARK: - private
     private func setupPriceLabel() {
         let price = viewModel.mModel.map { $0.money.toInt }
         let resultPrice = price.reduce(0, { $0 + $1 }) 
@@ -59,11 +60,13 @@ class RecordViewController: BaseViewController {
         viewModel.orderTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(timerReciprocal), userInfo: nil, repeats: true)
     }
     
+    // MARK: - @objc
     @objc private func timerReciprocal() {
-        mTableView.reloadData()
+        mTableView.toReloadData()
     }
 }
 
+// MARK: - TableView
 extension RecordViewController: UITableViewDelegate, UITableViewDataSource {
      
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,9 +80,10 @@ extension RecordViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - menu更新資料
 extension RecordViewController: MenuVcProtocol {
     func setupRecordVcData(_ data: [SushiRecordModel]) {
         viewModel.mModel = data
-        mTableView.reloadData()
+        mTableView.toReloadData()
     }
 }

@@ -22,7 +22,7 @@ class WebViewViewController: BaseViewController {
         setupUIWithDelegate()
     }
 
-    // MARK: - 私有
+    // MARK: - private
     private func initWebView() {
         self.view.addSubview(wkWebView)
         wkWebView.navigationDelegate = self

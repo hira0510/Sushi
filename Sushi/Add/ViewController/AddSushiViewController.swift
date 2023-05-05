@@ -10,15 +10,6 @@ import RxCocoa
 import RxSwift
 import Kingfisher
 
-protocol AddSushiVcProtocol: AnyObject {
-    func requestSuc()
-}
-
-enum AddSushiVcType {
-    case add
-    case edit
-}
-
 class AddSushiViewController: BaseViewController {
     
     public let viewModel = AddSushiViewModel()
@@ -83,7 +74,7 @@ class AddSushiViewController: BaseViewController {
     @IBOutlet weak var sendBtn: NGSCustomizableButton! {
         didSet {
             Observable.combineLatest(viewModel.mName, viewModel.mNameEng, viewModel.mPrice, viewModel.mImage) { name, nameEng, price, img -> Bool in
-                return !name.isEmpty && !nameEng.isEmpty && !price.isEmpty && img != UIImage(named: "noImg")!
+                return !name.isEmpty && !nameEng.isEmpty && !price.isEmpty && Validation().isValidPrice(price) && img != UIImage(named: "noImg")!
             }.map { $0 }.bind(to: sendBtn.rx.isEnabled).disposed(by: bag)
             
             sendBtn.rx.tap.subscribe { [weak self] event in
@@ -108,6 +99,7 @@ class AddSushiViewController: BaseViewController {
         self.view.endEditing(true)
     }
     
+    // MARK: - private
     private func setupEditUI() {
         guard let model = viewModel.editModel.data, let img = URL(string: model.img) else { return }
         menuPickerView.isHidden = true
@@ -161,7 +153,7 @@ class AddSushiViewController: BaseViewController {
     
     private func editRequset() {
         let menu = self.viewModel.editModel.menu
-        let title = self.viewModel.editModel.data?.title ?? ""
+        let title = unwrap(self.viewModel.editModel.data?.title, "")
         
         Observable.zip(self.viewModel.delData(.titleEng(menu, title)), self.viewModel.delData(.money(menu, title)), self.viewModel.delData(.img(menu, title)), self.viewModel.delStorageImg(title)).subscribe(onNext: { [weak self] _, _, _, _ in
             guard let `self` = self else { return }
@@ -169,6 +161,7 @@ class AddSushiViewController: BaseViewController {
         }).disposed(by: bag)
     }
     
+    // MARK: - @objc
     /// 點擊相機
     @objc private func didClickCameraBtn() {
 

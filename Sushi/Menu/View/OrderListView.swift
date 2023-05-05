@@ -10,8 +10,9 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
-class OrderListView: UIView, NibOwnerLoadable {
-     
+class OrderListView: BaseView {
+    
+    @IBOutlet weak var bgView: NGSCustomizableView!
     @IBOutlet weak var mStackView: UIStackView!
     @IBOutlet weak var openBtn: NGSCustomizableButton! {
         didSet {
@@ -41,18 +42,26 @@ class OrderListView: UIView, NibOwnerLoadable {
                 collectionWConstraint = make.width.equalTo(243).constraint
             }
             mModel.bind(to: mCollectionView.rx.reloadOrderData).disposed(by: bag)
+            
+            mCollectionView.register(OrderListCollectionViewCell.nib, forCellWithReuseIdentifier: "OrderListCollectionViewCell")
+            mCollectionView.delegate = self
+            mCollectionView.dataSource = self
+            let w = mCollectionView.frame.height
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            layout.minimumLineSpacing = 5
+            layout.minimumInteritemSpacing = 5
+            layout.itemSize = CGSize(width: w, height: w)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+            mCollectionView.collectionViewLayout = layout
+            mCollectionView.reloadData()
         }
     }
-    @IBOutlet weak var bgView: NGSCustomizableView!
     
-    public var mModel: BehaviorRelay<[SushiModel]> = BehaviorRelay<[SushiModel]>(value: [])
-    public var collectionWConstraint: Constraint? = nil
+    private var mModel: BehaviorRelay<[SushiModel]> = BehaviorRelay<[SushiModel]>(value: [])
     private var bgViewConstraint: Constraint? = nil
-    public weak var delegate: OrderListCellProtocol?
-    
-    private lazy var bag: DisposeBag! = {
-        return DisposeBag()
-    }()
+    private var collectionWConstraint: Constraint? = nil
+    private weak var delegate: OrderListCellProtocol?
     
     override class func awakeFromNib() {
         super.awakeFromNib()
@@ -60,23 +69,20 @@ class OrderListView: UIView, NibOwnerLoadable {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
+        loadNibContent()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        commonInit()
-    }
-    
-    private func commonInit() {
         loadNibContent()
-        mCollectionView.register(OrderListCollectionViewCell.nib, forCellWithReuseIdentifier: "OrderListCollectionViewCell")
-        mCollectionView.delegate = self
-        mCollectionView.dataSource = self
-        mCollectionView.reloadData()
     }
     
-    func initView(order: BehaviorRelay<[SushiModel]>, delegate: OrderListCellProtocol? = nil) {
+    // MARK: - public
+    public func setCollectionWConstraint(_ offset: CGFloat) {
+        self.collectionWConstraint?.update(offset: offset)
+    }
+    
+    public func initView(order: BehaviorRelay<[SushiModel]>, delegate: OrderListCellProtocol? = nil) {
         if let delegate = delegate {
             self.delegate = delegate
         }
@@ -88,7 +94,8 @@ class OrderListView: UIView, NibOwnerLoadable {
     }
 }
 
-extension OrderListView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+// MARK: - UICollectionView
+extension OrderListView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -103,26 +110,4 @@ extension OrderListView: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.cellConfig(model: mModel.value[indexPath.item], delegate: delegate)
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let w = collectionView.frame.height
-        return CGSize(width: w, height: w)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-    }
 }
-

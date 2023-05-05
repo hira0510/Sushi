@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MenuServiceView: UIView, NibOwnerLoadable {
+class MenuServiceView: BaseView {
      
     @IBInspectable var bgColor: UIColor = .orange
     @IBInspectable var title: String = ""
@@ -30,6 +30,12 @@ class MenuServiceView: UIView, NibOwnerLoadable {
         loadNibContent()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layoutIfNeeded()
+        commonInit()
+    }
+    
     private func commonInit() {
         mButton.setTitle(title, for: .normal)
         mButton.setTitle(title.toEng, for: .selected)
@@ -38,11 +44,5 @@ class MenuServiceView: UIView, NibOwnerLoadable {
     
     public func updateUI(isHidden: Bool) {
         hintView.isHidden = !(SuShiSingleton.share().getIsAdmin() && !isHidden)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.layoutIfNeeded()
-        commonInit()
     }
 }

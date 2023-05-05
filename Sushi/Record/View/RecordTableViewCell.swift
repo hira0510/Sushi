@@ -17,8 +17,8 @@ enum RecordType {
         switch self {
         case .suc: return "已送達".twEng()
         case .wait(let min): return min.toStr + " 分鐘".twEng()
-        case .waitForAdmin: return "等待中"
-        case .adminPreparing(let min): return min.toStr + "分鐘"
+        case .waitForAdmin: return "等待中".twEng()
+        case .adminPreparing(let min): return min.toStr + "分鐘".twEng()
         }
     }
     

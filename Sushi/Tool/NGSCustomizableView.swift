@@ -170,11 +170,6 @@ class NGSCustomizableView: UIView {
         borderGradientLayer.colors = [startColor.cgColor, end.cgColor]
     }
     
-    /// 添加陰影
-    private func addShadowLayer() {
-//        self.layer.shadowPath = roundCornersMask.path
-    }
-    
     /// 添加圓角形狀
     public func addCornerRatioMask() {
         let roundRatios: CGFloat = RoundRatio / 2.0
@@ -224,7 +219,6 @@ class NGSCustomizableView: UIView {
     /// 旋轉螢幕時更新UI
     func orientUpdateSize() {
         addCornerRatioMask()
-        addShadowLayer()
         updateBorder()
         gradientLayer.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
     }
@@ -243,7 +237,6 @@ class NGSCustomizableView: UIView {
         if !firstInit {
             addCornerRatioMask()
             addGradientBg()
-            addShadowLayer()
             addGradientBorder()
             
             firstInit = true

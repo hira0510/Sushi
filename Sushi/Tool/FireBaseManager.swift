@@ -60,6 +60,7 @@ class FireBaseManager: NSObject {
     typealias WriteCompletionHandler = (Bool?) -> ()
     typealias StorageCompletionHandler = (String?) -> ()
     
+    /// 拿全部資料api
     func ref(completionHandler: @escaping CompletionHandler) {
         let ref = Database.database().reference(withPath: "Data")
         ref.observe(.value) { snapshot in
@@ -70,6 +71,7 @@ class FireBaseManager: NSObject {
         return completionHandler(nil)
     }
     
+    /// 新增品項api
     func addDatabase(type: WhiteType, value: String, completionHandler: @escaping WriteCompletionHandler) {
         let ref = Database.database().reference()
         ref.child(type.pathStr).setValue(value) { error, databaseReference in
@@ -81,6 +83,7 @@ class FireBaseManager: NSObject {
         return completionHandler(nil)
     }
     
+    /// 刪除品項api
     func delDatabase(type: WhiteType, completionHandler: @escaping WriteCompletionHandler) {
         let ref = Database.database().reference()
         ref.child(type.pathStr).setValue(nil) { error, databaseReference in
@@ -92,6 +95,7 @@ class FireBaseManager: NSObject {
         return completionHandler(nil)
     }
     
+    /// 新增圖片api
     func addStorageImg(_ title: String, _ img: UIImage, completionHandler: @escaping StorageCompletionHandler) {
         let storage = Storage.storage()
         let storageRef = storage.reference().child("\(title).png")
@@ -109,6 +113,7 @@ class FireBaseManager: NSObject {
         return completionHandler(nil)
     }
     
+    /// 刪除圖片api
     func delStorageImg(_ title: String, completionHandler: @escaping WriteCompletionHandler) {
         let storage = Storage.storage()
         let storageRef = storage.reference().child("\(title).png")
@@ -119,42 +124,4 @@ class FireBaseManager: NSObject {
         }
         return completionHandler(nil)
     }
-
-//    func storageImgRx(_ title: String, _ img: UIImage) -> Observable<String> {
-//        let storage = Storage.storage()
-//        let storageRef = storage.reference().child("\(title).png")
-//
-//        guard let uploadData = img.pngData() else { return Observable.just("") }
-//
-//        let request: Observable<String> = Observable.create { (observer) -> Disposable in
-//            // 這行就是 FirebaseStorage 關鍵的存取方法。
-//            storageRef.putData(uploadData, metadata: nil, completion: { (_, error) in
-//                if error != nil { return }
-//                storageRef.downloadURL(completion: { (url, err) in
-//                    if error != nil { return }
-//                    guard let url = url else { return }
-//                    observer.onNext(url.absoluteString)
-//                    observer.onCompleted()
-//                })
-//            })
-//            return Disposables.create()
-//        }
-//        return request
-//    }
-    
-//    func addData(_ type: WhiteType, _ value: String) -> Observable<MsgRequestStatus> {
-//        let ref = Database.database().reference()
-//        let request: Observable<MsgRequestStatus> = Observable.create { (observer) -> Disposable in
-//            ref.child(type.pathStr).setValue(value) { error, databaseReference in
-//                if error != nil {
-//                    observer.onNext(.error())
-//                    return
-//                }
-//                observer.onNext(.success())
-//                observer.onCompleted()
-//            }
-//            return Disposables.create()
-//        }
-//        return request
-//    }
 }

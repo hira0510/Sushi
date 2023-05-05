@@ -68,6 +68,7 @@
 		84A013642A025A9400D4139E /* arrived.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A013632A025A9400D4139E /* arrived.mp3 */; };
 		84A013682A025BE400D4139E /* RecordFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A013672A025BE400D4139E /* RecordFooterView.swift */; };
 		84A0136A2A025BEC00D4139E /* RecordFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A013692A025BEB00D4139E /* RecordFooterView.xib */; };
+		84A25FAB2A04C70C0079996E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25FAA2A04C70C0079996E /* BaseView.swift */; };
 		84A55DCB2A03AE630055C5A7 /* OrderSQLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A55DCA2A03AE630055C5A7 /* OrderSQLModel.swift */; };
 		84A55DCF2A03B5A80055C5A7 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A55DCE2A03B5A80055C5A7 /* RecordViewModel.swift */; };
 		84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */; };
@@ -180,6 +181,7 @@
 		84A013632A025A9400D4139E /* arrived.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = arrived.mp3; sourceTree = "<group>"; };
 		84A013672A025BE400D4139E /* RecordFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFooterView.swift; sourceTree = "<group>"; };
 		84A013692A025BEB00D4139E /* RecordFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordFooterView.xib; sourceTree = "<group>"; };
+		84A25FAA2A04C70C0079996E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		84A55DCA2A03AE630055C5A7 /* OrderSQLModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSQLModel.swift; sourceTree = "<group>"; };
 		84A55DCE2A03B5A80055C5A7 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -233,20 +235,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		843B3E6729F8D88600FB3969 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				849FB4F129F27A44002340F9 /* LoginViewController.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		843B3E7B29F8F08100FB3969 /* Order */ = {
 			isa = PBXGroup;
 			children = (
 				843B3E7C29F8F08A00FB3969 /* ViewModel */,
 				843B3E7D29F8F08E00FB3969 /* ViewController */,
-				843B3E7E29F8F09400FB3969 /* View */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -263,16 +256,9 @@
 			isa = PBXGroup;
 			children = (
 				843B3E7529F8F06100FB3969 /* OrderViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		843B3E7E29F8F09400FB3969 /* View */ = {
-			isa = PBXGroup;
-			children = (
 				843B3E7629F8F06100FB3969 /* OrderViewController.xib */,
 			);
-			path = View;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		849B470E29F0E888002E4C60 = {
@@ -300,9 +286,6 @@
 		849B471929F0E888002E4C60 /* Sushi */ = {
 			isa = PBXGroup;
 			children = (
-				849CA9422A00EED2008779B0 /* Server */,
-				849CA93D2A00A730008779B0 /* SQLite */,
-				84B2AF0D29FBAB6400ABC4D9 /* Web */,
 				84DDFE8329FA7D8B00EABFEE /* Base */,
 				849FB4E829F22780002340F9 /* Login */,
 				849FB4E729F2277B002340F9 /* Menu */,
@@ -310,7 +293,6 @@
 				84DDFE7529FA39F100EABFEE /* Record */,
 				84C0EB5129F28BA700B7D2CE /* Add */,
 				849B475529F10E6A002E4C60 /* Tool */,
-				84A0135C2A02593700D4139E /* MP3 */,
 				849B471A29F0E888002E4C60 /* AppDelegate.swift */,
 				849B471C29F0E888002E4C60 /* SceneDelegate.swift */,
 				849B471E29F0E888002E4C60 /* ViewController.swift */,
@@ -363,15 +345,16 @@
 		849B475529F10E6A002E4C60 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				84A0135C2A02593700D4139E /* MP3 */,
 				849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */,
 				8498F5CB29FBC41000FC23EB /* StarscreamWebSocketManager.swift */,
 				849FB4F329F280FA002340F9 /* SystemInfo.swift */,
+				849B475129F10E4C002E4C60 /* GlobalUtil.swift */,
 				849B475329F10E54002E4C60 /* Extension.swift */,
 				849FC40029FB6E9100A86794 /* ExtensionUI.swift */,
 				849FC3FC29FB6DA400A86794 /* ExtensionRx.swift */,
 				849FC3FE29FB6E3400A86794 /* ExtensionStoryboard.swift */,
 				849CA9402A00D597008779B0 /* ExtensionUserDefaults.swift */,
-				849B475129F10E4C002E4C60 /* GlobalUtil.swift */,
 				849B475D29F11D8A002E4C60 /* NGSCustomizableButton.swift */,
 				843B3E8329F9095B00FB3969 /* NGSCustomizableView.swift */,
 				843B3E8929F90B4D00FB3969 /* NGSCustomizableImageView.swift */,
@@ -419,15 +402,7 @@
 			path = SQLite;
 			sourceTree = "<group>";
 		};
-		849CA9422A00EED2008779B0 /* Server */ = {
-			isa = PBXGroup;
-			children = (
-				849CA9432A00EED5008779B0 /* View */,
-			);
-			path = Server;
-			sourceTree = "<group>";
-		};
-		849CA9432A00EED5008779B0 /* View */ = {
+		849CA9432A00EED5008779B0 /* Server */ = {
 			isa = PBXGroup;
 			children = (
 				849CA94A2A010200008779B0 /* ServerView.swift */,
@@ -437,7 +412,7 @@
 				84A013672A025BE400D4139E /* RecordFooterView.swift */,
 				84A013692A025BEB00D4139E /* RecordFooterView.xib */,
 			);
-			path = View;
+			path = Server;
 			sourceTree = "<group>";
 		};
 		849FB4E729F2277B002340F9 /* Menu */ = {
@@ -456,7 +431,6 @@
 			children = (
 				849FB4EA29F22790002340F9 /* ViewModel */,
 				849FB4E929F22787002340F9 /* ViewController */,
-				843B3E6729F8D88600FB3969 /* View */,
 				849FB4EC29F2279F002340F9 /* Model */,
 			);
 			path = Login;
@@ -466,6 +440,7 @@
 			isa = PBXGroup;
 			children = (
 				849FB4DB29F2195B002340F9 /* LoginViewController.swift */,
+				849FB4F129F27A44002340F9 /* LoginViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -497,12 +472,43 @@
 			path = MP3;
 			sourceTree = "<group>";
 		};
-		84A55DCC2A03AE9E0055C5A7 /* View */ = {
+		84A25FA62A04B0290079996E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */,
+				849CA93D2A00A730008779B0 /* SQLite */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		84A25FA72A04B02F0079996E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				849CA9432A00EED5008779B0 /* Server */,
+				84A25FAA2A04C70C0079996E /* BaseView.swift */,
+				84C0EB5A29F28FE600B7D2CE /* CameraView.swift */,
+				84C0EB5C29F2900100B7D2CE /* CameraView.xib */,
+				84A5FAB329F6352500781C03 /* ToastView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		84A25FA82A04B0380079996E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				84DDFE8429FA7DAC00EABFEE /* BaseNavViewController.swift */,
+				849FB4DF29F21B1C002340F9 /* BaseViewController.swift */,
+				84B2AF0929FBAB4900ABC4D9 /* WebViewViewController.swift */,
+				84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		84A25FA92A04B03F0079996E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84B2AF0729FB9ED000ABC4D9 /* BaseViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		84A55DCD2A03B59E0055C5A7 /* ViewModel */ = {
@@ -513,30 +519,11 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		84B2AF0D29FBAB6400ABC4D9 /* Web */ = {
-			isa = PBXGroup;
-			children = (
-				84B2AF0E29FBAD1000ABC4D9 /* Controller */,
-				84A55DCC2A03AE9E0055C5A7 /* View */,
-			);
-			path = Web;
-			sourceTree = "<group>";
-		};
-		84B2AF0E29FBAD1000ABC4D9 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				84B2AF0929FBAB4900ABC4D9 /* WebViewViewController.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
 		84C0EB5129F28BA700B7D2CE /* Add */ = {
 			isa = PBXGroup;
 			children = (
 				84C0EB5229F28BB700B7D2CE /* ViewModel */,
 				84C0EB5329F28BBD00B7D2CE /* ViewController */,
-				84C0EB5429F28BC400B7D2CE /* View */,
-				84C0EB5529F28BC700B7D2CE /* Model */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -553,26 +540,9 @@
 			isa = PBXGroup;
 			children = (
 				84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */,
+				84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */,
 			);
 			path = ViewController;
-			sourceTree = "<group>";
-		};
-		84C0EB5429F28BC400B7D2CE /* View */ = {
-			isa = PBXGroup;
-			children = (
-				84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */,
-				84C0EB5A29F28FE600B7D2CE /* CameraView.swift */,
-				84C0EB5C29F2900100B7D2CE /* CameraView.xib */,
-				84A5FAB329F6352500781C03 /* ToastView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		84C0EB5529F28BC700B7D2CE /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		84DDFE7529FA39F100EABFEE /* Record */ = {
@@ -588,7 +558,6 @@
 		84DDFE7629FA3A0C00EABFEE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				84DDFE7A29FA3A2200EABFEE /* RecordViewController.xib */,
 				84DDFE7F29FA5EDD00EABFEE /* RecordTableViewCell.swift */,
 				84DDFE8029FA5EDD00EABFEE /* RecordTableViewCell.xib */,
 			);
@@ -599,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				84DDFE7929FA3A2200EABFEE /* RecordViewController.swift */,
+				84DDFE7A29FA3A2200EABFEE /* RecordViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -606,9 +576,10 @@
 		84DDFE8329FA7D8B00EABFEE /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				849FB4DF29F21B1C002340F9 /* BaseViewController.swift */,
-				84DDFE8429FA7DAC00EABFEE /* BaseNavViewController.swift */,
-				84B2AF0729FB9ED000ABC4D9 /* BaseViewModel.swift */,
+				84A25FA92A04B03F0079996E /* ViewModel */,
+				84A25FA82A04B0380079996E /* ViewController */,
+				84A25FA72A04B02F0079996E /* View */,
+				84A25FA62A04B0290079996E /* Model */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -929,6 +900,7 @@
 				84DDFE7B29FA3A2200EABFEE /* RecordViewController.swift in Sources */,
 				849FB4F429F280FA002340F9 /* SystemInfo.swift in Sources */,
 				84B2AF0B29FBAB4900ABC4D9 /* WebViewViewController.swift in Sources */,
+				84A25FAB2A04C70C0079996E /* BaseView.swift in Sources */,
 				849B476229F11E75002E4C60 /* MenuViews.swift in Sources */,
 				849B471D29F0E888002E4C60 /* SceneDelegate.swift in Sources */,
 				849B476C29F1272A002E4C60 /* MenuModel.swift in Sources */,

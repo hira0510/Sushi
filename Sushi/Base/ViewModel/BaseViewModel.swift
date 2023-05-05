@@ -11,6 +11,10 @@ import RxSwift
 
 class BaseViewModel: NSObject {
     
+    internal lazy var bag: DisposeBag! = {
+        return DisposeBag()
+    }()
+    
     var orderSqlite: OrderSQLite {
         get {
             return OrderSQLite()

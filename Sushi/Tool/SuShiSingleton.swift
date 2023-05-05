@@ -22,6 +22,7 @@ class SuShiSingleton {
     private var isEng: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     private var isCheckout: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     
+    // MARK: - isLoginModel_登入資料
     func setIsLoginModel(_ account: String, _ psw: String, _ type: AccountType) {
         self.isLoginModel.accept(IsLoginModel(account, psw, type))
     }
@@ -31,12 +32,13 @@ class SuShiSingleton {
     func getIsAdmin() -> Bool { return isLoginModel.value.type == .administrator }
     func getIsLogin() -> IsLoginModel { return isLoginModel.value }
     func bindIsLogin() -> BehaviorRelay<IsLoginModel> { return isLoginModel }
-    
-    
+     
+    // MARK: - isEng_是否是英文
     func setIsEng(_ bool: Bool) { isEng.accept(bool) }
     func getIsEng() -> Bool { return isEng.value }
     func bindIsEng() -> BehaviorRelay<Bool> { return isEng }
     
+   // MARK: - isCheckout_是否結帳
     func setIsCheckout(_ bool: Bool) { isCheckout.accept(bool) }
     func getIsCheckout() -> Bool { return isCheckout.value }
     func bindIsCheckout() -> BehaviorRelay<Bool> { return isCheckout }

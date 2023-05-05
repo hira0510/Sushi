@@ -50,7 +50,7 @@ class MenuModelData: NSObject {
         let menuSort = dic.keys.sorted(by: <)
         var dataAry: [MenuModel] = []
         for key in menuSort {
-            dataAry.append(dic[key] ?? MenuModel())
+            dataAry.append(unwrap(dic[key], MenuModel()))
         }
         self.data = dataAry
     }
@@ -65,10 +65,10 @@ class MenuModel: NSObject {
     var sushi: [SushiModel] = []
     
     init(_ menu: Any? = nil, _ title: Any? = nil, _ titleEng: Any? = nil, _ color: Any? = nil, _ sushiImg: [SushiModel] = []) {
-        self.menu = menu as? String ?? ""
-        self.title = title as? String ?? ""
-        self.titleEng = titleEng as? String ?? ""
-        self.color = color as? String ?? ""
+        self.menu = menu.toStr()
+        self.title = title.toStr()
+        self.titleEng = titleEng.toStr()
+        self.color = color.toStr()
         self.sushi = sushiImg
     }
     
@@ -130,5 +130,19 @@ class SushiRecordModel: NSObject {
         self.titleEng = model.titleEng
         self.img = model.img
         self.money = model.money
+    }
+}
+
+class AddOrderItem {
+    var table: String = ""
+    var item: String = ""
+    var itemPrice: String = ""
+    var numId: String = ""
+    
+    init(_ dic: [String : String]) {
+        self.table = unwrap(dic["桌號"], "")
+        self.item = unwrap(dic["點餐"], "")
+        self.itemPrice = unwrap(dic["價格"], "")
+        self.numId = unwrap(dic["單號"], "")
     }
 }

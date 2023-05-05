@@ -16,10 +16,11 @@ class MenuTitleCollectionViewCell: UICollectionViewCell {
     }
     
     override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+        super.awakeFromNib() 
     }
-    
+     
+    /// - Parameters:
+    ///   - select: 是否選擇該menu
     func cellConfig(_ model: MenuModel, _ select: Bool) {
         mLabel.text = SuShiSingleton.share().getIsEng() ? model.titleEng: model.title
         bgView.backgroundColor = select ? UIColor(hexString: model.color): .white

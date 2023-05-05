@@ -14,8 +14,8 @@
             filePath = "Sushi/Menu/View/MenuViews.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "recordBtnAddTarget(_:)"
             landmarkType = "7">
          </BreakpointContent>

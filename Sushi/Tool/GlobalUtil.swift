@@ -50,7 +50,7 @@ class GlobalUtil {
         if #available(iOS 11.0, *) {
             let scene = UIApplication.shared.connectedScenes.first
             guard let appDelegate = scene?.delegate as? SceneDelegate else { return defaultH }
-            safeAreaY = appDelegate.window?.safeAreaLayoutGuide.layoutFrame.minY ?? 0
+            safeAreaY = unwrap(appDelegate.window?.safeAreaLayoutGuide.layoutFrame.minY, 0)
         } else {
             safeAreaY = defaultH
         }

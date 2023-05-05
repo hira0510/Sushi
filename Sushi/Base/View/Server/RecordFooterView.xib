@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="RecordFooterView" id="iN0-l3-epB" customClass="RecordFooterView" customModule="Sushi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbW-TE-7BV">
+                    <rect key="frame" x="0.0" y="0.0" width="37" height="50"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tGR-yE-UU6">
+                    <rect key="frame" x="47" y="10" width="323" height="30"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtf-l9-RYr" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="77" height="30"/>
+                            <color key="backgroundColor" name="main_btn_isEnable"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="3分鐘">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="disabled" title="3分鐘">
+                                <color key="titleColor" name="main_btn_isDisable_title"/>
+                            </state>
+                            <state key="selected" title="3分鐘">
+                                <color key="titleColor" name="main_btn_isSelect_title"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="ShadowNorColors">
+                                    <color key="value" name="main_btn_isEnable_shadow"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="ShadowOpacitys">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="ShadowBlur">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="size" keyPath="ShadowOffsets">
+                                    <size key="value" width="1" height="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="PressMask" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="ShadowDisColors">
+                                    <color key="value" name="main_btn_isDisable_shadow"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="BgDis">
+                                    <color key="value" name="main_btn_isDisable"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z2O-dM-5rt" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="82" y="0.0" width="77" height="30"/>
+                            <color key="backgroundColor" name="main_btn_isEnable"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="5分鐘">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="disabled" title="5分鐘">
+                                <color key="titleColor" name="main_btn_isDisable_title"/>
+                            </state>
+                            <state key="selected" title="5分鐘">
+                                <color key="titleColor" name="main_btn_isSelect_title"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="ShadowNorColors">
+                                    <color key="value" name="main_btn_isEnable_shadow"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="ShadowOpacitys">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="ShadowBlur">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="size" keyPath="ShadowOffsets">
+                                    <size key="value" width="1" height="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="PressMask" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="ShadowDisColors">
+                                    <color key="value" name="main_btn_isDisable_shadow"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="BgDis">
+                                    <color key="value" name="main_btn_isDisable"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BuG-tB-bet" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="164" y="0.0" width="77" height="30"/>
+                            <color key="backgroundColor" name="main_btn_isEnable"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="10分鐘">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="disabled" title="10分鐘">
+                                <color key="titleColor" name="main_btn_isDisable_title"/>
+                            </state>
+                            <state key="selected" title="10分鐘">
+                                <color key="titleColor" name="main_btn_isSelect_title"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="ShadowNorColors">
+                                    <color key="value" name="main_btn_isEnable_shadow"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="ShadowOpacitys">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="ShadowBlur">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="size" keyPath="ShadowOffsets">
+                                    <size key="value" width="1" height="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="PressMask" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="ShadowDisColors">
+                                    <color key="value" name="main_btn_isDisable_shadow"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="BgDis">
+                                    <color key="value" name="main_btn_isDisable"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EUm-64-g9V" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                            <rect key="frame" x="246" y="0.0" width="77" height="30"/>
+                            <color key="backgroundColor" name="main_btn_isEnable"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="15分鐘">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <state key="disabled" title="10分鐘">
+                                <color key="titleColor" name="main_btn_isDisable_title"/>
+                            </state>
+                            <state key="selected" title="10分鐘">
+                                <color key="titleColor" name="main_btn_isSelect_title"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="ShadowNorColors">
+                                    <color key="value" name="main_btn_isEnable_shadow"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="ShadowOpacitys">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="ShadowBlur">
+                                    <real key="value" value="0.5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="size" keyPath="ShadowOffsets">
+                                    <size key="value" width="1" height="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="PressMask" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="ShadowDisColors">
+                                    <color key="value" name="main_btn_isDisable_shadow"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="BgDis">
+                                    <color key="value" name="main_btn_isDisable"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="tGR-yE-UU6" firstAttribute="leading" secondItem="ZbW-TE-7BV" secondAttribute="trailing" constant="10" id="E07-14-NaO"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="tGR-yE-UU6" secondAttribute="trailing" constant="5" id="N4C-uo-gs6"/>
+                <constraint firstItem="tGR-yE-UU6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="P1h-z6-Pzt"/>
+                <constraint firstItem="ZbW-TE-7BV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Yge-MQ-FvU"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ZbW-TE-7BV" secondAttribute="bottom" id="gkE-FJ-lpJ"/>
+                <constraint firstItem="ZbW-TE-7BV" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="jDb-Au-aU2"/>
+                <constraint firstAttribute="bottom" secondItem="tGR-yE-UU6" secondAttribute="bottom" constant="10" id="kER-XD-Ke7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="min10Btn" destination="BuG-tB-bet" id="NKj-FE-zzu"/>
+                <outlet property="min15Btn" destination="EUm-64-g9V" id="GV1-bX-PTE"/>
+                <outlet property="min3Btn" destination="jtf-l9-RYr" id="LvU-s7-dnb"/>
+                <outlet property="min5Btn" destination="z2O-dM-5rt" id="CJD-TJ-Dq8"/>
+            </connections>
+            <point key="canvasLocation" x="130.53435114503816" y="-228.87323943661974"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="main_btn_isDisable">
+            <color red="0.73699998860000004" green="0.75300002099999996" blue="0.76099997760000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isDisable_shadow">
+            <color red="0.68999999759999997" green="0.69400000569999998" blue="0.69800001379999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isDisable_title">
+            <color red="0.45899999141693115" green="0.42399999499320984" blue="0.43900001049041748" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isEnable">
+            <color red="0.68999999761581421" green="0.54100000858306885" blue="0.36500000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isEnable_shadow">
+            <color red="0.41200000050000002" green="0.30199998620000001" blue="0.15299999710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_btn_isSelect_title">
+            <color red="0.34099999070167542" green="0.34099999070167542" blue="0.34099999070167542" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

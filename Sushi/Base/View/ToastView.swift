@@ -9,9 +9,7 @@ enum ToastType {
     case sending
 }
 
-class ToastView: UIView {
-
-    lazy var finishedToast: (() -> ()) = { }
+class ToastView: BaseView {
 
     internal let label = UILabel()
     internal var text: String = ""
@@ -61,23 +59,12 @@ class ToastView: UIView {
     }
     
     convenience init(frame :CGRect?, text: String, type: ToastType?) {
-        self.init(frame: frame ?? CGRect.zero, text: text)
+        self.init(frame: unwrap(frame, CGRect.zero), text: text)
         initType = type
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-
-    /// 消失
-    private func remove(delay: TimeInterval) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            self.removeFromSuperview()
-            self.finishedToast()
-        }
-    }
-    private func isiPhoneXDevice() -> Bool {
-        return UIScreen.main.bounds.height >= 812
     }
     
     /// 通用設定Label屬性

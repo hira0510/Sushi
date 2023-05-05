@@ -34,8 +34,6 @@ class RecordFooterView: UITableViewHeaderFooterView {
         btnAry.forEach { btn in
             btn?.addTarget(self, action: #selector(clickTime), for: .touchUpInside)
             btn?.isEnabled = model.timestamp.isZero
-            btn?.setBackgroundColor(UIColor(named: "main_btn_isEnable"), for: .normal)
-            btn?.setBackgroundColor(UIColor(named: "main_btn_isDisable"), for: .disabled)
         }
     }
     

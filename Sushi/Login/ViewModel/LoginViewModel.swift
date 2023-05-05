@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class LoginViewModel: NSObject { 
+class LoginViewModel: BaseViewModel {
     var account: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     var password: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     var accountType: BehaviorRelay<AccountType> = BehaviorRelay<AccountType>(value: .normal)
