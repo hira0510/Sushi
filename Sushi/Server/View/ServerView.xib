@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServerView" customModule="Sushi" customModuleProvider="target">
+            <connections>
+                <outlet property="bgView" destination="UYo-W3-rEe" id="JXv-8c-EVi"/>
+                <outlet property="mTableView" destination="cjH-TH-wSR" id="biI-Es-Hos"/>
+                <outlet property="mView" destination="XZy-mp-Xgj" id="AEk-Q9-CsE"/>
+                <outlet property="triangleImgView" destination="PJ1-Qx-sPI" id="M37-EL-MQi"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="ServerView" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="513" height="597"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XZy-mp-Xgj">
+                    <rect key="frame" x="0.0" y="20" width="513" height="577"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UYo-W3-rEe" customClass="NGSCustomizableView" customModule="Sushi" customModuleProvider="target">
+                    <rect key="frame" x="30" y="50" width="453" height="517"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="cjH-TH-wSR">
+                            <rect key="frame" x="15" y="15" width="423" height="487"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.62822333916083917" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="cjH-TH-wSR" firstAttribute="top" secondItem="UYo-W3-rEe" secondAttribute="top" constant="15" id="IbZ-yZ-Hx0"/>
+                        <constraint firstAttribute="bottom" secondItem="cjH-TH-wSR" secondAttribute="bottom" constant="15" id="UcY-p1-EL9"/>
+                        <constraint firstItem="cjH-TH-wSR" firstAttribute="leading" secondItem="UYo-W3-rEe" secondAttribute="leading" constant="15" id="qcF-to-43W"/>
+                        <constraint firstAttribute="trailing" secondItem="cjH-TH-wSR" secondAttribute="trailing" constant="15" id="uC6-iP-xC4"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="RoundRatio">
+                            <real key="value" value="0.080000000000000002"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="BgEndColor">
+                            <color key="value" white="0.25606424830000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="BgHorizontalMode" value="NO"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="BgDiagonalMode" value="NO"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrowtriangle.down.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="PJ1-Qx-sPI">
+                    <rect key="frame" x="236" y="558" width="40" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" white="0.25606424825174823" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </imageView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="UYo-W3-rEe" secondAttribute="trailing" constant="30" id="0jJ-2M-xIY"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="XZy-mp-Xgj" secondAttribute="bottom" id="ITx-cC-ReA"/>
+                <constraint firstItem="UYo-W3-rEe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="S6H-0X-N6R"/>
+                <constraint firstItem="XZy-mp-Xgj" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="SEh-EQ-eIG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="XZy-mp-Xgj" secondAttribute="trailing" id="gqy-z4-R8p"/>
+                <constraint firstItem="UYo-W3-rEe" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="30" id="jcM-bq-XOJ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="UYo-W3-rEe" secondAttribute="bottom" constant="30" id="oMs-Sb-Bif"/>
+                <constraint firstItem="XZy-mp-Xgj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="zrv-LE-6Ct"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="5.5999999999999996" y="-101.19940029985008"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrowtriangle.down.fill" catalog="system" width="128" height="120"/>
+    </resources>
+</document>

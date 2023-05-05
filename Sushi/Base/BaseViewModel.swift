@@ -11,6 +11,12 @@ import RxSwift
 
 class BaseViewModel: NSObject {
     
+    var orderSqlite: OrderSQLite {
+        get {
+            return OrderSQLite()
+        }
+    }
+    
     func request() -> Observable<[MenuModel]> {
         let firebaseManager = FireBaseManager()
         firebaseManager.auth()
@@ -61,8 +67,7 @@ class BaseViewModel: NSObject {
     
     func addStorageImg(_ name: String, _ image: UIImage) -> Observable<String> {
         let firebaseManager = FireBaseManager()
-        let json: Observable<String> = Observable.create { [weak self] (observer) -> Disposable in
-            guard let `self` = self else { return Disposables.create() }
+        let json: Observable<String> = Observable.create { (observer) -> Disposable in 
             firebaseManager.addStorageImg(name, image) { url in
                 guard let urlStr = url else { return }
                 observer.onNext(urlStr)

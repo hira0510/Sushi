@@ -27,6 +27,11 @@ class MenuViewController: BaseViewController {
         setupUI()
     }
     
+    deinit {
+        views.orderTimer?.invalidate()
+        views.orderTimer = nil
+    }
+    
     /// 設定collection的frame
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) -> Void in
@@ -36,6 +41,7 @@ class MenuViewController: BaseViewController {
             self.viewModel.orient = orient
             self.viewModel.menuCollectionFrame.accept(self.views.menuCollectionView.frame)
             self.viewModel.sushiCollectionFrame.accept(self.views.sushiCollectionView.frame)
+            self.views.setupAdminServerView(self)
         })
         super.viewWillTransition(to: size, with: coordinator)
     }
@@ -51,6 +57,7 @@ class MenuViewController: BaseViewController {
         views.serviceBtnAddTarget(self)
     }
     
+    /// 請求菜單api
     public func request() {
         viewModel.request().subscribe(onNext: { [weak self] (result) in
             guard let `self` = self, result.count > 0 else { return }
@@ -60,6 +67,7 @@ class MenuViewController: BaseViewController {
         }).disposed(by: bag)
     }
     
+    /// Server編輯刪除品項api
     public func delData(_ index: Int) -> Observable<Int> {
         let menu = viewModel.menuModel.value[viewModel.selectItem.value].menu
         let title = viewModel.menuModel.value[viewModel.selectItem.value].sushi[index].title
@@ -126,11 +134,11 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 let section = viewModel.selectItem.value
                 let model = viewModel.menuModel.value[section]
                 let sushi = model.sushi[indexPath.item]
-                if SuShiSingleton.share().getAccountType() == .administrator {
+                if SuShiSingleton.share().getIsAdmin() {
                     let vc = UIStoryboard.loadAddVC(delegate: self, edit: (model.menu, sushi))
                     self.navigationController?.pushViewController(vc, animated: true)
                 } else {
-                    let vc = UIStoryboard.loadOrderVC(model: model.sushi[indexPath.item], color: model.color, protocal: self)
+                    let vc = UIStoryboard.loadOrderVC(model: model.sushi[indexPath.item], color: model.color, delegate: self)
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             } else {
@@ -168,7 +176,16 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
 }
+
+extension MenuViewController: AddSushiVcProtocol {
+    /// Server新增品項後重新打api
+    func requestSuc() {
+        request()
+    }
+}
+
 extension MenuViewController: OrderVcProtocol {
+    /// Client從點餐頁面新增點餐項目
     func sendOrder(model: [SushiModel]) {
         viewModel.orderModel.add(model)
     }
@@ -176,6 +193,7 @@ extension MenuViewController: OrderVcProtocol {
 
 extension MenuViewController: OrderListCellProtocol {
     
+    /// Client刪除單一點餐項目
     func clickRemoveItem(_ model: SushiModel?) {
         var tempModel = viewModel.orderModel.value
         guard let model = model, let index = tempModel.firstIndex(of: model) else { return }
@@ -183,28 +201,71 @@ extension MenuViewController: OrderListCellProtocol {
         viewModel.orderModel.accept(tempModel)
     }
     
+    /// Client點擊縮放懸浮點餐View
     func clickOpenBtn(_ isToOpen: Bool) {
         viewModel.orderIsOpen.accept(isToOpen)
     }
     
+    /// Client點擊送出點餐項目
     func clickOrderBtn() {
-        viewModel.recordModel.add(viewModel.orderModel.value)
-        StarscreamWebSocketManager.shard.writeData(viewModel.orderModel.value)
+        let numId = viewModel.sendOrderCount.value
+        viewModel.recordModel.add(viewModel.orderModel.value.map { SushiRecordModel(numId.toStr, -1, $0) })
+        StarscreamWebSocketManager.shard.writeData(viewModel.orderModel.value, numId)
         
         addToast(txt: "已送出".twEng())
+        viewModel.sendOrderCount.accept(viewModel.sendOrderCount.value + 1)
         viewModel.orderModel.accept([])
     }
 }
 
-extension MenuViewController: AddSushiVcProtocol {
-    func requestSuc() {
-        request()
-    }
-}
-
 extension MenuViewController: StarscreamWebSocketManagerProtocol {
-    func getMin(_ str: String) {
-        viewModel.orderTimeStr.accept(str)
+    
+    
+   /// Server新增服務紀錄、結帳紀錄
+    func otherHint(_ str: String, _ type: ServiceType) {
+        switch type {
+        case .checkout:
+            UserDefaults.standard.checkoutHintIsHidden = false
+            UserDefaults.standard.checkoutTableAry[str] = GlobalUtil.getCurrentTime()
+        case .service:
+            UserDefaults.standard.serviceHintIsHidden = false
+            UserDefaults.standard.serviceTableAry[str] = GlobalUtil.getCurrentTime()
+        }
+    }
+    
+   /// Server新增點餐紀錄
+    func orderHint(data: AddOrderItem) {
+        let sqlite = OrderSQLite()
+        UserDefaults.standard.recordHintIsHidden = false
+        sqlite.insertData(_tableNumber: data.table, _numId: data.numId, _itemName: data.item, _itemPrice: data.itemPrice)
+         
+        //如果當前在點餐紀錄通知頁面就不用顯示紅點
+        guard views.adminServerView.mType.value == .record() && self.view.subviews.contains(views.adminServerView) else { return }
+        UserDefaults.standard.recordHintIsHidden = true
+        let recordModel = viewModel.orderSqlite.readData()
+        views.adminServerView.mType.accept(.record(recordModel))
+    }
+     
+    /// Client結帳後的處理
+    func alreadyCheckedOut() {
+        viewModel.orderModel.accept([])
+        viewModel.recordModel.accept([])
+        viewModel.orderTimeStr.accept("0")
+        viewModel.orderTimeDic.accept([:])
+        SuShiSingleton.share().setIsCheckout(false)
+    }
+    /// Client拿到Server傳送過來的等待時間
+    func getMin(_ min: Int, _ numId: String) {
+         let timeStamp: TimeInterval = (min * 60).toDouble + GlobalUtil.getCurrentTime()
+         viewModel.setupRecordModel(timeStamp, numId)
+         viewModel.orderTimeDic.accept(viewModel.orderTimeDic.value.merging([numId: timeStamp]){ (_, new) in new })
+         views.addOrderTimer()
+     }
+    
+    /// Client拿到Server傳送過來的"送達"的處理
+    func alreadyArrived(_ numId: String) {
+        viewModel.setupRecordModel(GlobalUtil.getCurrentTime(), numId)
+        viewModel.orderTimeDic.accept(viewModel.orderTimeDic.value.merging([numId: 0]){ (_, new) in new })
+        views.addOrderTimer()
     }
 }
-

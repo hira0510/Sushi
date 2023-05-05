@@ -21,14 +21,11 @@ enum AddSushiVcType {
 
 class AddSushiViewController: BaseViewController {
     
-    internal var editModel: (menu: String, data: SushiModel?) = (menu: "", data: nil)
-    internal var menuStrAry: [MenuStrModel] = []
-    internal weak var delegate: AddSushiVcProtocol?
-    private let viewModel = AddSushiViewModel()
+    public let viewModel = AddSushiViewModel()
     
     @IBOutlet weak var menuPickerView: UIPickerView! {
         didSet {
-            let strAry = menuStrAry.map { $0.title }
+            let strAry = viewModel.menuStrAry.map { $0.title }
             Observable.just(strAry)
                 .bind(to: menuPickerView.rx.items(adapter: viewModel.stringPickerAdapter))
                 .disposed(by: bag)
@@ -49,15 +46,14 @@ class AddSushiViewController: BaseViewController {
             viewModel.mImage.bind(to: mImageView.rx.image).disposed(by: bag)
             let myImageTouch = UITapGestureRecognizer(target: self, action: #selector(didClickCameraBtn))
             mImageView.isUserInteractionEnabled = true
-            self.mImageView.addGestureRecognizer(myImageTouch)
+            mImageView.addGestureRecognizer(myImageTouch)
         }
     }
     
     @IBOutlet weak var nameTextField: UITextField! {
         didSet {
             _ = nameTextField.rx.textInput <-> viewModel.mName
-            nameTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
-                [weak self] (_) in
+            nameTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: { [weak self] (_) in
                 guard let `self` = self else { return }
                 self.nameEngTextField.becomeFirstResponder()
             }).disposed(by: bag)
@@ -67,8 +63,7 @@ class AddSushiViewController: BaseViewController {
     @IBOutlet weak var nameEngTextField: UITextField! {
         didSet {
             _ = nameEngTextField.rx.textInput <-> viewModel.mNameEng
-            nameEngTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
-                [weak self] (_) in
+            nameEngTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: { [weak self] (_) in
                 guard let `self` = self else { return }
                 self.priceTextField.becomeFirstResponder()
             }).disposed(by: bag)
@@ -78,8 +73,7 @@ class AddSushiViewController: BaseViewController {
     @IBOutlet weak var priceTextField: UITextField! {
         didSet {
             _ = priceTextField.rx.textInput <-> viewModel.mPrice
-            priceTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: {
-                [weak self] (_) in
+            priceTextField.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: { [weak self] (_) in
                 guard let `self` = self else { return }
                 self.priceTextField.resignFirstResponder()
             }).disposed(by: bag)
@@ -115,7 +109,7 @@ class AddSushiViewController: BaseViewController {
     }
     
     private func setupEditUI() {
-        guard let model = editModel.data, let img = URL(string: model.img) else { return }
+        guard let model = viewModel.editModel.data, let img = URL(string: model.img) else { return }
         menuPickerView.isHidden = true
         
         viewModel.mType = .edit
@@ -136,7 +130,7 @@ class AddSushiViewController: BaseViewController {
     
     private func addStorageImage() {
         guard viewModel.mImage.value != viewModel.mTempEditImage.value else {
-            if let img = editModel.data?.img {
+            if let img = viewModel.editModel.data?.img {
                 self.addRequset(img)
             }
             return
@@ -152,7 +146,7 @@ class AddSushiViewController: BaseViewController {
     private func addRequset(_ imgUrl: String) {
         let index = menuPickerView.selectedRow(inComponent: 0)
         
-        let menu = menuStrAry.count > index ? menuStrAry[index].menu: self.editModel.menu
+        let menu = viewModel.menuStrAry.count > index ? viewModel.menuStrAry[index].menu: self.viewModel.editModel.menu
         let title = viewModel.mName.value
         let eng = viewModel.mNameEng.value
         let price = viewModel.mPrice.value
@@ -161,13 +155,13 @@ class AddSushiViewController: BaseViewController {
             guard let `self` = self else { return }
             self.removeToast()
             self.addToast(txt: self.viewModel.mType == .add ? "新增成功": "修改成功")
-            self.delegate?.requestSuc()
+            self.viewModel.delegate?.requestSuc()
         }).disposed(by: bag)
     }
     
     private func editRequset() {
-        let menu = self.editModel.menu
-        let title = self.editModel.data?.title ?? ""
+        let menu = self.viewModel.editModel.menu
+        let title = self.viewModel.editModel.data?.title ?? ""
         
         Observable.zip(self.viewModel.delData(.titleEng(menu, title)), self.viewModel.delData(.money(menu, title)), self.viewModel.delData(.img(menu, title)), self.viewModel.delStorageImg(title)).subscribe(onNext: { [weak self] _, _, _, _ in
             guard let `self` = self else { return }

@@ -18,6 +18,7 @@ target 'Sushi' do
   pod 'Kingfisher', '5.13.4'
   pod 'SnapKit'
   pod 'Starscream', '4.0.4'
+  pod 'SQLite.swift'
 
   target 'SushiTests' do
     inherit! :search_paths

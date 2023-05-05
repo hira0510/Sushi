@@ -114,25 +114,21 @@ class SushiModel: NSObject {
     }
 }
 
-
-class SushiEngModel: NSObject {
+class SushiRecordModel: NSObject {
     
+    var numId: String = ""
+    var arrivedTime: TimeInterval = 0
     var title: String = ""
     var titleEng: String = ""
-
-    init(_ sushi: (key: String, value: String)) {
-        self.title = sushi.key
-        self.titleEng = sushi.value
-    }
-}
-
-class SushiMoneyModel: NSObject {
-    
-    var title: String = ""
+    var img: String = ""
     var money: String = ""
 
-    init(_ sushi: (key: String, value: String)) {
-        self.title = sushi.key
-        self.money = sushi.value
+    init(_ numId: String = "", _ arrivedTime: TimeInterval = 0, _ model: SushiModel) {
+        self.numId = numId
+        self.arrivedTime = arrivedTime
+        self.title = model.title
+        self.titleEng = model.titleEng
+        self.img = model.img
+        self.money = model.money
     }
 }

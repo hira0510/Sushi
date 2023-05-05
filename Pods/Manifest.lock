@@ -804,6 +804,9 @@ PODS:
     - RxSwift (~> 5)
   - RxSwift (5.1.1)
   - SnapKit (5.6.0)
+  - SQLite.swift (0.14.1):
+    - SQLite.swift/standard (= 0.14.1)
+  - SQLite.swift/standard (0.14.1)
   - Starscream (4.0.4)
 
 DEPENDENCIES:
@@ -818,6 +821,7 @@ DEPENDENCIES:
   - RxGesture
   - RxSwift (= 5.1.1)
   - SnapKit
+  - SQLite.swift
   - Starscream (= 4.0.4)
 
 SPEC REPOS:
@@ -853,6 +857,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
+    - SQLite.swift
     - Starscream
 
 SPEC CHECKSUMS:
@@ -887,8 +892,9 @@ SPEC CHECKSUMS:
   RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SQLite.swift: 2992550ebf3c5b268bf4352603e3df87d2a4ed72
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: 7a443382554a491371c9281d531e64747826e629
+PODFILE CHECKSUM: f00fdca82d18182d19e9a7e694576be18e851b17
 
 COCOAPODS: 1.12.0

@@ -83,7 +83,11 @@ class NGSCustomizableButton: UIButton {
 
     // MARK: - Background背景顏色
     /// 一般背景顏色
-    private var BgNor: UIColor?
+    var BgNor: UIColor? {
+        didSet {
+            updateColors()
+        }
+    }
     /// 選擇背景顏色
     @IBInspectable var BgSel: UIColor? {
         didSet {

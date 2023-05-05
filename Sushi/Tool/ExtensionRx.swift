@@ -80,7 +80,7 @@ extension Reactive where Base: UILabel {
         }
     }
     
-    var countText: Binder<[SushiModel]> {
+    var countText: Binder<[SushiRecordModel]> {
         get {
             return Binder(self.base) { label, model in
                 label.text = "\(model.count)"
@@ -114,6 +114,14 @@ extension Reactive where Base: UICollectionView {
         }
     }
     
+    var allowsSelection: Binder<Bool> {
+        get {
+            return Binder(self.base) { collectionView, isNotEdit in
+                collectionView.allowsSelection = !isNotEdit
+            }
+        }
+    }
+    
     var sushiScrollTop: Binder<Int> {
         get {
             return Binder(self.base) { collectionView, _ in
@@ -128,6 +136,24 @@ extension Reactive where Base: UICollectionView {
             return Binder(self.base) { collectionView, index in
                 guard collectionView.visibleCells.count > 0 else { return }
                 collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+            }
+        }
+    }
+}
+
+// MARK: - 綁定UITableView
+extension Reactive where Base: UITableView {
+    var reloadData: Binder<ServerViewType> {
+        get {
+            return Binder(self.base) { tableView, _ in
+                tableView.reloadData()
+            }
+        }
+    }
+    var reloadDatas: Binder<[SushiRecordModel]> {
+        get {
+            return Binder(self.base) { tableView, _ in
+                tableView.reloadData()
             }
         }
     }

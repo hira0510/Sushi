@@ -14,17 +14,27 @@ import RxGesture
 class MenuViews: NSObject {
     public var viewModel: MenuViewModel!
     public var bag: DisposeBag!
+    
+    /// Server的收發通知頁面
+    public var adminServerView: ServerView = ServerView()
+    /// Client懸浮點餐View對右的tConstraints
     private var orderListViewRightConstraints: Constraint? = nil
+    /// 送達時間到數Timer
+    public var orderTimer: Timer?
 
     @IBOutlet weak var sushiCollectionView: UICollectionView! {
         didSet {
+            //切換頁面移至Top
             viewModel.selectItem.bind(to: sushiCollectionView.rx.sushiScrollTop).disposed(by: bag)
+            //Server編輯時可多選
             viewModel.isNotEdit.bind(to: sushiCollectionView.rx.allowsMultipleSelection).disposed(by: bag)
-            
+            //Client結帳後不可點餐
+            SuShiSingleton.share().bindIsCheckout().bind(to: sushiCollectionView.rx.allowsSelection).disposed(by: bag)
+            //點擊menu選擇頁面＆拿到api時變更背景色
             Observable.combineLatest(viewModel.selectItem, viewModel.menuModel) { index, model -> UIColor in
                 return model.count > 0 ? UIColor(hexString: model[index].color) ?? .clear: .clear
             }.map { $0 }.bind(to: sushiCollectionView.rx.backgroundColor).disposed(by: bag)
-            
+            //點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
             Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, SuShiSingleton.share().bindIsEng()) { index, _, _ -> Int in
                 return index
             }.map { $0 }.bind(to: sushiCollectionView.rx.reloadData).disposed(by: bag)
@@ -33,8 +43,9 @@ class MenuViews: NSObject {
     
     @IBOutlet weak var menuCollectionView: UICollectionView! {
         didSet {
+            //點擊menu選擇頁面時頁面滑至同index
             viewModel.selectItem.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag)
-            
+            //點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
             Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, SuShiSingleton.share().bindIsEng()) { index, _, _ -> Int in
                 return index
             }.map { $0 }.bind(to: menuCollectionView.rx.reloadData).disposed(by: bag)
@@ -43,7 +54,9 @@ class MenuViews: NSObject {
     
     @IBOutlet weak var languageInfoBtn: UIButton! {
         didSet {
+            //中英轉換
             SuShiSingleton.share().bindIsEng().bind(to: languageInfoBtn.rx.isSelected).disposed(by: bag)
+            //點擊中英轉換，重整UI
             languageInfoBtn.rx.tap.asObservable().map { [weak self] _ -> Bool in
                 guard let `self` = self else { return false }
                 return !self.languageInfoBtn.isSelected
@@ -58,31 +71,36 @@ class MenuViews: NSObject {
     }
     @IBOutlet weak var menuInfoView: MenuInfoView! {
         didSet {
-            let isAdmin = SuShiSingleton.share().getAccountType() == .administrator
+            //桌號
+            let isAdmin = SuShiSingleton.share().getIsAdmin()
             self.menuInfoView.num = isAdmin ? "X": SuShiSingleton.share().getPassword()
         }
     }
     @IBOutlet weak var plateInfoView: MenuInfoView! {
         didSet {
+            //盤數
             viewModel.recordModel.bind(to: plateInfoView.numLabel.rx.countText).disposed(by: bag)
         }
     }
     @IBOutlet weak var timeInfoView: MenuInfoView! {
         didSet {
+            //送達時間
             viewModel.orderTimeStr.bind(to: timeInfoView.numLabel.rx.text).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var loginLabel: UILabel! {
         didSet {
+            //登入資訊
             SuShiSingleton.share().bindIsLogin().bind(to: loginLabel.rx.labelIsHidden).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var previousPageBtn: UIButton! {
         didSet {
+            //文字中英轉換
             SuShiSingleton.share().bindIsEng().bind(to: previousPageBtn.rx.isSelected).disposed(by: bag)
-            
+            //點擊上一頁
             previousPageBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
                 guard self.viewModel.selectItem.value > 0 else { return }
@@ -93,8 +111,9 @@ class MenuViews: NSObject {
     
     @IBOutlet weak var nextPageBtn: UIButton! {
         didSet {
+            //文字中英轉換
             SuShiSingleton.share().bindIsEng().bind(to: nextPageBtn.rx.isSelected).disposed(by: bag)
-            
+            //點擊下一頁
             nextPageBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
                 guard self.viewModel.selectItem.value < self.viewModel.menuModel.value.count - 1 else { return }
@@ -103,40 +122,62 @@ class MenuViews: NSObject {
         }
     }
     
-    @IBOutlet weak var recordBtn: UIButton! {
+    @IBOutlet weak var recordView: MenuServiceView! {
         didSet {
-            SuShiSingleton.share().bindIsEng().bind(to: recordBtn.rx.isSelected).disposed(by: bag)
+            //文字中英轉換
+            SuShiSingleton.share().bindIsEng().bind(to: recordView.mButton.rx.isSelected).disposed(by: bag)
+            //監聽有新資料會出現紅點
+            UserDefaults.standard.rx.observe(Bool.self, "recordHintIsHidden").subscribe(onNext: { [weak self] isHidden in
+                guard let `self` = self else { return }
+                self.recordView.updateUI(isHidden: isHidden ?? true)
+            }).disposed(by: bag)
         }
     }
-    @IBOutlet weak var serviceBtn: UIButton! {
+    @IBOutlet weak var serviceView: MenuServiceView! {
         didSet {
-            SuShiSingleton.share().bindIsEng().bind(to: serviceBtn.rx.isSelected).disposed(by: bag)
+            //文字中英轉換
+            SuShiSingleton.share().bindIsEng().bind(to: serviceView.mButton.rx.isSelected).disposed(by: bag)
+            //監聽有新資料會出現紅點
+            UserDefaults.standard.rx.observe(Bool.self, "serviceHintIsHidden").subscribe(onNext: { [weak self] isHidden in
+                guard let `self` = self else { return }
+                self.serviceView.updateUI(isHidden: isHidden ?? true)
+            }).disposed(by: bag)
         }
     }
-    @IBOutlet weak var checkoutBtn: UIButton! {
+    @IBOutlet weak var checkoutView: MenuServiceView! {
         didSet {
-            SuShiSingleton.share().bindIsEng().bind(to: checkoutBtn.rx.isSelected).disposed(by: bag)
+            //文字中英轉換
+            SuShiSingleton.share().bindIsEng().bind(to: checkoutView.mButton.rx.isSelected).disposed(by: bag)
+            //監聽有新資料會出現紅點
+            UserDefaults.standard.rx.observe(Bool.self, "checkoutHintIsHidden").subscribe(onNext: { [weak self] isHidden in
+                guard let `self` = self else { return }
+                self.checkoutView.updateUI(isHidden: isHidden ?? true)
+            }).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var addNewBtn: NGSCustomizableButton! {
         didSet {
+            //Server端出現新增按鈕
             SuShiSingleton.share().bindIsLogin().bind(to: addNewBtn.rx.addBtnIsHidden).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var editBtn: UIButton! {
         didSet {
+            //Server端出現編輯按鈕
             SuShiSingleton.share().bindIsLogin().bind(to: editBtn.rx.addBtnIsHidden).disposed(by: bag)
+            //按鈕狀態
             viewModel.isNotEdit.bind(to: editBtn.rx.btnIsSelect).disposed(by: bag)
             
+            //點擊編輯按鈕
             editBtn.rx.tap.asObservable().map { [weak self] _ -> Bool in
                 guard let `self` = self else { return false }
                 return !self.editBtn.isSelected
             }.do { [weak self] isSelect in
                 guard let `self` = self else { return }
                 self.viewModel.isNotEdit.accept(!isSelect)
-                if !isSelect {
+                if !isSelect { //取消時所有cell不被選中
                     self.cancelSelect()
                 }
             }.bind(to: editBtn.rx.isSelected).disposed(by: bag)
@@ -145,19 +186,23 @@ class MenuViews: NSObject {
     
     @IBOutlet weak var deleteItemBtn: UIButton! {
         didSet {
+            //Server編輯狀態刪除按鈕出現
             viewModel.isNotEdit.bind(to: deleteItemBtn.rx.isHidden).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var orderListView: OrderListView! {
         didSet {
+            // 綁定懸浮點餐View的Constraint
             bindOrderListViewConstraint()
+            //初始Constraints
             orderListView.snp.makeConstraints { make in
                 orderListViewRightConstraints = make.right.equalToSuperview().offset(0).constraint
             }
         }
     }
     
+    /// 初始CollectionView
     func setupCollectionView(_ vc: MenuViewController) {
         menuCollectionView.delegate = vc
         menuCollectionView.dataSource = vc
@@ -167,6 +212,29 @@ class MenuViews: NSObject {
         sushiCollectionView.register(SushiCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiCollectionViewCell")
     }
     
+    /// Client端送達時間計時分鐘
+    func addOrderTimer() {
+        self.orderTimer?.invalidate()
+        self.orderTimer = nil
+        timerReciprocal()
+        orderTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(timerReciprocal), userInfo: nil, repeats: true)
+    }
+    
+    /// 送達時間更新
+    @objc func timerReciprocal() {
+        //找出最久的時間顯示在螢幕
+        let maxTimeStamp = self.viewModel.orderTimeDic.value.getSortValue.first ?? 0
+        guard maxTimeStamp > GlobalUtil.getCurrentTime() else {
+            self.viewModel.orderTimeStr.accept("0")
+            self.orderTimer?.invalidate()
+            self.orderTimer = nil
+            return
+        }
+        let waitMin = ((maxTimeStamp - GlobalUtil.getCurrentTime()) / 60) + 1
+        viewModel.orderTimeStr.accept(waitMin.toInt.toStr)
+    }
+    
+    /// Server取消選中所有被選中的cell
     func cancelSelect() {
         var indexPathArr = self.sushiCollectionView.indexPathsForSelectedItems ?? []
         for indexpah in indexPathArr {
@@ -177,6 +245,7 @@ class MenuViews: NSObject {
         }
     }
     
+    /// Client變更懸浮點餐View的Constraint
     func bindOrderListViewConstraint() {
         Observable.combineLatest(viewModel.orderModel, viewModel.orderIsOpen) { [weak self] model, isOpen ->  (model: [SushiModel], isOpen: Bool) in
             guard let `self` = self, model.count > 0 else { return ([], false) }
@@ -211,6 +280,7 @@ class MenuViews: NSObject {
         }.subscribe().disposed(by: bag)
     }
     
+    /// Server點擊刪除按鈕_刪除多個品項
     func deleteItemBtnAddTarget(_ baseVc: MenuViewController) {
         deleteItemBtn.rx.tap.subscribe { [weak self] event in
             guard let `self` = self else { return }
@@ -231,6 +301,7 @@ class MenuViews: NSObject {
         }.disposed(by: bag)
     }
     
+    /// 點擊菜單_開啟官網Menu
     func menuInfoViewAddTarget(_ baseVc: MenuViewController) {
         menuInfoView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in 
             let vc = UIStoryboard.loadWebViewVC(url: "https://www.sushiexpress.com.tw/sushi-express/Menu?c=Gunkan")
@@ -238,14 +309,7 @@ class MenuViews: NSObject {
         }).disposed(by: bag)
     }
     
-    func recordBtnAddTarget(_ baseVc: BaseViewController) {
-        recordBtn.rx.tap.subscribe { [weak self] _ in
-            guard let `self` = self else { return }
-            let vc = UIStoryboard.loadRecordVC(model: self.viewModel.recordModel.value)
-            baseVc.navigationController?.pushViewController(vc, animated: true)
-        }.disposed(by: bag)
-    }
-    
+    /// Server點擊新增按鈕_跳至新增頁面
     func addNewBtnAddTarget(_ baseVc: MenuViewController) {
         addNewBtn.rx.tap.subscribe { [weak self] _ in
             guard let `self` = self else { return }
@@ -257,19 +321,90 @@ class MenuViews: NSObject {
         }.disposed(by: bag)
     }
     
-    func checkoutBtnAddTarget(_ baseVc: BaseViewController) {
-        checkoutBtn.rx.tap.subscribe { _ in
-            baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
-            let table = SuShiSingleton.share().getPassword()
-            StarscreamWebSocketManager.shard.writeMsg("桌號\(table) 結帳")
+    /// 點擊點餐紀錄按鈕_Server開啟點餐通知View_Client開啟紀錄Vc
+    func recordBtnAddTarget(_ baseVc: BaseViewController) {
+        recordView.mButton.rx.tap.subscribe { [weak self] _ in
+            guard let `self` = self else { return }
+            if SuShiSingleton.share().getIsAdmin() {
+                self.setupAdminServerView(baseVc, self.recordView)
+            } else {
+                let vc = UIStoryboard.loadRecordVC(model: self.viewModel.recordModel.value)
+                self.viewModel.delegate = vc
+                baseVc.navigationController?.pushViewController(vc, animated: true)
+            }
         }.disposed(by: bag)
     }
     
-    func serviceBtnAddTarget(_ baseVc: BaseViewController) {
-        serviceBtn.rx.tap.subscribe { _ in
-            baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
-            let table = SuShiSingleton.share().getPassword()
-            StarscreamWebSocketManager.shard.writeMsg("桌號\(table) 服務")
+    /// 點擊結帳按鈕_Server開啟結帳通知View_Client傳送通知給Server
+    func checkoutBtnAddTarget(_ baseVc: BaseViewController) {
+        checkoutView.mButton.rx.tap.subscribe { [weak self] _ in
+            guard let `self` = self else { return }
+            if SuShiSingleton.share().getIsAdmin() {
+                self.setupAdminServerView(baseVc, self.checkoutView)
+            } else if viewModel.recordModel.value.count > 0 {
+                baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
+                let table = SuShiSingleton.share().getPassword()
+                StarscreamWebSocketManager.shard.writeMsg("結帳桌號\(table)")
+                SuShiSingleton.share().setIsCheckout(true)
+            }
         }.disposed(by: bag)
+    }
+    
+    /// 點擊結帳按鈕_Server開啟服務通知View_Client傳送通知給Server
+    func serviceBtnAddTarget(_ baseVc: BaseViewController) {
+        serviceView.mButton.rx.tap.subscribe { [weak self] _ in
+            guard let `self` = self else { return }
+            if SuShiSingleton.share().getIsAdmin() {
+                self.setupAdminServerView(baseVc, self.serviceView)
+            } else {
+                baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
+                let table = SuShiSingleton.share().getPassword()
+                StarscreamWebSocketManager.shard.writeMsg("服務桌號\(table)")
+            }
+        }.disposed(by: bag)
+    }
+    
+    /// 重新設置通知View的Constraints跟資料
+    func setupAdminServerView(_ baseVc: BaseViewController, _ view: UIView? = nil) {
+        if !baseVc.view.subviews.contains(adminServerView) {
+            baseVc.view.addSubview(adminServerView)
+            adminServerView.snp.makeConstraints { make in
+                make.top.equalToSuperview()
+                make.left.equalToSuperview()
+                make.right.equalToSuperview()
+                make.bottom.equalTo(recordView.snp.top).offset(-3)
+            }
+        }
+        
+        //nil這段是為了橫式轉方向寫的
+        var views: UIView
+        if view == nil {
+            switch adminServerView.mType.value {
+            case .service: views = serviceView
+            case .record(_): views = recordView
+            case .checkout: views = checkoutView
+            }
+        } else {
+            views = view!
+        }
+        
+        if views == recordView {
+            let recordModel = viewModel.orderSqlite.readData()
+            adminServerView.mType.accept(.record(recordModel))
+            UserDefaults.standard.recordHintIsHidden = true
+        } else if views == checkoutView {
+            let tableAry = UserDefaults.standard.checkoutTableAry.getSortKey
+            let timeAry = UserDefaults.standard.checkoutTableAry.getSortValue
+            let recordModel = viewModel.orderSqlite.readUniteData(tableAry: tableAry)
+            adminServerView.mType.accept(.checkout(recordModel, timeAry))
+            UserDefaults.standard.checkoutHintIsHidden = true
+        } else if views == serviceView {
+            let sortAry = UserDefaults.standard.serviceTableAry.sortAry
+            adminServerView.mType.accept(.service(sortAry))
+            UserDefaults.standard.serviceHintIsHidden = true
+        }
+        
+        let left = baseVc.view.convert(CGPoint.zero, from: views).x + views.bounds.midX - 20
+        adminServerView.triangleImgViewConstraints?.update(offset: left)
     }
 }

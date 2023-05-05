@@ -21,6 +21,7 @@ enum Valid {
 enum ValidationType {
     case account
     case password
+    case num
 }
 
 ///正則表達式
@@ -28,15 +29,18 @@ enum RegularExpression: String {
     //帳號英文或數字隨便組合並且4-2000個
     case account = "^[A-Za-z0-9]{4,10}"
     //密碼英文或數字隨便組合並且4-2000個
-    case password = "^[A-Za-z0-9]{2,15}"
+    case password = "^[A-Za-z0-9]{4,15}"
+    case num = "^[0-9]{2,3}"
 }
 
 enum AlertMessages: String {
     case inValidAccount = "帳號輸入錯誤，請輸入4~10位數字/英文"
     case inValidPSW = "密碼輸入錯誤，請輸入4~15位的數字/英文"
+    case inValidNum = "桌號輸入錯誤，請輸入2~3位的數字"
     
     case emptyAccount = "沒有輸入帳號"
     case emptyPSW = "沒有輸入密碼"
+    case emptyNum = "沒有輸入桌號"
     func localized() -> String {
         return NSLocalizedString(self.rawValue, comment: "")
     }
@@ -57,6 +61,8 @@ class Validation: NSObject {
                 return isValidString((valueToBeChecked.inputValue, .account, .emptyAccount, .inValidAccount))
             case .password:
                 return isValidString((valueToBeChecked.inputValue, .password, .emptyPSW, .inValidPSW))
+            case .num:
+                return isValidString((valueToBeChecked.inputValue, .num, .emptyNum, .inValidNum))
             }
         }
         return (true, "")

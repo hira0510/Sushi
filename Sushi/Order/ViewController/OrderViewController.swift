@@ -17,7 +17,6 @@ protocol OrderVcProtocol: AnyObject {
 class OrderViewController: BaseViewController {
     
     public let viewModel = OrderViewModel()
-    public weak var delegate: OrderVcProtocol?
     
     @IBOutlet weak var mImageView: UIImageView!
     @IBOutlet weak var mTitleLabel: UILabel!
@@ -61,7 +60,7 @@ class OrderViewController: BaseViewController {
             addOrderBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
                 let orderModel = Array(repeating: self.viewModel.sushiModel.value, count: self.viewModel.orderCount.value)
-                self.delegate?.sendOrder(model: orderModel)
+                self.viewModel.delegate?.sendOrder(model: orderModel)
                 self.previousBack()
             }.disposed(by: bag)
         }
@@ -79,25 +78,12 @@ class OrderViewController: BaseViewController {
             if SuShiSingleton.share().getIsEng() {
                 vc.mTitleLabel.text = model.titleEng
             } else {
-                vc.mTitleLabel.attributedText = self.setAttributedString(model.title, model.titleEng)
+                vc.mTitleLabel.attributedText = self.viewModel.setAttributedString(model.title, model.titleEng)
             }
             if let url = URL(string: model.img) {
                 vc.mImageView.kf.setImage(with: url, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously])
             }
-            
         }
-        
         viewModel.sushiModel.bind(to: modelObserver).disposed(by: bag)
     }
-    
-    private func setAttributedString(_ title: String, _ titleEng: String) -> NSMutableAttributedString {
-        let attributedString = NSMutableAttributedString(string: "\(title)\n\(titleEng)", attributes: [
-          .font: UIFont(name: "PingFangTC-Regular", size: 18.0)!,
-          .foregroundColor: #colorLiteral(red: 0.1887685245, green: 0.163427008, blue: 0.1054069033, alpha: 1),
-          .kern: 0.0
-        ])
-        attributedString.addAttribute(.font, value: UIFont(name: "PingFangTC-Regular", size: 24)!, range: NSRange(location: 0, length: title.count))
-        return attributedString
-    }
-
 }

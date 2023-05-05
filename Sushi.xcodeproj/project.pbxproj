@@ -42,6 +42,12 @@
 		849B476C29F1272A002E4C60 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B476B29F1272A002E4C60 /* MenuModel.swift */; };
 		849B476F29F1344E002E4C60 /* SushiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B476D29F1344E002E4C60 /* SushiCollectionViewCell.swift */; };
 		849B477029F1344E002E4C60 /* SushiCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B476E29F1344E002E4C60 /* SushiCollectionViewCell.xib */; };
+		849CA9372A009F82008779B0 /* MenuServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849CA9362A009F82008779B0 /* MenuServiceView.swift */; };
+		849CA9392A009F89008779B0 /* MenuServiceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849CA9382A009F89008779B0 /* MenuServiceView.xib */; };
+		849CA93F2A00A754008779B0 /* OrderSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849CA93E2A00A754008779B0 /* OrderSQLite.swift */; };
+		849CA9412A00D597008779B0 /* ExtensionUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849CA9402A00D597008779B0 /* ExtensionUserDefaults.swift */; };
+		849CA94B2A010200008779B0 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849CA94A2A010200008779B0 /* ServerView.swift */; };
+		849CA94D2A01020E008779B0 /* ServerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849CA94C2A01020E008779B0 /* ServerView.xib */; };
 		849FB4DD29F2195B002340F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4DB29F2195B002340F9 /* LoginViewController.swift */; };
 		849FB4E029F21B1C002340F9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4DF29F21B1C002340F9 /* BaseViewController.swift */; };
 		849FB4E429F2274F002340F9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4E329F2274F002340F9 /* LoginViewModel.swift */; };
@@ -54,6 +60,16 @@
 		849FC3FD29FB6DA400A86794 /* ExtensionRx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FC3FC29FB6DA400A86794 /* ExtensionRx.swift */; };
 		849FC3FF29FB6E3400A86794 /* ExtensionStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FC3FE29FB6E3400A86794 /* ExtensionStoryboard.swift */; };
 		849FC40129FB6E9100A86794 /* ExtensionUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FC40029FB6E9100A86794 /* ExtensionUI.swift */; };
+		84A013592A022A4300D4139E /* ServiceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A013582A022A4300D4139E /* ServiceHeaderView.swift */; };
+		84A0135B2A022B5900D4139E /* ServiceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A0135A2A022B5900D4139E /* ServiceHeaderView.xib */; };
+		84A013602A02594300D4139E /* record.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A0135D2A02594200D4139E /* record.mp3 */; };
+		84A013612A02594300D4139E /* checkout.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A0135E2A02594300D4139E /* checkout.mp3 */; };
+		84A013622A02594300D4139E /* service.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A0135F2A02594300D4139E /* service.mp3 */; };
+		84A013642A025A9400D4139E /* arrived.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A013632A025A9400D4139E /* arrived.mp3 */; };
+		84A013682A025BE400D4139E /* RecordFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A013672A025BE400D4139E /* RecordFooterView.swift */; };
+		84A0136A2A025BEC00D4139E /* RecordFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A013692A025BEB00D4139E /* RecordFooterView.xib */; };
+		84A55DCB2A03AE630055C5A7 /* OrderSQLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A55DCA2A03AE630055C5A7 /* OrderSQLModel.swift */; };
+		84A55DCF2A03B5A80055C5A7 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A55DCE2A03B5A80055C5A7 /* RecordViewModel.swift */; };
 		84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */; };
 		84A5FAB229F6157100781C03 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB129F6157100781C03 /* FireBaseManager.swift */; };
 		84A5FAB429F6352500781C03 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB329F6352500781C03 /* ToastView.swift */; };
@@ -62,7 +78,6 @@
 		84B2AF0829FB9ED000ABC4D9 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2AF0729FB9ED000ABC4D9 /* BaseViewModel.swift */; };
 		84B2AF0B29FBAB4900ABC4D9 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2AF0929FBAB4900ABC4D9 /* WebViewViewController.swift */; };
 		84B2AF0C29FBAB4900ABC4D9 /* WebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */; };
-		84B2AF1529FBBAA800ABC4D9 /* StarscreamWebSocketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2AF1429FBBAA800ABC4D9 /* StarscreamWebSocketViewController.swift */; };
 		84C0EB5829F28F0B00B7D2CE /* AddSushiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */; };
 		84C0EB5929F28F0B00B7D2CE /* AddSushiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */; };
 		84C0EB5B29F28FE600B7D2CE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5A29F28FE600B7D2CE /* CameraView.swift */; };
@@ -139,6 +154,12 @@
 		849B476B29F1272A002E4C60 /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
 		849B476D29F1344E002E4C60 /* SushiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SushiCollectionViewCell.swift; sourceTree = "<group>"; };
 		849B476E29F1344E002E4C60 /* SushiCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SushiCollectionViewCell.xib; sourceTree = "<group>"; };
+		849CA9362A009F82008779B0 /* MenuServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuServiceView.swift; sourceTree = "<group>"; };
+		849CA9382A009F89008779B0 /* MenuServiceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuServiceView.xib; sourceTree = "<group>"; };
+		849CA93E2A00A754008779B0 /* OrderSQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSQLite.swift; sourceTree = "<group>"; };
+		849CA9402A00D597008779B0 /* ExtensionUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUserDefaults.swift; sourceTree = "<group>"; };
+		849CA94A2A010200008779B0 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
+		849CA94C2A01020E008779B0 /* ServerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerView.xib; sourceTree = "<group>"; };
 		849FB4DB29F2195B002340F9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		849FB4DF29F21B1C002340F9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		849FB4E329F2274F002340F9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -151,6 +172,16 @@
 		849FC3FC29FB6DA400A86794 /* ExtensionRx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionRx.swift; sourceTree = "<group>"; };
 		849FC3FE29FB6E3400A86794 /* ExtensionStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionStoryboard.swift; sourceTree = "<group>"; };
 		849FC40029FB6E9100A86794 /* ExtensionUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUI.swift; sourceTree = "<group>"; };
+		84A013582A022A4300D4139E /* ServiceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHeaderView.swift; sourceTree = "<group>"; };
+		84A0135A2A022B5900D4139E /* ServiceHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceHeaderView.xib; sourceTree = "<group>"; };
+		84A0135D2A02594200D4139E /* record.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = record.mp3; sourceTree = "<group>"; };
+		84A0135E2A02594300D4139E /* checkout.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = checkout.mp3; sourceTree = "<group>"; };
+		84A0135F2A02594300D4139E /* service.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = service.mp3; sourceTree = "<group>"; };
+		84A013632A025A9400D4139E /* arrived.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = arrived.mp3; sourceTree = "<group>"; };
+		84A013672A025BE400D4139E /* RecordFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFooterView.swift; sourceTree = "<group>"; };
+		84A013692A025BEB00D4139E /* RecordFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordFooterView.xib; sourceTree = "<group>"; };
+		84A55DCA2A03AE630055C5A7 /* OrderSQLModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSQLModel.swift; sourceTree = "<group>"; };
+		84A55DCE2A03B5A80055C5A7 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84A5FAB129F6157100781C03 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
 		84A5FAB329F6352500781C03 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
@@ -159,7 +190,6 @@
 		84B2AF0729FB9ED000ABC4D9 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		84B2AF0929FBAB4900ABC4D9 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewViewController.xib; sourceTree = "<group>"; };
-		84B2AF1429FBBAA800ABC4D9 /* StarscreamWebSocketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamWebSocketViewController.swift; sourceTree = "<group>"; };
 		84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSushiViewController.swift; sourceTree = "<group>"; };
 		84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddSushiViewController.xib; sourceTree = "<group>"; };
 		84C0EB5A29F28FE600B7D2CE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
@@ -270,6 +300,8 @@
 		849B471929F0E888002E4C60 /* Sushi */ = {
 			isa = PBXGroup;
 			children = (
+				849CA9422A00EED2008779B0 /* Server */,
+				849CA93D2A00A730008779B0 /* SQLite */,
 				84B2AF0D29FBAB6400ABC4D9 /* Web */,
 				84DDFE8329FA7D8B00EABFEE /* Base */,
 				849FB4E829F22780002340F9 /* Login */,
@@ -278,6 +310,7 @@
 				84DDFE7529FA39F100EABFEE /* Record */,
 				84C0EB5129F28BA700B7D2CE /* Add */,
 				849B475529F10E6A002E4C60 /* Tool */,
+				84A0135C2A02593700D4139E /* MP3 */,
 				849B471A29F0E888002E4C60 /* AppDelegate.swift */,
 				849B471C29F0E888002E4C60 /* SceneDelegate.swift */,
 				849B471E29F0E888002E4C60 /* ViewController.swift */,
@@ -313,6 +346,8 @@
 				849B476129F11E75002E4C60 /* MenuViews.swift */,
 				849B474A29F10E01002E4C60 /* MenuInfoView.swift */,
 				849B474C29F10E0A002E4C60 /* MenuInfoView.xib */,
+				849CA9362A009F82008779B0 /* MenuServiceView.swift */,
+				849CA9382A009F89008779B0 /* MenuServiceView.xib */,
 				849B475929F11C8D002E4C60 /* MenuTitleCollectionViewCell.swift */,
 				849B475A29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib */,
 				849B476D29F1344E002E4C60 /* SushiCollectionViewCell.swift */,
@@ -329,11 +364,13 @@
 			isa = PBXGroup;
 			children = (
 				849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */,
+				8498F5CB29FBC41000FC23EB /* StarscreamWebSocketManager.swift */,
 				849FB4F329F280FA002340F9 /* SystemInfo.swift */,
 				849B475329F10E54002E4C60 /* Extension.swift */,
-				849FC3FE29FB6E3400A86794 /* ExtensionStoryboard.swift */,
 				849FC40029FB6E9100A86794 /* ExtensionUI.swift */,
 				849FC3FC29FB6DA400A86794 /* ExtensionRx.swift */,
+				849FC3FE29FB6E3400A86794 /* ExtensionStoryboard.swift */,
+				849CA9402A00D597008779B0 /* ExtensionUserDefaults.swift */,
 				849B475129F10E4C002E4C60 /* GlobalUtil.swift */,
 				849B475D29F11D8A002E4C60 /* NGSCustomizableButton.swift */,
 				843B3E8329F9095B00FB3969 /* NGSCustomizableView.swift */,
@@ -345,7 +382,6 @@
 				84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */,
 				84B2AF0329FB911000ABC4D9 /* Operators.swift */,
 				849FC3ED29FB53F600A86794 /* TwToEng.swift */,
-				8498F5CB29FBC41000FC23EB /* StarscreamWebSocketManager.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -372,6 +408,36 @@
 				849B476B29F1272A002E4C60 /* MenuModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		849CA93D2A00A730008779B0 /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				849CA93E2A00A754008779B0 /* OrderSQLite.swift */,
+				84A55DCA2A03AE630055C5A7 /* OrderSQLModel.swift */,
+			);
+			path = SQLite;
+			sourceTree = "<group>";
+		};
+		849CA9422A00EED2008779B0 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				849CA9432A00EED5008779B0 /* View */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		849CA9432A00EED5008779B0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				849CA94A2A010200008779B0 /* ServerView.swift */,
+				849CA94C2A01020E008779B0 /* ServerView.xib */,
+				84A013582A022A4300D4139E /* ServiceHeaderView.swift */,
+				84A0135A2A022B5900D4139E /* ServiceHeaderView.xib */,
+				84A013672A025BE400D4139E /* RecordFooterView.swift */,
+				84A013692A025BEB00D4139E /* RecordFooterView.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		849FB4E729F2277B002340F9 /* Menu */ = {
@@ -420,11 +486,38 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		84A0135C2A02593700D4139E /* MP3 */ = {
+			isa = PBXGroup;
+			children = (
+				84A013632A025A9400D4139E /* arrived.mp3 */,
+				84A0135E2A02594300D4139E /* checkout.mp3 */,
+				84A0135D2A02594200D4139E /* record.mp3 */,
+				84A0135F2A02594300D4139E /* service.mp3 */,
+			);
+			path = MP3;
+			sourceTree = "<group>";
+		};
+		84A55DCC2A03AE9E0055C5A7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84A55DCD2A03B59E0055C5A7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84A55DCE2A03B5A80055C5A7 /* RecordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		84B2AF0D29FBAB6400ABC4D9 /* Web */ = {
 			isa = PBXGroup;
 			children = (
 				84B2AF0E29FBAD1000ABC4D9 /* Controller */,
-				84B2AF0F29FBAD1E00ABC4D9 /* View */,
+				84A55DCC2A03AE9E0055C5A7 /* View */,
 			);
 			path = Web;
 			sourceTree = "<group>";
@@ -433,17 +526,8 @@
 			isa = PBXGroup;
 			children = (
 				84B2AF0929FBAB4900ABC4D9 /* WebViewViewController.swift */,
-				84B2AF1429FBBAA800ABC4D9 /* StarscreamWebSocketViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		84B2AF0F29FBAD1E00ABC4D9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		84C0EB5129F28BA700B7D2CE /* Add */ = {
@@ -494,6 +578,7 @@
 		84DDFE7529FA39F100EABFEE /* Record */ = {
 			isa = PBXGroup;
 			children = (
+				84A55DCD2A03B59E0055C5A7 /* ViewModel */,
 				84DDFE7729FA3A0F00EABFEE /* Controller */,
 				84DDFE7629FA3A0C00EABFEE /* View */,
 			);
@@ -660,22 +745,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A013622A02594300D4139E /* service.mp3 in Resources */,
 				849B472729F0E889002E4C60 /* LaunchScreen.storyboard in Resources */,
 				843B3E8229F9019800FB3969 /* OrderListView.xib in Resources */,
+				84A0135B2A022B5900D4139E /* ServiceHeaderView.xib in Resources */,
 				84B2AF0C29FBAB4900ABC4D9 /* WebViewViewController.xib in Resources */,
 				849B474D29F10E0A002E4C60 /* MenuInfoView.xib in Resources */,
 				84C0EB5D29F2900100B7D2CE /* CameraView.xib in Resources */,
+				849CA9392A009F89008779B0 /* MenuServiceView.xib in Resources */,
 				849B472429F0E889002E4C60 /* Assets.xcassets in Resources */,
 				849B475C29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib in Resources */,
 				843B3E7929F8F06100FB3969 /* OrderViewController.xib in Resources */,
 				849B472229F0E888002E4C60 /* Main.storyboard in Resources */,
 				84DDFE8229FA5EDD00EABFEE /* RecordTableViewCell.xib in Resources */,
+				84A013642A025A9400D4139E /* arrived.mp3 in Resources */,
+				84A0136A2A025BEC00D4139E /* RecordFooterView.xib in Resources */,
 				849FB4F229F27A44002340F9 /* LoginViewController.xib in Resources */,
 				84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */,
 				843B3E8829F90AEA00FB3969 /* OrderListCollectionViewCell.xib in Resources */,
+				84A013602A02594300D4139E /* record.mp3 in Resources */,
+				849CA94D2A01020E008779B0 /* ServerView.xib in Resources */,
 				84DDFE7C29FA3A2200EABFEE /* RecordViewController.xib in Resources */,
 				849B477029F1344E002E4C60 /* SushiCollectionViewCell.xib in Resources */,
 				84C0EB5929F28F0B00B7D2CE /* AddSushiViewController.xib in Resources */,
+				84A013612A02594300D4139E /* checkout.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -805,6 +898,7 @@
 			files = (
 				849B475229F10E4C002E4C60 /* GlobalUtil.swift in Sources */,
 				84B2AF0829FB9ED000ABC4D9 /* BaseViewModel.swift in Sources */,
+				849CA93F2A00A754008779B0 /* OrderSQLite.swift in Sources */,
 				8498F5CC29FBC41000FC23EB /* StarscreamWebSocketManager.swift in Sources */,
 				84AA819529F7A2C3009DA56D /* Zip4Sequence.swift in Sources */,
 				84DDFE8129FA5EDD00EABFEE /* RecordTableViewCell.swift in Sources */,
@@ -812,13 +906,15 @@
 				849B471F29F0E888002E4C60 /* ViewController.swift in Sources */,
 				849B476529F12123002E4C60 /* MenuViewModel.swift in Sources */,
 				84C0EB5F29F2967000B7D2CE /* AddSushiViewModel.swift in Sources */,
+				849CA9412A00D597008779B0 /* ExtensionUserDefaults.swift in Sources */,
 				849B475429F10E54002E4C60 /* Extension.swift in Sources */,
 				849FB4E629F22765002340F9 /* LoginModel.swift in Sources */,
 				849FC3FF29FB6E3400A86794 /* ExtensionStoryboard.swift in Sources */,
 				849B474B29F10E01002E4C60 /* MenuInfoView.swift in Sources */,
 				843B3E8429F9095B00FB3969 /* NGSCustomizableView.swift in Sources */,
+				84A013592A022A4300D4139E /* ServiceHeaderView.swift in Sources */,
 				849FC40129FB6E9100A86794 /* ExtensionUI.swift in Sources */,
-				84B2AF1529FBBAA800ABC4D9 /* StarscreamWebSocketViewController.swift in Sources */,
+				849CA94B2A010200008779B0 /* ServerView.swift in Sources */,
 				849B476929F12612002E4C60 /* RoundCornersView.swift in Sources */,
 				849FC3FD29FB6DA400A86794 /* ExtensionRx.swift in Sources */,
 				843B3E8A29F90B4D00FB3969 /* NGSCustomizableImageView.swift in Sources */,
@@ -827,6 +923,7 @@
 				849FC3EE29FB53F600A86794 /* TwToEng.swift in Sources */,
 				843B3E8729F90AEA00FB3969 /* OrderListCollectionViewCell.swift in Sources */,
 				843B3E7829F8F06100FB3969 /* OrderViewController.swift in Sources */,
+				84A55DCB2A03AE630055C5A7 /* OrderSQLModel.swift in Sources */,
 				84A5FAB229F6157100781C03 /* FireBaseManager.swift in Sources */,
 				849B471B29F0E888002E4C60 /* AppDelegate.swift in Sources */,
 				84DDFE7B29FA3A2200EABFEE /* RecordViewController.swift in Sources */,
@@ -838,6 +935,7 @@
 				843B3E8029F9019000FB3969 /* OrderListView.swift in Sources */,
 				84A5FAB429F6352500781C03 /* ToastView.swift in Sources */,
 				849B475E29F11D8A002E4C60 /* NGSCustomizableButton.swift in Sources */,
+				84A55DCF2A03B5A80055C5A7 /* RecordViewModel.swift in Sources */,
 				84C0EB5B29F28FE600B7D2CE /* CameraView.swift in Sources */,
 				84C0EB5829F28F0B00B7D2CE /* AddSushiViewController.swift in Sources */,
 				849FB4DD29F2195B002340F9 /* LoginViewController.swift in Sources */,
@@ -846,7 +944,9 @@
 				84DDFE8529FA7DAC00EABFEE /* BaseNavViewController.swift in Sources */,
 				849B476F29F1344E002E4C60 /* SushiCollectionViewCell.swift in Sources */,
 				849FB4E429F2274F002340F9 /* LoginViewModel.swift in Sources */,
+				849CA9372A009F82008779B0 /* MenuServiceView.swift in Sources */,
 				849FB4F029F24151002340F9 /* Validations.swift in Sources */,
+				84A013682A025BE400D4139E /* RecordFooterView.swift in Sources */,
 				849B475029F10E44002E4C60 /* NibOwnerLoadable.swift in Sources */,
 				843B3E7729F8F06100FB3969 /* OrderViewModel.swift in Sources */,
 			);

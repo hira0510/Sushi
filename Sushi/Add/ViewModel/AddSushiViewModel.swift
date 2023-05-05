@@ -12,6 +12,10 @@ import RxDataSources
 
 class AddSushiViewModel: BaseViewModel {
     
+    public var editModel: (menu: String, data: SushiModel?) = (menu: "", data: nil)
+    public var menuStrAry: [MenuStrModel] = []
+    public weak var delegate: AddSushiVcProtocol?
+    
     var mType: AddSushiVcType = .add
     var mName: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     var mNameEng: BehaviorRelay<String> = BehaviorRelay<String>(value: "")

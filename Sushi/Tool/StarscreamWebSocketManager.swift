@@ -7,11 +7,35 @@
 
 import UIKit
 import Starscream
+import MediaPlayer
 
 #warning("測試Server端網址：https://www.piesocket.com/websocket-tester")
 
+class AddOrderItem {
+    var table: String = ""
+    var item: String = ""
+    var itemPrice: String = ""
+    var numId: String = ""
+    
+    init(_ table: String, _ item: String, _ itemPrice: String, _ numId: String) {
+        self.table = table
+        self.item = item
+        self.itemPrice = itemPrice
+        self.numId = numId
+    }
+}
+
+enum ServiceType {
+    case service
+    case checkout
+}
+
 protocol StarscreamWebSocketManagerProtocol: AnyObject {
-    func getMin(_ str: String)
+    func getMin(_ min: Int, _ numId: String)
+    func otherHint(_ str: String, _ type: ServiceType)
+    func orderHint(data: AddOrderItem)
+    func alreadyArrived(_ numId: String)
+    func alreadyCheckedOut()
 }
 
 class StarscreamWebSocketManager: NSObject {
@@ -28,6 +52,8 @@ class StarscreamWebSocketManager: NSObject {
     }
     
     weak var delegate: StarscreamWebSocketManagerProtocol?
+    
+    private var soundEffectsPlayer: AVPlayer?
     private var webSocket: WebSocket?
     private let testPort = "8888"
     private let testWebSocketIP = "wss://socketsbay.com/wss/v2/1/demo/"
@@ -55,42 +81,70 @@ class StarscreamWebSocketManager: NSObject {
     
     func writeMsg(_ str: String) {
         webSocket?.write(string: str)
-        print(self.dateStr() + "\n🟢Client: " + str + "\n")
+        print(GlobalUtil.dateStr() + "\n🟢Client: " + str + "\n")
     }
     
-    func writeData(_ model: [SushiModel]) {
+    func writeData(_ model: [SushiModel], _ numId: Int) {
         let table = SuShiSingleton.share().getPassword()
-        writeMsg("桌號\(table) 點餐")
-        for data in model {
-            writeMsg(data.title)
+        var item: String = ""
+        var price: String = ""
+        for (i, data) in model.enumerated() {
+            item.append("\(data.title)")
+            price.append("\(data.money)")
+            if i < model.count - 1 {
+                item.append(",")
+                price.append(",")
+            }
         }
+        writeMsg("桌號:\(table):點餐:\(item):價格:\(price):單號:\(numId)")
     }
     
-    func getServiceText(_ str: String) { // ex: 桌號13,5分鐘
+    func getData(_ str: String) -> AddOrderItem {
+        let table = str.replacingOccurrences(of: "桌號:", with: "").components(separatedBy: [":", ","]).first ?? ""
+        let item = str.replacingOccurrences(of: "桌號:\(table):點餐:", with: "").components(separatedBy: [":"]).first ?? ""
+        let price = str.replacingOccurrences(of: "桌號:\(table):點餐:\(item):價格:", with: "").components(separatedBy: [":"]).first ?? ""
+        let numId = str.replacingOccurrences(of: "桌號:\(table):點餐:\(item):價格:\(price):單號:", with: "").components(separatedBy: [":"]).first ?? ""
+        return AddOrderItem(table, item, price, numId)
+    }
+    
+    func getServiceText(_ str: String) {
         let table = SuShiSingleton.share().getPassword()
-        if str.contains("桌號\(table)") && str.contains("分鐘") {
-            let parts = str.components(separatedBy: [","])
-            let minPart = parts.count == 2 ? String(parts[1]): "0"
-            let min = minPart.replacingOccurrences(of: "分鐘", with: "")
-            delegate?.getMin(min)
-        } else if str.contains("桌號\(table)") && str.contains("點餐") {
-            //這邊還沒好 想要做Server對Client傳送一些資訊
-            writeMsg("桌號13,5分鐘")
+        if str.contains("桌號:\(table)") && str.contains("分鐘") { //Client接收Server的時間
+            let table = str.replacingOccurrences(of: "桌號:", with: "").components(separatedBy: [":", ","]).first ?? ""
+            let min = str.replacingOccurrences(of: "桌號:\(table):分鐘:", with: "").components(separatedBy: [":", ","]).first ?? ""
+            let numId = str.replacingOccurrences(of: "桌號:\(table):分鐘:\(min):numId:", with: "").components(separatedBy: [":", ","]).first ?? ""
+            delegate?.getMin(min.toInt, numId)
+        } else if str.contains("桌號") && str.contains("點餐") { //Server接收Client的點餐項目
+            delegate?.orderHint(data: getData(str))
+            playTheSoundEffects(forResource: "record")
+        } else if str.contains("結帳桌號") { //Server接收Client的結帳通知
+            let table = str.replacingOccurrences(of: "結帳桌號", with: "")
+            playTheSoundEffects(forResource: "checkout")
+            delegate?.otherHint(table, .checkout)
+        } else if str.contains("服務桌號") { //Server接收Client的服務通知
+            let table = str.replacingOccurrences(of: "服務桌號", with: "")
+            playTheSoundEffects(forResource: "service")
+            delegate?.otherHint(table, .service)
+        } else if str.contains("桌號\(table)") && str.contains("已結清") { //Client接收Server的結清通知
+            delegate?.alreadyCheckedOut()
+        } else if str.contains("桌號\(table)") && str.contains("已送達") { //Client接收Server的送達通知
+            let numId = str.replacingOccurrences(of: "桌號\(table)已送達,numId:", with: "")
+            playTheSoundEffects(forResource: "arrived")
+            delegate?.alreadyArrived(numId)
         }
-    }
-    
-    private func dateStr() -> String {
-        let now = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = dateFormatter.string(from: now)
-        return date
     }
 
     // 設定Ping，來驗證及確保連線是正常的，並回傳一個 Pong
     @objc private func timerPing() {
         guard let data = "Ping".data(using: .utf16) else { return }
         webSocket?.write(ping: data)
+    }
+    
+    private func playTheSoundEffects(forResource: String) {
+        if let url = Bundle.main.url(forResource: forResource, withExtension: "mp3") {
+            soundEffectsPlayer = AVPlayer(url: url)
+            self.soundEffectsPlayer?.play()
+        }
     }
 }
  
@@ -101,28 +155,22 @@ extension StarscreamWebSocketManager: WebSocketDelegate {
             print("🟢🟢連線成功\n===========================")
         case .disconnected(let reason, _):
             print("🟢🟢結束\(reason)")
-            print(self.dateStr() + "\n🟢Server: " + "結束連接" + "\n===========================")
+            print(GlobalUtil.dateStr() + "\n🟢Server: " + "結束連接" + "\n===========================")
         case .text(let string):
-            print(self.dateStr() + "\n🟢Server: " + string + "\n")
+            print(GlobalUtil.dateStr() + "\n🟢Server: " + string + "\n")
             getServiceText(string)
         case .binary(let data):
             let text = String(data: data, encoding: .utf16) ?? ""
-            print(self.dateStr() + "\n🟢Server: " + text + "\n")
-        case .ping(let data): break
-//            guard let data = data else { return }
-//            let text = String(data: data, encoding: .utf16) ?? ""
-//            print(self.dateStr() + "🟢ping \(text)")
-        case .pong(let data): break
-//            guard let data = data else { return }
-//            let text = String(data: data, encoding: .utf16) ?? ""
-//            print(self.dateStr() + "🟢Pong \(text)")
+            print(GlobalUtil.dateStr() + "\n🟢Server: " + text + "\n")
+        case .ping: break
+        case .pong: break
         case .viabilityChanged(_):
             break
         case .reconnectSuggested(_):
             break
         case .cancelled:
             connect()
-            print(self.dateStr() + "\n🟢Server: " + "結束連接" + "\n")
+            print(GlobalUtil.dateStr() + "\n🟢Server: " + "結束連接" + "\n")
         case .error(let error):
             print("🟢失敗\(String(describing: error))")
         }

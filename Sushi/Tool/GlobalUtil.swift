@@ -11,6 +11,38 @@ import UIKit
 
 class GlobalUtil {
     
+    /// 回傳當前時間
+    ///
+    /// - Returns: TimeInterval（秒數）
+    static func getCurrentTime() -> TimeInterval {
+        return Date().timeIntervalSince1970
+    }
+    
+    static func dateStr() -> String {
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = dateFormatter.string(from: now)
+        return date
+    }
+    
+    ///  指定時間戳的西元年月日時
+    ///
+    /// - Parameter timeInterval: 指定時間戳
+    /// - Returns: 回傳西元年String
+    static func specificTimeIntervalStr(timeInterval: TimeInterval, format: String) -> String {
+        let timeInterval: TimeInterval = TimeInterval(timeInterval)
+        let date: Date = Date(timeIntervalSince1970: timeInterval)
+
+        let dateFormat: DateFormatter = DateFormatter()
+        dateFormat.dateFormat = format
+        dateFormat.locale = Locale(identifier: "zh_Hant_TW")
+        dateFormat.timeZone = TimeZone(identifier: "Asia/Taipei")
+        let dateFormatStr = String(dateFormat.string(from: date))
+
+        return dateFormatStr
+    }
+    
     /// 電池那邊的StatusBar高度
     static func statusBarHeight() -> CGFloat {
         let defaultH: CGFloat = UIScreen.main.bounds.height >= 812 ? 44 : 0

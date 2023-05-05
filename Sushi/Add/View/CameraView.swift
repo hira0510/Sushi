@@ -7,7 +7,7 @@
  
 import UIKit
 
-class CameraView: UIView {
+class CameraView: UIView, NibOwnerLoadable {
 
     @IBOutlet var mView: UIView!
     @IBOutlet weak var cameraButton: NGSCustomizableButton!
@@ -28,13 +28,7 @@ class CameraView: UIView {
     }
 
     private func commonInit() {
-        Bundle.main.loadNibNamed("CameraView", owner: self, options: nil)
-        addSubview(mView!)
-        mView.translatesAutoresizingMaskIntoConstraints = false
-        mView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        mView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        mView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        mView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        loadNibContent()
         
         cameraButton.addTarget(self, action: #selector(didClickCameraBtn), for: .touchUpInside)
         albumButton.addTarget(self, action: #selector(didClickAlbumBtn), for: .touchUpInside)

@@ -17,15 +17,12 @@ class WebViewViewController: BaseViewController {
     private var wkWebView: WKWebView = WKWebView()
     public var mUrl: String = ""
 
-    var didDismissVcHandler: (() -> Void)? = { }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUIWithDelegate()
     }
 
     // MARK: - 私有
-
     private func initWebView() {
         self.view.addSubview(wkWebView)
         wkWebView.navigationDelegate = self

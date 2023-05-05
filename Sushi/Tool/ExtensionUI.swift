@@ -51,6 +51,17 @@ extension UIColor {
     }
 }
 
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor?, for state: UIControl.State) {
+        let color = color ?? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        let colorImage = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1)).image { _ in
+          color.setFill()
+          UIBezierPath(rect: CGRect(x: 0, y: 0, width: 1, height: 1)).fill()
+        }
+        setBackgroundImage(colorImage, for: state)
+    }
+}
+
 extension UIView {
 
     @IBInspectable var cornerRadius: CGFloat {

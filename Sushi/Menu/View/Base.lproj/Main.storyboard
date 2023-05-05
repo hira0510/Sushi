@@ -379,63 +379,36 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HIq-bA-brU">
                                         <rect key="frame" x="10" y="74" width="410" height="51.666666666666657"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7IZ-wD-XkR" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eLA-Ay-epn" customClass="MenuServiceView" customModule="Sushi" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="130" height="51.666666666666664"/>
-                                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="點餐紀錄">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <state key="selected" title="Order Record"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
-                                                        <integer key="value" value="5"/>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" systemColor="systemOrangeColor"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="title" value="點餐紀錄"/>
                                                 </userDefinedRuntimeAttributes>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lH-rO-aRM" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ene-6J-vig" customClass="MenuServiceView" customModule="Sushi" customModuleProvider="target">
                                                 <rect key="frame" x="140" y="0.0" width="130" height="51.666666666666664"/>
-                                                <color key="backgroundColor" red="0.20392156862745098" green="0.65149694055944052" blue="0.22421082287810226" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="服務鈕">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <state key="selected" title="Service"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
-                                                        <integer key="value" value="5"/>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.20392156859999999" green="0.65098039220000004" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="title" value="服務"/>
                                                 </userDefinedRuntimeAttributes>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwq-lK-C5e" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Opb-Z3-4Am" customClass="MenuServiceView" customModule="Sushi" customModuleProvider="target">
                                                 <rect key="frame" x="280" y="0.0" width="130" height="51.666666666666664"/>
-                                                <color key="backgroundColor" systemColor="systemRedColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="結帳">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <state key="selected" title="Checkout"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
-                                                        <integer key="value" value="5"/>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.20080310314685315" green="0.73377403846153844" blue="0.62928868006993011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="title" value="結帳"/>
                                                 </userDefinedRuntimeAttributes>
-                                            </button>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -562,7 +535,7 @@
                 <customObject id="G9R-2X-UVD" customClass="MenuViews" customModule="Sushi" customModuleProvider="target">
                     <connections>
                         <outlet property="addNewBtn" destination="Ib3-fD-kvJ" id="EA6-Pk-Zg1"/>
-                        <outlet property="checkoutBtn" destination="Rwq-lK-C5e" id="JGD-Dn-vwa"/>
+                        <outlet property="checkoutView" destination="Opb-Z3-4Am" id="EMR-8Z-tJB"/>
                         <outlet property="deleteItemBtn" destination="0UW-i0-7MR" id="HRq-Ck-yae"/>
                         <outlet property="editBtn" destination="OVb-jH-OKF" id="SAi-Qh-Jjn"/>
                         <outlet property="languageInfoBtn" destination="zUE-vr-XW0" id="0Cw-um-Sal"/>
@@ -573,34 +546,25 @@
                         <outlet property="orderListView" destination="qMz-yy-0mF" id="w65-1I-giM"/>
                         <outlet property="plateInfoView" destination="1kC-Aq-rc9" id="bS6-Pb-3P7"/>
                         <outlet property="previousPageBtn" destination="2jd-7P-gmZ" id="ztu-NJ-abH"/>
-                        <outlet property="recordBtn" destination="7IZ-wD-XkR" id="6Bt-VH-2rL"/>
-                        <outlet property="serviceBtn" destination="3lH-rO-aRM" id="IQU-4K-YoR"/>
+                        <outlet property="recordView" destination="eLA-Ay-epn" id="pCU-c2-J2r"/>
+                        <outlet property="serviceView" destination="Ene-6J-vig" id="eMp-Xc-ii0"/>
                         <outlet property="sushiCollectionView" destination="290-eh-uE1" id="Fw0-1H-z1y"/>
                         <outlet property="timeInfoView" destination="Zsk-FB-edY" id="2qZ-n7-gB0"/>
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="410" y="-45"/>
+            <point key="canvasLocation" x="-303" y="-45"/>
         </scene>
     </scenes>
     <designables>
         <designable name="2jd-7P-gmZ">
             <size key="intrinsicContentSize" width="66" height="33"/>
         </designable>
-        <designable name="3lH-rO-aRM">
-            <size key="intrinsicContentSize" width="49" height="32"/>
-        </designable>
-        <designable name="7IZ-wD-XkR">
-            <size key="intrinsicContentSize" width="70" height="33"/>
-        </designable>
         <designable name="Ib3-fD-kvJ">
             <size key="intrinsicContentSize" width="30" height="38"/>
         </designable>
         <designable name="OVb-jH-OKF">
             <size key="intrinsicContentSize" width="31" height="30"/>
-        </designable>
-        <designable name="Rwq-lK-C5e">
-            <size key="intrinsicContentSize" width="33" height="32"/>
         </designable>
         <designable name="w8M-Ce-LEp">
             <size key="intrinsicContentSize" width="66" height="33"/>

@@ -13,6 +13,10 @@ class BaseViewController: UIViewController {
     internal lazy var bag: DisposeBag! = {
         return DisposeBag()
     }()
+    
+    deinit {
+        NSLog("\(self.className)釋放")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

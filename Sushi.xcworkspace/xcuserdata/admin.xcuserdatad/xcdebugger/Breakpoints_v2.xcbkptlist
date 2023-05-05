@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AAD57D89-C1B7-4A0A-91CA-0BD9DFB3F125"
+            uuid = "6724DC2C-C606-4F8F-B7E6-5B6A5AFAB2E7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sushi/Record/Controller/RecordViewController.swift"
+            filePath = "Sushi/Menu/View/MenuViews.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
+            landmarkName = "recordBtnAddTarget(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

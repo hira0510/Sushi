@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuServiceView" customModule="Sushi" customModuleProvider="target">
+            <connections>
+                <outlet property="hintView" destination="BaK-Du-gC9" id="zE3-23-Xwc"/>
+                <outlet property="mButton" destination="y4d-b2-hGs" id="6iC-DC-J0H"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="MenuServiceView" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="122" height="39"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y4d-b2-hGs" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                    <rect key="frame" x="3" y="3" width="116" height="33"/>
+                    <color key="backgroundColor" red="0.20392156859999999" green="0.65149694059999996" blue="0.2242108229" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="服務鈕">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <state key="selected" title="Service"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="RoundValue">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BaK-Du-gC9" customClass="NGSCustomizableView" customModule="Sushi" customModuleProvider="target">
+                    <rect key="frame" x="112" y="0.0" width="10" height="10"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="10" id="4DZ-S4-SV3"/>
+                        <constraint firstAttribute="height" constant="10" id="hBA-4m-Zf4"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="LeftTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="LeftBotton" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightTop" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="RightBottom" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="y4d-b2-hGs" secondAttribute="bottom" constant="3" id="Azw-Y3-xMm"/>
+                <constraint firstItem="BaK-Du-gC9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Cds-6o-AeF"/>
+                <constraint firstItem="y4d-b2-hGs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="3" id="LIy-P6-t9C"/>
+                <constraint firstItem="y4d-b2-hGs" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="fAy-ge-q25"/>
+                <constraint firstAttribute="trailing" secondItem="BaK-Du-gC9" secondAttribute="trailing" id="hBI-uT-nFR"/>
+                <constraint firstAttribute="trailing" secondItem="y4d-b2-hGs" secondAttribute="trailing" constant="3" id="yOz-Dh-MGr"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-76.33587786259541" y="-297.53521126760563"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="y4d-b2-hGs">
+            <size key="intrinsicContentSize" width="49" height="32"/>
+        </designable>
+    </designables>
+</document>

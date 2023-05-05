@@ -21,23 +21,23 @@ extension UIStoryboard {
 
     static func loadAddVC(delegate: AddSushiVcProtocol, menu: [MenuStrModel] = [], edit: (menu: String, data: SushiModel?) = (menu: "", data: nil)) -> AddSushiViewController {
         let vc = AddSushiViewController(nibName: "AddSushiViewController", bundle: nil)
-        vc.menuStrAry = menu
-        vc.editModel = edit
-        vc.delegate = delegate
+        vc.viewModel.menuStrAry = menu
+        vc.viewModel.editModel = edit
+        vc.viewModel.delegate = delegate
         return vc
     }
 
-    static func loadOrderVC(model: SushiModel, color: String, protocal: OrderVcProtocol) -> OrderViewController {
+    static func loadOrderVC(model: SushiModel, color: String, delegate: OrderVcProtocol) -> OrderViewController {
         let vc = OrderViewController(nibName: "OrderViewController", bundle: nil)
         vc.viewModel.setSushiModel(model)
         vc.viewModel.bgColor = color
-        vc.delegate = protocal
+        vc.viewModel.delegate = delegate
         return vc
     }
 
-    static func loadRecordVC(model: [SushiModel]) -> RecordViewController {
+    static func loadRecordVC(model: [SushiRecordModel]) -> RecordViewController {
         let vc = RecordViewController(nibName: "RecordViewController", bundle: nil)
-        vc.mModel = model.reversed()
+        vc.viewModel.mModel = model.reversed()
         return vc
     }
     
