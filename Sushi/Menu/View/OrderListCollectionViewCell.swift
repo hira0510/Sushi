@@ -16,11 +16,7 @@ protocol OrderListCellProtocol: AnyObject {
     func clickOrderBtn()
 }
 
-class OrderListCollectionViewCell: UICollectionViewCell {
-    
-    internal lazy var bag: DisposeBag! = {
-        return DisposeBag()
-    }()
+class OrderListCollectionViewCell: BaseCollectionViewCell {
     
     @IBOutlet weak var removeBtn: NGSCustomizableButton! {
         didSet {

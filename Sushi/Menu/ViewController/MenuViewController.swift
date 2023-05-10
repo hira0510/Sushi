@@ -23,7 +23,7 @@ class MenuViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         StarscreamWebSocketManager.shard.delegate = self
-        request()
+        getAllMenu()
         setupUI()
     }
     
@@ -37,8 +37,6 @@ class MenuViewController: BaseViewController {
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) -> Void in
         }, completion: { [weak self] (UIViewControllerTransitionCoordinatorContext) -> Void in
             guard let `self` = self else { return }
-            let orient = UIDevice.current.orientation
-            self.viewModel.orient = orient
             self.viewModel.menuCollectionFrame.accept(self.views.menuCollectionView.frame)
             self.viewModel.sushiCollectionFrame.accept(self.views.sushiCollectionView.frame)
             self.views.setupAdminServerView(self)
@@ -56,18 +54,45 @@ class MenuViewController: BaseViewController {
         views.addNewBtnAddTarget(self)
         views.checkoutBtnAddTarget(self)
         views.serviceBtnAddTarget(self)
+        views.cellTypeView.delegate = self
     }
     
     // MARK: - public
     /// 請求菜單api
-    public func request() {
-        viewModel.request().subscribe(onNext: { [weak self] (result) in
+    public func getAllMenu() {
+        viewModel.getAllMenu().subscribe(onNext: { [weak self] (result) in
             guard let `self` = self, result.count > 0 else { return }
             self.viewModel.menuModel.accept(result)
-            self.views.menuCollectionView.reloadData()
-            self.views.sushiCollectionView.reloadData()
+            self.viewModel.selectSushiItem.accept(1) 
         }).disposed(by: bag)
-    } 
+    }
+    /// 請求部分菜單
+    public func requestMenu(_ menuName: String) {
+        viewModel.requestMenu(menuName).subscribe(onNext: { [weak self] (result) in
+            guard let `self` = self else { return }
+            self.viewModel.updateMenuModel(result)
+        }).disposed(by: bag)
+    }
+    
+    /// 拖曳後更新api
+    func updateDropModel() {
+        let menu = viewModel.getMenu
+        viewModel.addData(.dropEditSushi(menu.menu), menu.getSushiData()).subscribe(onNext: { (result) in
+            StarscreamWebSocketManager.shard.writeMsg(["menu": menu.menu, "msg": "reloadData"])
+        }).disposed(by: bag)
+    }
+    
+    /// 編輯多選後更新api
+    func updateEditModel() {
+        let menu = viewModel.getMenu
+        viewModel.addData(.dropEditSushi(menu.menu), menu.getSushiData()).subscribe(onNext: { [weak self] result in
+            guard let `self` = self else { return }
+            self.addAndRemoveToast(txt: "刪除成功")
+            self.requestSuc(self.viewModel.getMenu.menu)
+            self.viewModel.deleteIndexAry.accept([])
+            self.viewModel.isNotEdit.accept(true)
+        }).disposed(by: bag)
+    }
 }
 
 // MARK: - CollectionView
@@ -88,25 +113,25 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let type: CollectionViewType = collectionView == views.menuCollectionView ? .menu: .sushi
         let model = viewModel.menuModel.value
         guard model.count > 0 else { return 0 }
-        let sections = viewModel.selectItem.value
-        return type == .menu ? model.count: model[sections].sushi.count
+        return type == .menu ? model.count: viewModel.getSushiData().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let type: CollectionViewType = collectionView == views.menuCollectionView ? .menu: .sushi
-        let model = viewModel.menuModel.value
-        let index = viewModel.selectItem.value
         switch type {
         case .menu:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuTitleCollectionViewCell", for: indexPath) as! MenuTitleCollectionViewCell
             let model = viewModel.menuModel.value
+            let section = viewModel.selectMenuItem.value
             guard model.count > indexPath.item else { return cell }
-            cell.cellConfig(model[indexPath.item], index == indexPath.item)
+            cell.cellConfig(model[indexPath.item], section == indexPath.item)
             return cell
         case .sushi:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiCollectionViewCell", for: indexPath) as! SushiCollectionViewCell
-            guard model.count > index else { return cell }
-            cell.cellConfig(model: model[index].sushi[indexPath.item])
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiContanerCollectionViewCell", for: indexPath) as! SushiContanerCollectionViewCell
+            let model = viewModel.getSushiData()
+            guard model.count > indexPath.item else { return cell } 
+            cell.cellConfig(model: model[indexPath.item].sushi, frame: viewModel.sushiCollectionFrame.value, color: unwrap(UIColor(hexString: model[indexPath.item].color), .clear), delegate: self)
+            cell.bindData(select: viewModel.selectSushiItem, layoutType: viewModel.layoutType, frame: viewModel.sushiCollectionFrame, isNotEdit: viewModel.isNotEdit, deleteAry: viewModel.deleteIndexAry)
             return cell
         }
     }
@@ -115,23 +140,9 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let type: CollectionViewType = collectionView == views.menuCollectionView ? .menu: .sushi
         switch type {
         case .menu:
-            viewModel.selectItem.accept(indexPath.item)
-        case .sushi:
-            if viewModel.isNotEdit.value {
-                let section = viewModel.selectItem.value
-                let model = viewModel.menuModel.value[section]
-                let sushi = model.sushi[indexPath.item]
-                if SuShiSingleton.share().getIsAdmin() {
-                    let vc = UIStoryboard.loadAddVC(delegate: self, edit: (model.menu, sushi))
-                    self.navigationController?.pushViewController(vc, animated: true)
-                } else {
-                    let vc = UIStoryboard.loadOrderVC(model: sushi, color: model.color, delegate: self)
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            } else {
-                let cell = collectionView.cellForItem(at: indexPath) as! SushiCollectionViewCell
-                cell.backgroundColor = .gray
-            }
+            viewModel.selectMenuItem.accept(indexPath.item)
+            viewModel.selectSushiItem.accept(indexPath.item + 1)
+        case .sushi: break
         }
     }
     
@@ -141,7 +152,8 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .menu:
             return CGSize(width: GlobalUtil.calculateWidthScaleWithSize(width: 70), height: viewModel.menuCollectionFrame.value.height)
         case .sushi:
-            return viewModel.getCellSize()
+            let frame = viewModel.sushiCollectionFrame.value
+            return CGSize(width: frame.width, height: frame.height)
         }
     }
     
@@ -156,10 +168,63 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if collectionView == views.menuCollectionView {
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    /// 偏移cell
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard scrollView == views.sushiCollectionView else { return }
+        let collectionWidth = viewModel.sushiCollectionFrame.value.width
+        let pageWidthFloat: CGFloat = CGFloat(collectionWidth)
+        // 偏移量
+        let offSetX: CGFloat = targetContentOffset.pointee.x
+        // 按照偏移量計算是第幾個cell
+        let pageCell = Int((offSetX + (collectionWidth / 2)) / collectionWidth)
+        let pageCellFloat: CGFloat = CGFloat(pageCell)
+        // 根據顯示第幾個cell來偏移
+        let index = viewModel.getSushiData().count - (viewModel.getSushiData().count - pageCell)
+        if offSetX > (index.toCGFloat * collectionWidth + collectionWidth / 2) {
+            targetContentOffset.pointee.x = (pageCellFloat + 1) * pageWidthFloat
         } else {
-            return UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
+            targetContentOffset.pointee.x = pageCellFloat * pageWidthFloat
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard scrollView == views.sushiCollectionView else { return }
+        let page = scrollView.contentOffset.x / scrollView.bounds.size.width
+        if page == 0 { // 当UIScrollView滑动到第一位停止时，将UIScrollView的偏移位置改变
+            viewModel.selectSushiItem.accept(viewModel.getSushiData().count - 2)
+        } else if page.toInt == (viewModel.getSushiData().count - 1) { // 当UIScrollView滑动到最后一位停止时，将UIScrollView的偏移位置改变
+            viewModel.selectSushiItem.accept(1)
+        } else {
+            viewModel.selectSushiItem.accept(page.toInt)
+        } 
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView == views.sushiCollectionView else { return }
+        var visibleRect = CGRect()
+        visibleRect.origin = scrollView.contentOffset
+        visibleRect.size = scrollView.bounds.size
+        // 拿取每次scroll後scrollView總偏移X的中間值
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        // 用偏移的point來計算當前cell是哪個indexPath
+        let indexPath = unwrap(views.sushiCollectionView.indexPathForItem(at: visiblePoint), IndexPath(item: 0, section: 0))
+        let page = indexPath.item
+        let modelCount = viewModel.menuModel.value.count
+        var selectIndex = 0
+ 
+        if page == 0 {
+            selectIndex = modelCount - 1
+        } else if page == viewModel.getSushiData().count - 1 {
+            selectIndex = 0
+        } else {
+            selectIndex = page - 1
+        }
+        
+        if viewModel.selectMenuItem.value != selectIndex && modelCount > selectIndex {
+            viewModel.selectMenuItem.accept(selectIndex)
         }
     }
 }
@@ -167,8 +232,9 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
 // MARK: - 新增品項Vc
 extension MenuViewController: AddSushiVcProtocol {
     /// Server新增品項後重新打api
-    func requestSuc() {
-        request()
+    func requestSuc(_ menuName: String) {
+        requestMenu(menuName)
+        StarscreamWebSocketManager.shard.writeMsg(["menu": menuName, "msg": "reloadData"])
     }
 }
 
@@ -240,7 +306,7 @@ extension MenuViewController: StarscreamWebSocketManagerProtocol {
     
     /// Client拿到Server傳送過來的等待時間
     func getMin(_ min: Int, _ numId: String) {
-         let timeStamp: TimeInterval = (min * 60).toDouble + GlobalUtil.getCurrentTime()
+         let timeStamp: TimeInterval = (min * 60).toTimeInterval + GlobalUtil.getCurrentTime()
          viewModel.setupRecordModel(timeStamp, numId)
          viewModel.orderTimeDic.accept(viewModel.orderTimeDic.value.merging([numId: timeStamp]){ (_, new) in new })
          views.addOrderTimer()
@@ -251,5 +317,45 @@ extension MenuViewController: StarscreamWebSocketManagerProtocol {
         viewModel.setupRecordModel(GlobalUtil.getCurrentTime(), numId)
         viewModel.orderTimeDic.accept(viewModel.orderTimeDic.value.merging([numId: 0]){ (_, new) in new })
         views.addOrderTimer()
+    }
+    
+    /// Client拿到Server傳送過來的Menu重新拿資料
+    func updateMenu(_ menuName: String) {
+        requestMenu(menuName)
+    }
+}
+// MARK: - WebSocket訊息處理
+extension MenuViewController: ToggleLayoutViewDelegate {
+    ///點擊切換layout類型
+    func onToggleLayoutClick(layoutType: ToggleLayoutView.LayoutType) {
+        self.viewModel.layoutType.accept(layoutType)
+    }
+}
+
+// MARK: - sushiCell
+extension MenuViewController: SushiContanerCellToMenuVcProtocol {
+    /// 到AddVC
+    func pushToAddVC(index: Int, sushi: SushiModel) {
+        let model = viewModel.getMenu
+        let vc = UIStoryboard.loadAddVC(type: .edit(index), delegate: self, edit: (model.menu, sushi))
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    /// 到OrderVC
+    func pushToOrderVC(sushi: SushiModel) {
+        let model = viewModel.getMenu
+        let vc = UIStoryboard.loadOrderVC(model: sushi, color: model.color, delegate: self)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    /// 編輯排序更新menuModel
+    func updateMenuModel(removeIndex: Int, insertIndex: Int, insertModel: SushiModel) {
+        let oldModel = viewModel.menuModel.value
+        oldModel[viewModel.selectMenuItem.value].sushi.remove(at: removeIndex)
+        oldModel[viewModel.selectMenuItem.value].sushi.insert(insertModel, at: insertIndex)
+        viewModel.menuModel.accept(oldModel)
+        self.updateDropModel()
+    }
+    /// 更新要刪除的IndexPath
+    func updateDeleteIndexAry(_ indexPath: [IndexPath]) {
+        viewModel.deleteIndexAry.accept(indexPath)
     }
 }

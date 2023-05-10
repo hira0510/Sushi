@@ -43,9 +43,9 @@ extension Dictionary {
             result.append("\(dic.key):\(dic.value) ")
         }
         return result
-    }
+    } 
     
-    var sortAry: [(String, TimeInterval)] {
+    var sortTimeAry: [(String, TimeInterval)] {
         guard let dic = self as? [String: TimeInterval] else { return [] }
         let sortedByKeyDictionary = dic.sorted { $0.1 > $1.1 }
 
@@ -56,12 +56,12 @@ extension Dictionary {
         return newArray
     }
 
-    var getSortKey: [String] {
-        return sortAry.map { $0.0 }
+    var getSortTimeKey: [String] {
+        return sortTimeAry.map { $0.0 }
     }
     
-    var getSortValue: [TimeInterval] {
-        return sortAry.map { $0.1 }
+    var getSortTimeValue: [TimeInterval] {
+        return sortTimeAry.map { $0.1 }
     }
 }
 
@@ -69,6 +69,12 @@ extension Dictionary {
 extension Int {
     var toDouble: Double {
         return Double(self)
+    }
+    var toCGFloat: CGFloat {
+        return CGFloat(self)
+    }
+    var toTimeInterval: TimeInterval {
+        return TimeInterval(self)
     }
     var toStr: String {
         return String(self)
@@ -80,6 +86,13 @@ extension Double {
     var toStr: String {
         return String(self)
     }
+    var toInt: Int {
+        return Int(self)
+    }
+}
+
+// MARK: - CGFloat
+extension CGFloat {
     var toInt: Int {
         return Int(self)
     }

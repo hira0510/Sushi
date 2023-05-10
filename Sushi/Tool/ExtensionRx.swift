@@ -98,6 +98,7 @@ extension Reactive where Base: UICollectionView {
             }
         }
     }
+    
     var reloadOrderData: Binder<[SushiModel]> {
         get {
             return Binder(self.base) { collectionView, _ in
@@ -109,6 +110,7 @@ extension Reactive where Base: UICollectionView {
     var allowsMultipleSelection: Binder<Bool> {
         get {
             return Binder(self.base) { collectionView, isNotEdit in
+                collectionView.dragInteractionEnabled = !isNotEdit
                 collectionView.allowsMultipleSelection = !isNotEdit
             }
         }
@@ -136,6 +138,30 @@ extension Reactive where Base: UICollectionView {
             return Binder(self.base) { collectionView, index in
                 guard collectionView.visibleCells.count > 0 else { return }
                 collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+            }
+        }
+    }
+    
+    var sushiScrollContentOffset: Binder<CGFloat> {
+        get {
+            return Binder(self.base) { collectionView, x in
+                collectionView.contentOffset = CGPoint(x: x, y: 0)
+            }
+        }
+    }
+    
+    /// Server取消選中所有被選中的cell
+    var cancelAllSelect: Binder<[IndexPath]> {
+        get {
+            return Binder(self.base) { collectionView, indexAry in
+                guard indexAry.isEmpty else { return }
+                var indexPathArr = unwrap(collectionView.indexPathsForSelectedItems, [])
+                for indexpah in indexPathArr {
+                    let cell = collectionView.cellForItem(at: indexpah) as! BaseCollectionViewCell
+                    cell.isSelectChangeBg(false)
+                    collectionView.deselectItem(at: indexpah, animated: true)//取消选中的状态
+                    indexPathArr = (collectionView.indexPathsForSelectedItems)!//所有被选中的cell的indexpath
+                }
             }
         }
     }

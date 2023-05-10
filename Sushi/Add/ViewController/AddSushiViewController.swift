@@ -11,9 +11,9 @@ import RxSwift
 import Kingfisher
 
 class AddSushiViewController: BaseViewController {
-    
+
     public let viewModel = AddSushiViewModel()
-    
+
     @IBOutlet weak var menuPickerView: UIPickerView! {
         didSet {
             let strAry = viewModel.menuStrAry.map { $0.title }
@@ -22,7 +22,7 @@ class AddSushiViewController: BaseViewController {
                 .disposed(by: bag)
         }
     }
-    
+
     @IBOutlet weak var previousBtn: UIButton! {
         didSet {
             previousBtn.rx.tap.subscribe { [weak self] event in
@@ -31,7 +31,7 @@ class AddSushiViewController: BaseViewController {
             }.disposed(by: bag)
         }
     }
-    
+
     @IBOutlet weak var mImageView: UIImageView! {
         didSet {
             viewModel.mImage.bind(to: mImageView.rx.image).disposed(by: bag)
@@ -40,7 +40,7 @@ class AddSushiViewController: BaseViewController {
             mImageView.addGestureRecognizer(myImageTouch)
         }
     }
-    
+
     @IBOutlet weak var nameTextField: UITextField! {
         didSet {
             _ = nameTextField.rx.textInput <-> viewModel.mName
@@ -50,7 +50,7 @@ class AddSushiViewController: BaseViewController {
             }).disposed(by: bag)
         }
     }
-    
+
     @IBOutlet weak var nameEngTextField: UITextField! {
         didSet {
             _ = nameEngTextField.rx.textInput <-> viewModel.mNameEng
@@ -60,7 +60,7 @@ class AddSushiViewController: BaseViewController {
             }).disposed(by: bag)
         }
     }
-    
+
     @IBOutlet weak var priceTextField: UITextField! {
         didSet {
             _ = priceTextField.rx.textInput <-> viewModel.mPrice
@@ -70,13 +70,13 @@ class AddSushiViewController: BaseViewController {
             }).disposed(by: bag)
         }
     }
-    
+
     @IBOutlet weak var sendBtn: NGSCustomizableButton! {
         didSet {
             Observable.combineLatest(viewModel.mName, viewModel.mNameEng, viewModel.mPrice, viewModel.mImage) { name, nameEng, price, img -> Bool in
                 return !name.isEmpty && !nameEng.isEmpty && !price.isEmpty && Validation().isValidPrice(price) && img != UIImage(named: "noImg")!
             }.map { $0 }.bind(to: sendBtn.rx.isEnabled).disposed(by: bag)
-            
+
             sendBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
                 if self.viewModel.mType == .add {
@@ -89,37 +89,36 @@ class AddSushiViewController: BaseViewController {
             }.disposed(by: bag)
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEditUI()
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
+
     // MARK: - private
     private func setupEditUI() {
         guard let model = viewModel.editModel.data, let img = URL(string: model.img) else { return }
         menuPickerView.isHidden = true
-        
-        viewModel.mType = .edit
+ 
         viewModel.mName.accept(model.title)
-        viewModel.mPrice.accept(model.money)
-        viewModel.mNameEng.accept(model.titleEng)
+        viewModel.mPrice.accept(model.price)
+        viewModel.mNameEng.accept(model.eng)
         mImageView.kf.setImage(with: img, placeholder: UIImage(named: "noImg"), options: [.transition(.fade(0.5)), .loadDiskFileSynchronously], completionHandler: { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let value):
-                self.viewModel.mTempEditImage.accept(value.image)
-                self.viewModel.mImage.accept(value.image)
-            case .failure(let error):
-                print("Error: \(error)")
-            }
-        })
+                guard let `self` = self else { return }
+                switch result {
+                case .success(let value):
+                    self.viewModel.mTempEditImage.accept(value.image)
+                    self.viewModel.mImage.accept(value.image)
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            })
     }
-    
+
     private func addStorageImage() {
         guard viewModel.mImage.value != viewModel.mTempEditImage.value else {
             if let img = viewModel.editModel.data?.img {
@@ -134,33 +133,29 @@ class AddSushiViewController: BaseViewController {
             self.addRequset(imgUrl)
         }).disposed(by: bag)
     }
-    
+
     private func addRequset(_ imgUrl: String) {
         let index = menuPickerView.selectedRow(inComponent: 0)
-        
-        let menu = viewModel.menuStrAry.count > index ? viewModel.menuStrAry[index].menu: self.viewModel.editModel.menu
-        let title = viewModel.mName.value
-        let eng = viewModel.mNameEng.value
-        let price = viewModel.mPrice.value
-        
-        Observable.zip(viewModel.addData(.titleEng(menu, title), price, eng), viewModel.addData(.money(menu, title), price, eng), viewModel.addData(.img(menu, title), price, eng, imgUrl: imgUrl)).subscribe(onNext: { [weak self] _, _, imgUrl in
+
+        let menu = viewModel.menuStrAry.count > index ? viewModel.menuStrAry[index].menu : self.viewModel.editModel.menu
+        let sushiCount = viewModel.mType == .add ? viewModel.menuStrAry[index].sushiCount: viewModel.mType.index
+        let model: SushiModel = viewModel.toSushiModel(imgUrl)
+        viewModel.addData(.addSushi(menu, sushiCount.toStr), model.toAnyObject()).subscribe(onNext: { [weak self] (result) in
             guard let `self` = self else { return }
-            self.removeToast()
-            self.addToast(txt: self.viewModel.mType == .add ? "新增成功": "修改成功")
-            self.viewModel.delegate?.requestSuc()
+            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增成功" : "修改成功")
+            self.viewModel.delegate?.requestSuc(menu)
         }).disposed(by: bag)
     }
-    
+
     private func editRequset() {
-        let menu = self.viewModel.editModel.menu
         let title = unwrap(self.viewModel.editModel.data?.title, "")
         
-        Observable.zip(self.viewModel.delData(.titleEng(menu, title)), self.viewModel.delData(.money(menu, title)), self.viewModel.delData(.img(menu, title)), self.viewModel.delStorageImg(title)).subscribe(onNext: { [weak self] _, _, _, _ in
+        viewModel.delStorageImg(title).subscribe(onNext: { [weak self] (result) in
             guard let `self` = self else { return }
             self.addStorageImage()
         }).disposed(by: bag)
     }
-    
+
     // MARK: - @objc
     /// 點擊相機
     @objc private func didClickCameraBtn() {

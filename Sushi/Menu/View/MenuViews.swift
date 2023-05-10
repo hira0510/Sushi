@@ -24,29 +24,24 @@ class MenuViews: NSObject {
 
     @IBOutlet weak var sushiCollectionView: UICollectionView! {
         didSet {
-            //切換頁面移至Top
-            viewModel.selectItem.bind(to: sushiCollectionView.rx.sushiScrollTop).disposed(by: bag)
-            //Server編輯時可多選
-            viewModel.isNotEdit.bind(to: sushiCollectionView.rx.allowsMultipleSelection).disposed(by: bag)
-            //Client結帳後不可點餐
-            SuShiSingleton.share().bindIsCheckout().bind(to: sushiCollectionView.rx.allowsSelection).disposed(by: bag)
-            //點擊menu選擇頁面＆拿到api時變更背景色
-            Observable.combineLatest(viewModel.selectItem, viewModel.menuModel) { index, model -> UIColor in
-                return model.count > 0 ? unwrap(UIColor(hexString: model[index].color), .clear) : .clear
-            }.map { $0 }.bind(to: sushiCollectionView.rx.backgroundColor).disposed(by: bag)
-            //點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
-            Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, SuShiSingleton.share().bindIsEng()) { index, _, _ -> Int in
-                return index
+            //手機更換方向時重整collectionView
+            Observable.combineLatest(viewModel.menuModel, viewModel.sushiCollectionFrame) { _, frame -> CGRect in
+                return frame
             }.map { $0 }.bind(to: sushiCollectionView.rx.reloadData).disposed(by: bag)
+            
+            //選擇頁面時頁面滑至同index
+            Observable.combineLatest(viewModel.selectSushiItem, viewModel.sushiCollectionFrame) { index, frame -> CGFloat in
+                return index.toCGFloat * frame.width
+            }.map { $0 }.bind(to: sushiCollectionView.rx.sushiScrollContentOffset).disposed(by: bag)
         }
     }
     
     @IBOutlet weak var menuCollectionView: UICollectionView! {
         didSet {
             //點擊menu選擇頁面時頁面滑至同index
-            viewModel.selectItem.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag)
-            //點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
-            Observable.combineLatest(viewModel.selectItem, viewModel.sushiCollectionFrame, SuShiSingleton.share().bindIsEng()) { index, _, _ -> Int in
+            viewModel.selectMenuItem.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag)
+            //拿到資料&拿到點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
+            Observable.combineLatest(viewModel.menuModel, viewModel.selectMenuItem, viewModel.menuCollectionFrame, SuShiSingleton.share().bindIsEng()) { _, index, _, _ -> Int in
                 return index
             }.map { $0 }.bind(to: menuCollectionView.rx.reloadData).disposed(by: bag)
         }
@@ -103,8 +98,13 @@ class MenuViews: NSObject {
             //點擊上一頁
             previousPageBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
-                guard self.viewModel.selectItem.value > 0 else { return }
-                self.viewModel.selectItem.accept(self.viewModel.selectItem.value - 1)
+                if self.viewModel.selectMenuItem.value == 0 { //如果是第一頁就做特殊處理到最後一頁
+                    self.viewModel.selectMenuItem.accept(self.viewModel.menuModel.value.count - 1)
+                    self.viewModel.selectSushiItem.accept(self.viewModel.getSushiData().count - 2)
+                } else {
+                    self.viewModel.selectMenuItem.accept(self.viewModel.selectMenuItem.value - 1)
+                    self.viewModel.selectSushiItem.accept(self.viewModel.selectSushiItem.value - 1)
+                }
             }.disposed(by: bag)
         }
     }
@@ -116,8 +116,13 @@ class MenuViews: NSObject {
             //點擊下一頁
             nextPageBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
-                guard self.viewModel.selectItem.value < self.viewModel.menuModel.value.count - 1 else { return }
-                self.viewModel.selectItem.accept(self.viewModel.selectItem.value + 1)
+                if self.viewModel.selectSushiItem.value + 1 == self.viewModel.getSushiData().count - 1 { //如果是最後一頁就做特殊處理到第一頁
+                    self.viewModel.selectMenuItem.accept(0)
+                    self.viewModel.selectSushiItem.accept(1)
+                } else {
+                    self.viewModel.selectMenuItem.accept(self.viewModel.selectMenuItem.value + 1)
+                    self.viewModel.selectSushiItem.accept(self.viewModel.selectSushiItem.value + 1)
+                }
             }.disposed(by: bag)
         }
     }
@@ -156,6 +161,7 @@ class MenuViews: NSObject {
         }
     }
     
+    @IBOutlet weak var cellTypeView: ToggleLayoutView!
     @IBOutlet weak var addNewBtn: NGSCustomizableButton! {
         didSet {
             //Server端出現新增按鈕
@@ -177,9 +183,6 @@ class MenuViews: NSObject {
             }.do { [weak self] isSelect in
                 guard let `self` = self else { return }
                 self.viewModel.isNotEdit.accept(!isSelect)
-                if !isSelect { //取消時所有cell不被選中
-                    self.cancelSelect()
-                }
             }.bind(to: editBtn.rx.isSelected).disposed(by: bag)
         }
     }
@@ -209,7 +212,8 @@ class MenuViews: NSObject {
         menuCollectionView.register(MenuTitleCollectionViewCell.nib, forCellWithReuseIdentifier: "MenuTitleCollectionViewCell")
         sushiCollectionView.delegate = vc
         sushiCollectionView.dataSource = vc
-        sushiCollectionView.register(SushiCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiCollectionViewCell")
+        sushiCollectionView.decelerationRate = .init(rawValue: 0.1)
+        sushiCollectionView.register(SushiContanerCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiContanerCollectionViewCell")
     }
     
     /// Client端送達時間計時分鐘
@@ -223,7 +227,7 @@ class MenuViews: NSObject {
     /// 送達時間更新
     @objc func timerReciprocal() {
         //找出最久的時間顯示在螢幕
-        let maxTimeStamp = unwrap(self.viewModel.orderTimeDic.value.getSortValue.first, 0)
+        let maxTimeStamp = unwrap(self.viewModel.orderTimeDic.value.getSortTimeValue.first, 0)
         guard maxTimeStamp > GlobalUtil.getCurrentTime() else {
             self.viewModel.orderTimeStr.accept("0")
             self.orderTimer?.invalidate()
@@ -232,17 +236,6 @@ class MenuViews: NSObject {
         }
         let waitMin = ((maxTimeStamp - GlobalUtil.getCurrentTime()) / 60) + 1
         self.viewModel.orderTimeStr.accept(waitMin.toInt.toStr)
-    }
-    
-    /// Server取消選中所有被選中的cell
-    func cancelSelect() {
-        var indexPathArr = unwrap(self.sushiCollectionView.indexPathsForSelectedItems, [])
-        for indexpah in indexPathArr {
-            let cell: SushiCollectionViewCell = self.sushiCollectionView.cellForItem(at: indexpah) as!SushiCollectionViewCell
-            self.sushiCollectionView.deselectItem(at: indexpah, animated: true)//取消选中的状态
-            cell.isSelected = false
-            indexPathArr = (self.sushiCollectionView.indexPathsForSelectedItems)!//所有被选中的cell的indexpath
-        }
     }
     
     /// Client變更懸浮點餐View的Constraint
@@ -257,18 +250,18 @@ class MenuViews: NSObject {
                 btn.isHidden = !isOpen
             }
             
-            let oneCell = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 70)
-            let allCell = oneCell.rounded(.down) * model.count.toDouble
-            let allCellSpace: Double = (model.count - 1).toDouble * 5
-            let edge = 10.0
-            let tool = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 60) + 2.0
-            let screenW = UIScreen.main.bounds.width
+            let oneCell: CGFloat = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 70)
+            let allCell: CGFloat = oneCell.rounded(.down) * model.count.toCGFloat
+            let allCellSpace: CGFloat = (model.count - 1).toCGFloat * 5
+            let edge: CGFloat = 10.0
+            let tool: CGFloat = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 60) + 2
+            let screenW: CGFloat = UIScreen.main.bounds.width
             let safeArea = UIApplication.safeArea
-            let maxW = screenW - 70 - tool - (viewModel.orient == .portrait ? 0: safeArea.left + safeArea.right)
+            let maxW: CGFloat = screenW - 70 - tool - (GlobalUtil.isPortrait() ? 0: safeArea.left + safeArea.right)
             
             if isOpen {
-                let rightConstant = screenW - (tool + allCell + allCellSpace + edge + 70)
-                let resultContant = allCell + allCellSpace + edge
+                let rightConstant: CGFloat = screenW - (tool + allCell + allCellSpace + edge + 70)
+                let resultContant: CGFloat = allCell + allCellSpace + edge
                 self.orderListViewRightConstraints?.update(offset: rightConstant <= 0 ? 0: rightConstant)
                 self.orderListView.setCollectionWConstraint(resultContant > maxW ? maxW: resultContant)
             } else {
@@ -284,27 +277,26 @@ class MenuViews: NSObject {
     func deleteItemBtnAddTarget(_ baseVc: MenuViewController) {
         deleteItemBtn.rx.tap.subscribe { [weak self] event in
             guard let `self` = self else { return }
-            let indexPathArr = unwrap(self.sushiCollectionView.indexPathsForSelectedItems, [])
+            let indexPathArr = viewModel.deleteIndexAry.value.sorted(by: >)
             guard indexPathArr.count > 0 else { return }
+            let oldModel = self.viewModel.menuModel.value
             baseVc.addToast(txt: "刪除中...", type: .sending)
             
             Observable.from(indexPathArr).enumerated().flatMap { [weak self] indexPath -> Observable<Int> in
                 guard let `self` = self else { return Observable.just(-1) }
-                return self.viewModel.delData(indexPath.element.item)
+                oldModel[self.viewModel.selectMenuItem.value].sushi.remove(at: indexPath.element.item)
+                return Observable.just(indexPath.element.item)
             }.subscribe(onNext: { [weak self] index in
                 guard let `self` = self, index == indexPathArr.last?.item else { return }
-                baseVc.removeToast()
-                baseVc.addToast(txt: "刪除成功")
-                baseVc.request()
-                self.cancelSelect()
-                self.viewModel.isNotEdit.accept(true)
+                self.viewModel.menuModel.accept(oldModel)
+                baseVc.updateEditModel()
             }).disposed(by: bag)
         }.disposed(by: bag)
     }
     
     /// 點擊菜單_開啟官網Menu
     func menuInfoViewAddTarget(_ baseVc: MenuViewController) {
-        menuInfoView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in 
+        menuInfoView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
             let vc = UIStoryboard.loadWebViewVC(url: "https://www.sushiexpress.com.tw/sushi-express/Menu?c=Gunkan")
             baseVc.present(vc, animated: true)
         }).disposed(by: bag)
@@ -317,7 +309,7 @@ class MenuViews: NSObject {
             let model = viewModel.menuModel.value
             guard model.count > 0 else { return }
             let menu: [MenuStrModel] = MenuStrModel().getAry(model)
-            let vc = UIStoryboard.loadAddVC(delegate: baseVc, menu: menu)
+            let vc = UIStoryboard.loadAddVC(type: .add, delegate: baseVc, menu: menu)
             baseVc.navigationController?.pushViewController(vc, animated: true)
         }.disposed(by: bag)
     }
@@ -367,15 +359,7 @@ class MenuViews: NSObject {
     
     /// 重新設置通知View的Constraints跟資料
     func setupAdminServerView(_ baseVc: BaseViewController, _ view: UIView? = nil) {
-        if !baseVc.view.subviews.contains(adminServerView) {
-            baseVc.view.addSubview(adminServerView)
-            adminServerView.snp.makeConstraints { make in
-                make.top.equalToSuperview()
-                make.left.equalToSuperview()
-                make.right.equalToSuperview()
-                make.bottom.equalTo(recordView.snp.top).offset(-3)
-            }
-        }
+        guard SuShiSingleton.share().getIsAdmin() else { return }
         
         //如果只是為了橫式轉方向就不往下執行
         guard let views = view else {
@@ -391,18 +375,28 @@ class MenuViews: NSObject {
             return
         }
         
+        if !baseVc.view.subviews.contains(adminServerView) {
+            baseVc.view.addSubview(adminServerView)
+            adminServerView.snp.makeConstraints { make in
+                make.top.equalToSuperview()
+                make.left.equalToSuperview()
+                make.right.equalToSuperview()
+                make.bottom.equalTo(recordView.snp.top).offset(-3)
+            }
+        }
+        
         if views == recordView {
             let recordModel = viewModel.orderSqlite.readData()
             adminServerView.setupType(.record(recordModel))
             UserDefaults.standard.recordHintIsHidden = true
         } else if views == checkoutView {
-            let tableAry = UserDefaults.standard.checkoutTableAry.getSortKey
-            let timeAry = UserDefaults.standard.checkoutTableAry.getSortValue
+            let tableAry = UserDefaults.standard.checkoutTableAry.getSortTimeKey
+            let timeAry = UserDefaults.standard.checkoutTableAry.getSortTimeValue
             let recordModel = viewModel.orderSqlite.readUniteData(tableAry: tableAry)
             adminServerView.setupType(.checkout(recordModel, timeAry))
             UserDefaults.standard.checkoutHintIsHidden = true
         } else if views == serviceView {
-            let sortAry = UserDefaults.standard.serviceTableAry.sortAry
+            let sortAry = UserDefaults.standard.serviceTableAry.sortTimeAry
             adminServerView.setupType(.service(sortAry))
             UserDefaults.standard.serviceHintIsHidden = true
         }

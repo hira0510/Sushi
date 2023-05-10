@@ -19,11 +19,12 @@ extension UIStoryboard {
         return vc
     }
 
-    static func loadAddVC(delegate: AddSushiVcProtocol, menu: [MenuStrModel] = [], edit: (menu: String, data: SushiModel?) = (menu: "", data: nil)) -> AddSushiViewController {
+    static func loadAddVC(type: AddSushiVcType, delegate: AddSushiVcProtocol, menu: [MenuStrModel] = [], edit: (menu: String, data: SushiModel?) = (menu: "", data: nil)) -> AddSushiViewController {
         let vc = AddSushiViewController(nibName: "AddSushiViewController", bundle: nil)
         vc.viewModel.menuStrAry = menu
         vc.viewModel.editModel = edit
         vc.viewModel.delegate = delegate
+        vc.viewModel.mType = type
         return vc
     }
 

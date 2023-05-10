@@ -13,15 +13,19 @@ import RxSwift
 import RxCocoa
 
 enum WhiteType {
-    case img(_ menu: String, _ title: String)
-    case titleEng(_ menu: String, _ title: String)
-    case money(_ menu: String, _ title: String)
+    case addSushi(_ menu: String, _ index: String)
+    case dropEditSushi(_ menu: String)
     
+    var indexStr: String {
+        switch self {
+        case .addSushi(_, let index): return index
+        case .dropEditSushi: return "-1"
+        }
+    }
     var pathStr: String {
         switch self {
-        case .img(let menu, let title): return "Data/\(menu)/sushiImg/\(title)"
-        case .titleEng(let menu, let title): return "Data/\(menu)/sushiEng/\(title)"
-        case .money(let menu, let title): return "Data/\(menu)/sushiMoney/\(title)"
+        case .addSushi(let menu, let index): return "Data/\(menu)/sushi/\(index)"
+        case .dropEditSushi(let menu): return "Data/\(menu)/sushi"
         }
     }
 }
@@ -57,22 +61,34 @@ class FireBaseManager: NSObject {
     }
 
     typealias CompletionHandler = (_ model: MenuModelData?) -> ()
+    typealias CompletionDataHandler = (_ data: MenuModel?) -> ()
     typealias WriteCompletionHandler = (Bool?) -> ()
     typealias StorageCompletionHandler = (String?) -> ()
     
     /// 拿全部資料api
-    func ref(completionHandler: @escaping CompletionHandler) {
-        let ref = Database.database().reference(withPath: "Data")
-        ref.observe(.value) { snapshot in
-            if let output = snapshot.value {
+    func getAllMenu(completionHandler: @escaping CompletionHandler) {
+        let ref = Database.database().reference()
+        ref.child("Data").getData { _, snapshot in
+            if let output = snapshot?.value {
                 return completionHandler(MenuModelData(output))
             }
         }
         return completionHandler(nil)
     }
     
+    /// 拿指定menu資料api
+    func getMenu(menuName: String, completionHandler: @escaping CompletionDataHandler) {
+        let ref = Database.database().reference()
+        ref.child("Data/\(menuName)").getData { _, snapshot in
+            if let output = snapshot?.value {
+                return completionHandler(MenuModel().data(menuName, output))
+            }
+        }
+        return completionHandler(nil)
+    }
+    
     /// 新增品項api
-    func addDatabase(type: WhiteType, value: String, completionHandler: @escaping WriteCompletionHandler) {
+    func addDatabase(type: WhiteType, value: [String : Any], completionHandler: @escaping WriteCompletionHandler) {
         let ref = Database.database().reference()
         ref.child(type.pathStr).setValue(value) { error, databaseReference in
             if error != nil {

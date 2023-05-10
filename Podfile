@@ -18,7 +18,7 @@ target 'Sushi' do
   pod 'Kingfisher', '5.13.4'
   pod 'SnapKit'
   pod 'Starscream', '4.0.4'
-  pod 'SQLite.swift'
+  pod 'SQLite.swift' 
 
   target 'SushiTests' do
     inherit! :search_paths
@@ -32,10 +32,12 @@ target 'Sushi' do
 end
 
 post_install do |installer|
+
   installer.pods_project.build_configurations.each do |config|
     config.build_settings.delete('CODE_SIGNING_ALLOWED')
     config.build_settings.delete('CODE_SIGNING_REQUIRED')
   end
+
   installer.generated_projects.each do |project|
     project.targets.each do |target|
         target.build_configurations.each do |config|
@@ -43,4 +45,5 @@ post_install do |installer|
          end
     end
   end
+
 end

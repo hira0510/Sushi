@@ -107,7 +107,7 @@ class ServerView: BaseView {
             guard let `self` = self, let newDic = dic else { return }
             guard self.getType() == .service() else { return }
             UserDefaults.standard.serviceHintIsHidden = true
-            self.setupType(.service(newDic.sortAry))
+            self.setupType(.service(newDic.sortTimeAry))
         }).disposed(by: bag)
 
         //如果當前在結帳通知頁面就不用顯示紅點
@@ -116,7 +116,7 @@ class ServerView: BaseView {
             guard self.getType() == .checkout() else { return }
             let sql = OrderSQLite()
             UserDefaults.standard.checkoutHintIsHidden = true
-            self.setupType(.checkout(sql.readUniteData(tableAry: newDic.getSortKey), newDic.getSortValue))
+            self.setupType(.checkout(sql.readUniteData(tableAry: newDic.getSortTimeKey), newDic.getSortTimeValue))
         }).disposed(by: bag)
     }
 

@@ -22,6 +22,7 @@ protocol StarscreamWebSocketManagerProtocol: AnyObject {
     func orderHint(data: AddOrderItem)
     func alreadyArrived(_ numId: String)
     func alreadyCheckedOut()
+    func updateMenu(_ menuName: String)
 }
 
 class StarscreamWebSocketManager: NSObject {
@@ -96,6 +97,9 @@ class StarscreamWebSocketManager: NSObject {
                 playTheSoundEffects(forResource: "arrived")
                 delegate?.alreadyArrived(unwrap(dic["numId"], ""))
             }
+        }
+        if dic.keys.contains("menu") && dic["msg"] == "reloadData" {
+            delegate?.updateMenu(unwrap(dic["menu"], ""))
         }
     }
     

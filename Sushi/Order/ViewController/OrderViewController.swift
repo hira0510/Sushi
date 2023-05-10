@@ -76,9 +76,9 @@ class OrderViewController: BaseViewController {
         let modelObserver: Binder<SushiModel> = Binder(self) { [weak self] vc, model in
             guard let `self` = self else { return }
             if SuShiSingleton.share().getIsEng() {
-                vc.mTitleLabel.text = model.titleEng
+                vc.mTitleLabel.text = model.eng
             } else {
-                vc.mTitleLabel.attributedText = self.viewModel.setAttributedString(model.title, model.titleEng)
+                vc.mTitleLabel.attributedText = self.viewModel.setAttributedString(model.title, model.eng)
             }
             if let url = URL(string: model.img) {
                 vc.mImageView.kf.setImage(with: url, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously])

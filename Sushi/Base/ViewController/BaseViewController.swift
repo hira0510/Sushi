@@ -42,6 +42,13 @@ class BaseViewController: UIViewController {
         self.view.addSubview(toastView)
     }
     
+    public func addAndRemoveToast(txt: String, type: ToastType = .autoRemove) {
+        self.removeToast()
+        let toastView = ToastView(frame: self.view.frame, text: txt)
+        toastView.type = type
+        self.view.addSubview(toastView)
+    }
+    
     // MARK: - private
     /// 加入返回上一頁的手勢
     private func addPanGestureRecognizer() {

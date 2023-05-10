@@ -14,8 +14,7 @@ protocol MenuVcProtocol: AnyObject {
 }
 
 class MenuViewModel: BaseViewModel {
-    
-    var orient: UIDeviceOrientation = .unknown
+     
     var sushiCollectionFrame: BehaviorRelay<CGRect> = BehaviorRelay<CGRect>(value: .zero)
     var menuCollectionFrame: BehaviorRelay<CGRect> = BehaviorRelay<CGRect>(value: .zero)
     
@@ -24,13 +23,17 @@ class MenuViewModel: BaseViewModel {
     /// 懸浮點餐view是否展開
     var orderIsOpen: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: true)
     /// 選擇的menu Index
-    var selectItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+    var selectMenuItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+    /// 選擇的Sushi Index 特殊處理從1開始
+    var selectSushiItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     /// api的menu資料
     var menuModel: BehaviorRelay<[MenuModel]> = BehaviorRelay<[MenuModel]>(value: [])
     /// 點餐紀錄暫時資料
     var orderModel: BehaviorRelay<[SushiModel]> = BehaviorRelay<[SushiModel]>(value: [])
     /// 點餐紀錄資料
     var recordModel: BehaviorRelay<[SushiRecordModel]> = BehaviorRelay<[SushiRecordModel]>(value: [])
+    /// 刪除sushiModel的indexPath
+    var deleteIndexAry: BehaviorRelay<[IndexPath]> = BehaviorRelay<[IndexPath]>(value: [])
     /// Client計算送出餐點次數
     var sendOrderCount: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     
@@ -38,7 +41,33 @@ class MenuViewModel: BaseViewModel {
     var orderTimeDic: BehaviorRelay<Dictionary<String, TimeInterval>> = BehaviorRelay<Dictionary<String, TimeInterval>>(value: [:])
     /// 餐點的最慢等待時間
     var orderTimeStr: BehaviorRelay<String> = BehaviorRelay<String>(value: "0")
+    /// 佈局樣式
+    var layoutType: BehaviorRelay<ToggleLayoutView.LayoutType> = BehaviorRelay<ToggleLayoutView.LayoutType>(value: .grid)
+    
     weak var delegate: MenuVcProtocol?
+    
+    var getMenu: MenuModel {
+        return menuModel.value.count > selectMenuItem.value ? menuModel.value[selectMenuItem.value]: MenuModel()
+    }
+    
+    /// 拿到特殊處理的menu資料
+    func getSushiData() -> [MenuModel] {
+        var newArray: [MenuModel] = menuModel.value
+
+        guard let last = newArray.last, let first = newArray.first else { return newArray }
+        newArray.insert(last, at: 0)
+        newArray.append(first)
+        return newArray
+    }
+    
+    /// 替換掉一整頁menu
+    func updateMenuModel(_ data: MenuModel) {
+        var oldModel = menuModel.value
+        let findIndex = (oldModel.map{ $0.menu }).firstIndex(of: data.menu) ?? 0
+        guard oldModel.count > findIndex else { return }
+        oldModel[findIndex] = data
+        menuModel.accept(oldModel)
+    }
     
     /// Client刪除單一點餐項目
     func clickRemoveItem(_ model: SushiModel?) {
@@ -78,7 +107,7 @@ class MenuViewModel: BaseViewModel {
         var price: String = ""
         for (i, data) in model.enumerated() {
             item.append(data.title)
-            price.append(data.money)
+            price.append(data.price)
             if i < model.count - 1 {
                 item.append(",")
                 price.append(",")
@@ -89,12 +118,12 @@ class MenuViewModel: BaseViewModel {
     
     /// Server編輯刪除品項api
     public func delData(_ index: Int) -> Observable<Int> {
-        let menu = menuModel.value[selectItem.value].menu
-        let title = menuModel.value[selectItem.value].sushi[index].title
+        let menu = getMenu.menu
+        let title = getMenu.sushi[index].title
         
         let json: Observable<Int> = Observable.create { [weak self] (observer) -> Disposable in
             guard let `self` = self else { return Disposables.create() }
-            Observable.zip(self.delData(.titleEng(menu, title)), self.delData(.money(menu, title)), self.delData(.img(menu, title)), self.delStorageImg(title)).subscribe(onNext: { _, _, _, _ in
+            Observable.zip(self.delData(.addSushi(menu, index.toStr)), self.delStorageImg(title)).subscribe(onNext: { _, _ in
                 observer.onNext(index)
                 observer.onCompleted()
             }).disposed(by: bag)
@@ -104,33 +133,10 @@ class MenuViewModel: BaseViewModel {
     }
 
     func getHSpace(_ type: CollectionViewType) -> CGFloat {
-        return type == .menu ? 5 : 10
+        return type == .menu ? 5 : 0
     }
 
     func getWSpace(_ type: CollectionViewType) -> CGFloat {
-        return type == .menu ? 5 : 10
-    }
-
-    func getColumn() -> Int {
-        switch orient {
-        case .landscapeLeft, .landscapeRight: return 4
-        case .portrait, .portraitUpsideDown: return 2
-        default:
-            self.orient = GlobalUtil.isPortrait() ? .portrait: .landscapeLeft
-            return getColumn()
-        }
-    }
-
-    /// 拿取cell的寬高
-    func getCellSize() -> CGSize {
-        let wSpace = getWSpace(.sushi)
-        //w
-        let cellSpaceWidth = wSpace * (getColumn().toDouble - 1)
-        let cellAllWidth = floor(sushiCollectionFrame.value.width - 20) - cellSpaceWidth
-        let cellMaxWidth = (cellAllWidth / getColumn().toDouble).rounded(.down)
-        //h
-        let cellMaxHeight = cellMaxWidth / 130 * 135
-
-        return CGSize(width: cellMaxWidth, height: cellMaxHeight)
+        return type == .menu ? 5 : 0
     }
 }

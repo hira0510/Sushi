@@ -16,19 +16,23 @@ class MenuStrModel: NSObject {
     
     var menu: String = ""
     var title: String = ""
+    var sushiCount: Int = 0
     
-    init(_ menu: String = "", _ title: String = "") {
+    init(_ menu: String = "", _ title: String = "", _ count: Int = 0) {
         self.menu = menu
         self.title = title
+        self.sushiCount = count
     }
     
     func getAry(_ model: [MenuModel]) -> [MenuStrModel] {
-        let title = model.map { $0.title }
-        let menu = model.map { $0.menu }
+        let titles = model.map { $0.title }
+        let menus = model.map { $0.menu }
+        let sushiCount = model.map { $0.sushi.count }
         
-        var resultAry: [MenuStrModel] = []
-        resultAry = zip(menu, title).map() {
-            return MenuStrModel($0, $1)
+        var resultAry: [MenuStrModel] = [] 
+        
+        for (menu, title, count) in zip(menus, titles, sushiCount) {
+            resultAry.append(MenuStrModel(menu, title, count))
         }
         return resultAry
     }
@@ -64,53 +68,58 @@ class MenuModel: NSObject {
     var color: String = ""
     var sushi: [SushiModel] = []
     
-    init(_ menu: Any? = nil, _ title: Any? = nil, _ titleEng: Any? = nil, _ color: Any? = nil, _ sushiImg: [SushiModel] = []) {
+    init(_ menu: Any? = nil, _ title: Any? = nil, _ titleEng: Any? = nil, _ color: Any? = nil, _ sushi: [SushiModel] = []) {
         self.menu = menu.toStr()
         self.title = title.toStr()
         self.titleEng = titleEng.toStr()
         self.color = color.toStr()
-        self.sushi = sushiImg
+        self.sushi = sushi
     }
     
     func data(_ menuIndexStr: Any, _ menu: Any) -> MenuModel {
-        if let menu = menu as? [String: Any] {
-            var resultAry: [SushiModel] = []
-            var titleAry: [String] = []
-            var titleEngAry: [String] = []
-            var imgAry: [String] = []
-            var moneyAry: [String] = []
-            if let sushiImg = menu["sushiEng"] as? [String: String] {
-                titleAry = sushiImg.keys.map { $0 }
-                titleEngAry = sushiImg.values.map { $0 }
+        if let menu = menu as? [String: Any], let sushi = menu["sushi"] as? [Any] {
+            if let data = try? JSONSerialization.data(withJSONObject: sushi, options: []), let resultAry = try? JSONDecoder().decode([SushiModel].self, from: data) {
+                return MenuModel(menuIndexStr, menu["title"], menu["titleEng"], menu["color"], resultAry)
             }
-            if let sushiImg = menu["sushiImg"] as? [String: String] {
-                imgAry = sushiImg.values.map { $0 }
-            }
-            if let sushiImg = menu["sushiMoney"] as? [String: String] {
-                moneyAry = sushiImg.values.map { $0 }
-            }
-            
-            for (title, titleEng, img, money) in zip(titleAry, titleEngAry, imgAry, moneyAry) {
-                resultAry.append(SushiModel(title, titleEng, img, money))
-            }
-            return MenuModel(menuIndexStr, menu["title"], menu["titleEng"], menu["color"], resultAry)
         }
         return MenuModel()
     }
+    
+    func getSushiData() -> [String: Any] {
+        var result: [String: Any] = [:]
+        var snapshotValue: [String: Any] = [:]
+        for (i, data) in self.sushi.enumerated() {
+            snapshotValue["title"] = data.title
+            snapshotValue["img"] = data.img
+            snapshotValue["eng"] = data.eng
+            snapshotValue["price"] = data.price
+            result[i.toStr] = snapshotValue
+        }
+        return result
+    }
 }
 
-class SushiModel: NSObject {
-    
+class SushiModel: NSObject, Codable {
+     
     var title: String = ""
-    var titleEng: String = ""
+    var eng: String = ""
     var img: String = ""
-    var money: String = ""
+    var price: String = ""
 
-    init(_ title: String = "", _ titleEng: String = "", _ img: String = "", _ money: String = "") {
+    init(title: String = "", eng: String = "", img: String = "", price: String = "") {
         self.title = title
-        self.titleEng = titleEng
+        self.eng = eng
         self.img = img
-        self.money = money
+        self.price = price
+    }
+    
+    func toAnyObject() -> [String: Any] {
+        var snapshotValue: [String: Any] = [:]
+        snapshotValue["title"] = self.title
+        snapshotValue["img"] = self.img
+        snapshotValue["eng"] = self.eng
+        snapshotValue["price"] = self.price
+        return snapshotValue
     }
 }
 
@@ -127,9 +136,9 @@ class SushiRecordModel: NSObject {
         self.numId = numId
         self.arrivedTime = arrivedTime
         self.title = model.title
-        self.titleEng = model.titleEng
+        self.titleEng = model.eng
         self.img = model.img
-        self.money = model.money
+        self.money = model.price
     }
 }
 

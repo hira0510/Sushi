@@ -11,21 +11,32 @@ import RxSwift
 import RxDataSources
 
 protocol AddSushiVcProtocol: AnyObject {
-    func requestSuc()
+    func requestSuc(_ menuName: String)
 }
 
 enum AddSushiVcType {
     case add
-    case edit
+    case edit(_ index: Int = 0)
+    
+    var index: Int {
+        switch self {
+        case .add: return -1
+        case .edit(let index): return index
+        }
+    }
+    
+    static func == (lhs: AddSushiVcType, rhs: AddSushiVcType) -> Bool {
+        return lhs.index == rhs.index
+    }
 }
 
 class AddSushiViewModel: BaseViewModel {
     
     public var editModel: (menu: String, data: SushiModel?) = (menu: "", data: nil)
     public var menuStrAry: [MenuStrModel] = []
+    public var mType: AddSushiVcType = .add
     public weak var delegate: AddSushiVcProtocol?
     
-    var mType: AddSushiVcType = .add
     var mName: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     var mNameEng: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     var mPrice: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
@@ -40,4 +51,8 @@ class AddSushiViewModel: BaseViewModel {
         titleForRow: { (_, _, items, row, _) -> String? in
             return items[row]}
     )
+    
+    func toSushiModel(_ img: String) -> SushiModel {
+        return SushiModel(title: mName.value, eng: mNameEng.value, img: img, price: mPrice.value)
+    }
 }

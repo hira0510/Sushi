@@ -21,11 +21,11 @@ class BaseViewModel: NSObject {
         }
     }
     
-    func request() -> Observable<[MenuModel]> {
+    func getAllMenu() -> Observable<[MenuModel]> {
         let firebaseManager = FireBaseManager()
         firebaseManager.auth()
         let json: Observable<[MenuModel]> = Observable.create { (observer) -> Disposable in
-            firebaseManager.ref { model in
+            firebaseManager.getAllMenu { model in
                 guard let model = model else { return }
                 observer.onNext(model.data)
                 observer.onCompleted()
@@ -35,17 +35,25 @@ class BaseViewModel: NSObject {
         return json
     }
     
-    func addData(_ type: WhiteType, _ price: String, _ eng: String, imgUrl: String = "") -> Observable<Bool> {
-        var value: String = ""
-        switch type {
-        case .img: value = imgUrl
-        case .money: value = price
-        case .titleEng: value = eng
+    func requestMenu(_ menuName: String) -> Observable<MenuModel> {
+        let firebaseManager = FireBaseManager()
+        firebaseManager.auth()
+        let json: Observable<MenuModel> = Observable.create { (observer) -> Disposable in
+            firebaseManager.getMenu(menuName: menuName) { model in
+                guard let model = model else { return }
+                observer.onNext(model)
+                observer.onCompleted()
+            }
+            return Disposables.create()
         }
+        return json
+    }
+    
+    func addData(_ type: WhiteType, _ data: [String : Any]) -> Observable<Bool> {
         
         let firebaseManager = FireBaseManager()
         let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
-            firebaseManager.addDatabase(type: type, value: value) { suc in
+            firebaseManager.addDatabase(type: type, value: data) { suc in
                 guard let _ = suc else { return }
                 observer.onNext(true)
                 observer.onCompleted()
@@ -88,7 +96,6 @@ class BaseViewModel: NSObject {
             firebaseManager.delStorageImg(title) { _ in
                 observer.onNext(true)
                 observer.onCompleted()
-                print("刪除圖片\(title)")
             }
             return Disposables.create()
         }
