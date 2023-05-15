@@ -14,11 +14,12 @@ target 'Sushi' do
   pod 'Firebase/Database', '10.8.0'
   pod 'Firebase/Auth', '10.8.0'
   pod 'Firebase/Storage', '10.8.0'
-  pod 'Firebase/Firestore', '10.8.0'
   pod 'Kingfisher', '5.13.4'
   pod 'SnapKit'
   pod 'Starscream', '4.0.4'
-  pod 'SQLite.swift' 
+  pod 'SQLite.swift'
+  pod 'TYCyclePagerView', '1.2.0' 
+
 
   target 'SushiTests' do
     inherit! :search_paths

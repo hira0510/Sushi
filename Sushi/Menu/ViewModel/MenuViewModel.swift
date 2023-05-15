@@ -28,6 +28,8 @@ class MenuViewModel: BaseViewModel {
     var selectSushiItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     /// api的menu資料
     var menuModel: BehaviorRelay<[MenuModel]> = BehaviorRelay<[MenuModel]>(value: [])
+    /// api的AD資料
+    var adModel: BehaviorRelay<[AdModel]> = BehaviorRelay<[AdModel]>(value: [])
     /// 點餐紀錄暫時資料
     var orderModel: BehaviorRelay<[SushiModel]> = BehaviorRelay<[SushiModel]>(value: [])
     /// 點餐紀錄資料
@@ -41,8 +43,6 @@ class MenuViewModel: BaseViewModel {
     var orderTimeDic: BehaviorRelay<Dictionary<String, TimeInterval>> = BehaviorRelay<Dictionary<String, TimeInterval>>(value: [:])
     /// 餐點的最慢等待時間
     var orderTimeStr: BehaviorRelay<String> = BehaviorRelay<String>(value: "0")
-    /// 佈局樣式
-    var layoutType: BehaviorRelay<ToggleLayoutView.LayoutType> = BehaviorRelay<ToggleLayoutView.LayoutType>(value: .grid)
     
     weak var delegate: MenuVcProtocol?
     

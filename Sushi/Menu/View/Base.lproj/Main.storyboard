@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7v2-AD-nCF">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -32,11 +33,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UrF-Vm-Djf" userLabel="ad" customClass="BannerTYCycleView" customModule="Sushi" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="70"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="UrF-Vm-Djf" secondAttribute="height" multiplier="375:70" id="76K-JN-SRm"/>
+                                    <constraint firstAttribute="height" id="vAl-UG-1ZO"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="76K-JN-SRm"/>
+                                        <exclude reference="vAl-UG-1ZO"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="vAl-UG-1ZO"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="76K-JN-SRm"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Baw-L9-clY">
-                                <rect key="frame" x="0.0" y="20" width="80" height="533"/>
+                                <rect key="frame" x="0.0" y="90" width="80" height="463"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2b-5T-5Kj">
-                                        <rect key="frame" x="0.0" y="435.5" width="80" height="97.5"/>
+                                        <rect key="frame" x="0.0" y="365.5" width="80" height="97.5"/>
                                         <subviews>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="bEH-g4-RGb">
                                                 <rect key="frame" x="0.0" y="10" width="80" height="77.5"/>
@@ -57,10 +82,10 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Pm8-UX-2uH">
-                                        <rect key="frame" x="5" y="5" width="70" height="425.5"/>
+                                        <rect key="frame" x="5" y="5" width="70" height="355.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1A-eb-QuY" customClass="MenuInfoView" customModule="Sushi" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="70" height="102.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="70" height="85"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="numColor">
@@ -77,10 +102,10 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rJc-uy-IvP">
-                                                <rect key="frame" x="0.0" y="107.5" width="70" height="103"/>
+                                                <rect key="frame" x="0.0" y="90" width="70" height="85.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUE-vr-XW0" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="10.5" width="70" height="81.5"/>
+                                                        <rect key="frame" x="0.0" y="9" width="70" height="67.5"/>
                                                         <color key="backgroundColor" systemColor="systemRedColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -112,7 +137,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1kC-Aq-rc9" customClass="MenuInfoView" customModule="Sushi" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="215.5" width="70" height="102.5"/>
+                                                <rect key="frame" x="0.0" y="180.5" width="70" height="85"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="numColor">
@@ -130,7 +155,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zsk-FB-edY" customClass="MenuInfoView" customModule="Sushi" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="323" width="70" height="102.5"/>
+                                                <rect key="frame" x="0.0" y="270.5" width="70" height="85"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="title">
@@ -176,10 +201,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ncK-oV-pNa">
-                                <rect key="frame" x="80" y="20" width="295" height="533"/>
+                                <rect key="frame" x="80" y="90" width="295" height="463"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="290-eh-uE1">
-                                        <rect key="frame" x="0.0" y="0.0" width="295" height="477.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="295" height="407.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Jyi-J4-CKa">
                                             <size key="itemSize" width="128" height="128"/>
@@ -190,7 +215,7 @@
                                         <cells/>
                                     </collectionView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OiY-lX-Rtp">
-                                        <rect key="frame" x="0.0" y="477.5" width="295" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="407.5" width="295" height="55.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="OiY-lX-Rtp" secondAttribute="height" multiplier="355:67" id="TpI-Ta-WQV"/>
@@ -214,7 +239,7 @@
                                         </variation>
                                     </collectionView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ib3-fD-kvJ" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
-                                        <rect key="frame" x="235" y="417.5" width="50" height="50"/>
+                                        <rect key="frame" x="235" y="347.5" width="50" height="50"/>
                                         <color key="backgroundColor" systemColor="systemTealColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Ib3-fD-kvJ" secondAttribute="height" multiplier="1:1" id="ZyG-ZO-CnF"/>
@@ -230,13 +255,6 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="PressMask" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ovz-dM-Whw" customClass="ToggleLayoutView" customModule="Sushi" customModuleProvider="target">
-                                        <rect key="frame" x="209" y="10" width="76" height="38"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="ovz-dM-Whw" secondAttribute="height" multiplier="2:1" id="9cu-ca-16O"/>
-                                        </constraints>
-                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="lastBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="huI-Mk-IiF">
                                         <rect key="frame" x="10" y="10" width="110" height="30"/>
                                         <subviews>
@@ -305,14 +323,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ovz-dM-Whw" secondAttribute="trailing" constant="10" id="0Qc-R1-nM2"/>
                                     <constraint firstItem="Ib3-fD-kvJ" firstAttribute="trailing" secondItem="290-eh-uE1" secondAttribute="trailing" constant="-10" id="8zi-Ta-5fa"/>
                                     <constraint firstItem="290-eh-uE1" firstAttribute="top" secondItem="ncK-oV-pNa" secondAttribute="top" id="AgF-Kv-k8U"/>
                                     <constraint firstItem="huI-Mk-IiF" firstAttribute="leading" secondItem="ncK-oV-pNa" secondAttribute="leading" constant="10" id="Ibf-vr-87X"/>
                                     <constraint firstItem="Ib3-fD-kvJ" firstAttribute="bottom" secondItem="290-eh-uE1" secondAttribute="bottom" constant="-10" id="Pt1-zI-yjD"/>
-                                    <constraint firstItem="ovz-dM-Whw" firstAttribute="height" secondItem="ncK-oV-pNa" secondAttribute="height" multiplier="38:322" id="Qmr-Sh-ph2"/>
                                     <constraint firstAttribute="trailing" secondItem="OiY-lX-Rtp" secondAttribute="trailing" id="Tr3-La-JKQ"/>
-                                    <constraint firstItem="ovz-dM-Whw" firstAttribute="width" secondItem="ncK-oV-pNa" secondAttribute="width" multiplier="76:295" id="Xwb-BR-Ksx"/>
                                     <constraint firstItem="huI-Mk-IiF" firstAttribute="top" secondItem="ncK-oV-pNa" secondAttribute="top" constant="10" id="ayr-ao-kIa"/>
                                     <constraint firstItem="OiY-lX-Rtp" firstAttribute="top" secondItem="290-eh-uE1" secondAttribute="bottom" id="bzP-9i-Q3O"/>
                                     <constraint firstItem="Ib3-fD-kvJ" firstAttribute="height" secondItem="ncK-oV-pNa" secondAttribute="height" multiplier="50:322" id="gAV-1I-Lw3"/>
@@ -322,12 +337,9 @@
                                     <constraint firstAttribute="bottom" secondItem="OiY-lX-Rtp" secondAttribute="bottom" id="rLI-3j-elD"/>
                                     <constraint firstItem="290-eh-uE1" firstAttribute="leading" secondItem="ncK-oV-pNa" secondAttribute="leading" id="vGs-al-yTS"/>
                                     <constraint firstItem="OiY-lX-Rtp" firstAttribute="height" secondItem="ncK-oV-pNa" secondAttribute="height" multiplier="40:316" id="viG-tx-USR"/>
-                                    <constraint firstItem="ovz-dM-Whw" firstAttribute="top" secondItem="huI-Mk-IiF" secondAttribute="top" id="vnX-iC-pKf"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="Qmr-Sh-ph2"/>
-                                        <exclude reference="Xwb-BR-Ksx"/>
                                         <exclude reference="viG-tx-USR"/>
                                         <exclude reference="gAV-1I-Lw3"/>
                                         <exclude reference="nET-lz-9D4"/>
@@ -335,14 +347,12 @@
                                 </variation>
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">
-                                        <include reference="Qmr-Sh-ph2"/>
                                         <include reference="viG-tx-USR"/>
                                         <include reference="gAV-1I-Lw3"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
                                     <mask key="constraints">
-                                        <include reference="Xwb-BR-Ksx"/>
                                         <include reference="nET-lz-9D4"/>
                                     </mask>
                                 </variation>
@@ -475,7 +485,7 @@
                                 </variation>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qMz-yy-0mF" customClass="OrderListView" customModule="Sushi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="90" width="375" height="70"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -485,20 +495,23 @@
                             <constraint firstItem="oCy-CS-Nhw" firstAttribute="leading" secondItem="Baw-L9-clY" secondAttribute="trailing" id="1Tq-ME-BGP"/>
                             <constraint firstItem="oCy-CS-Nhw" firstAttribute="top" secondItem="Baw-L9-clY" secondAttribute="bottom" id="2ox-tk-acH"/>
                             <constraint firstItem="ncK-oV-pNa" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4lP-eI-muG"/>
+                            <constraint firstItem="UrF-Vm-Djf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="9Fv-W6-XI3"/>
                             <constraint firstItem="qMz-yy-0mF" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="70:375" id="BLY-uC-zHe"/>
-                            <constraint firstItem="qMz-yy-0mF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Ff9-86-Crh"/>
+                            <constraint firstItem="qMz-yy-0mF" firstAttribute="top" secondItem="UrF-Vm-Djf" secondAttribute="bottom" id="Ff9-86-Crh"/>
                             <constraint firstItem="oCy-CS-Nhw" firstAttribute="top" secondItem="ncK-oV-pNa" secondAttribute="bottom" id="Hvh-Ye-3xm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oCy-CS-Nhw" secondAttribute="trailing" id="IdJ-hx-tsj"/>
+                            <constraint firstItem="UrF-Vm-Djf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="NjH-wu-8Ce"/>
                             <constraint firstAttribute="bottom" secondItem="Baw-L9-clY" secondAttribute="bottom" id="OFv-k2-EcP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oCy-CS-Nhw" secondAttribute="bottom" id="OrW-SB-ixW"/>
                             <constraint firstItem="ncK-oV-pNa" firstAttribute="leading" secondItem="Baw-L9-clY" secondAttribute="trailing" id="TGx-tg-37q"/>
                             <constraint firstItem="qMz-yy-0mF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WEf-OA-RuR"/>
-                            <constraint firstItem="Baw-L9-clY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="anU-vH-6QL"/>
+                            <constraint firstItem="Baw-L9-clY" firstAttribute="top" secondItem="UrF-Vm-Djf" secondAttribute="bottom" id="anU-vH-6QL"/>
                             <constraint firstItem="oCy-CS-Nhw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fX7-X6-nGD"/>
                             <constraint firstItem="Baw-L9-clY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hUc-Pw-4vI"/>
                             <constraint firstItem="Baw-L9-clY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ifK-Fx-1To"/>
+                            <constraint firstAttribute="trailing" secondItem="UrF-Vm-Djf" secondAttribute="trailing" id="iwe-DH-nhm"/>
                             <constraint firstItem="Baw-L9-clY" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="80:375" id="uqS-2x-hpy"/>
-                            <constraint firstItem="ncK-oV-pNa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="vPZ-Zj-1t3"/>
+                            <constraint firstItem="ncK-oV-pNa" firstAttribute="top" secondItem="UrF-Vm-Djf" secondAttribute="bottom" id="vPZ-Zj-1t3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qMz-yy-0mF" secondAttribute="trailing" id="vkr-JZ-WkV"/>
                             <constraint firstItem="oCy-CS-Nhw" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="53:375" id="wo3-GZ-QDr"/>
                             <constraint firstItem="Baw-L9-clY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="yjW-D8-YYL"/>
@@ -549,8 +562,8 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <customObject id="G9R-2X-UVD" customClass="MenuViews" customModule="Sushi" customModuleProvider="target">
                     <connections>
+                        <outlet property="adBannerView" destination="UrF-Vm-Djf" id="SjX-Rd-0sg"/>
                         <outlet property="addNewBtn" destination="Ib3-fD-kvJ" id="EA6-Pk-Zg1"/>
-                        <outlet property="cellTypeView" destination="ovz-dM-Whw" id="m6V-9B-RJF"/>
                         <outlet property="checkoutView" destination="Opb-Z3-4Am" id="EMR-8Z-tJB"/>
                         <outlet property="deleteItemBtn" destination="0UW-i0-7MR" id="HRq-Ck-yae"/>
                         <outlet property="editBtn" destination="OVb-jH-OKF" id="SAi-Qh-Jjn"/>
@@ -569,7 +582,7 @@
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="-304.18604651162792" y="-45.064377682403439"/>
+            <point key="canvasLocation" x="-304.80000000000001" y="-45.42728635682159"/>
         </scene>
     </scenes>
     <designables>

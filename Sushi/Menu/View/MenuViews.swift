@@ -22,6 +22,7 @@ class MenuViews: NSObject {
     /// 送達時間到數Timer
     public var orderTimer: Timer?
 
+    @IBOutlet weak var adBannerView: BannerTYCycleView!
     @IBOutlet weak var sushiCollectionView: UICollectionView! {
         didSet {
             //手機更換方向時重整collectionView
@@ -38,8 +39,10 @@ class MenuViews: NSObject {
     
     @IBOutlet weak var menuCollectionView: UICollectionView! {
         didSet {
-            //點擊menu選擇頁面時頁面滑至同index
-            viewModel.selectMenuItem.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag)
+            //點擊menu選擇頁面&手機更換方向時頁面滑至同index
+            Observable.combineLatest(viewModel.selectMenuItem, viewModel.menuCollectionFrame) { index, _ -> Int in
+                return index
+            }.map { $0 }.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag) 
             //拿到資料&拿到點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
             Observable.combineLatest(viewModel.menuModel, viewModel.selectMenuItem, viewModel.menuCollectionFrame, SuShiSingleton.share().bindIsEng()) { _, index, _, _ -> Int in
                 return index
@@ -161,7 +164,6 @@ class MenuViews: NSObject {
         }
     }
     
-    @IBOutlet weak var cellTypeView: ToggleLayoutView!
     @IBOutlet weak var addNewBtn: NGSCustomizableButton! {
         didSet {
             //Server端出現新增按鈕

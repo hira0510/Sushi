@@ -15,11 +15,8 @@ class BaseCollectionViewCell: UICollectionViewCell {
         return DisposeBag()
     }()
     
-    override var isSelected: Bool {
+    override var isSelected: Bool{
         didSet {
-            if !isSelected {
-                self.backgroundColor = .black
-            }
         }
     }
     

@@ -21,13 +21,18 @@ class BaseViewModel: NSObject {
         }
     }
     
-    func getAllMenu() -> Observable<[MenuModel]> {
+    func getAllMenu() -> Observable<MenuModelData> {
         let firebaseManager = FireBaseManager()
         firebaseManager.auth()
-        let json: Observable<[MenuModel]> = Observable.create { (observer) -> Disposable in
-            firebaseManager.getAllMenu { model in
-                guard let model = model else { return }
-                observer.onNext(model.data)
+        let json: Observable<MenuModelData> = Observable.create { (observer) -> Disposable in
+            firebaseManager.getAllMenu { model, err in
+                guard let model = model else {
+                    if let err = err {
+                        observer.onError(err)
+                    }
+                    return
+                }
+                observer.onNext(model)
                 observer.onCompleted()
             }
             return Disposables.create()
@@ -39,8 +44,13 @@ class BaseViewModel: NSObject {
         let firebaseManager = FireBaseManager()
         firebaseManager.auth()
         let json: Observable<MenuModel> = Observable.create { (observer) -> Disposable in
-            firebaseManager.getMenu(menuName: menuName) { model in
-                guard let model = model else { return }
+            firebaseManager.getMenu(menuName: menuName) { model, err in
+                guard let model = model else {
+                    if let err = err {
+                        observer.onError(err)
+                    }
+                    return
+                }
                 observer.onNext(model)
                 observer.onCompleted()
             }
@@ -53,8 +63,13 @@ class BaseViewModel: NSObject {
         
         let firebaseManager = FireBaseManager()
         let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
-            firebaseManager.addDatabase(type: type, value: data) { suc in
-                guard let _ = suc else { return }
+            firebaseManager.addDatabase(type: type, value: data) { suc, err  in
+                guard let _ = suc else {
+                    if let err = err {
+                        observer.onError(err)
+                    }
+                    return
+                }
                 observer.onNext(true)
                 observer.onCompleted()
             }
@@ -67,8 +82,13 @@ class BaseViewModel: NSObject {
         
         let firebaseManager = FireBaseManager()
         let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
-            firebaseManager.delDatabase(type: type) { suc in
-                guard let _ = suc else { return }
+            firebaseManager.delDatabase(type: type) { suc, err in
+                guard let _ = suc else {
+                    if let err = err {
+                        observer.onError(err)
+                    }
+                    return
+                }
                 observer.onNext(true)
                 observer.onCompleted()
             }
@@ -80,8 +100,13 @@ class BaseViewModel: NSObject {
     func addStorageImg(_ name: String, _ image: UIImage) -> Observable<String> {
         let firebaseManager = FireBaseManager()
         let json: Observable<String> = Observable.create { (observer) -> Disposable in 
-            firebaseManager.addStorageImg(name, image) { url in
-                guard let urlStr = url else { return }
+            firebaseManager.addStorageImg(name, image) { url, err in
+                guard let urlStr = url else {
+                    if let err = err {
+                        observer.onError(err)
+                    }
+                    return
+                }
                 observer.onNext(urlStr)
                 observer.onCompleted()
             }
@@ -93,7 +118,10 @@ class BaseViewModel: NSObject {
     func delStorageImg(_ title: String) -> Observable<Bool> {
         let firebaseManager = FireBaseManager()
         let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
-            firebaseManager.delStorageImg(title) { _ in
+            firebaseManager.delStorageImg(title) { _, err in
+                if let err = err {
+                    observer.onError(err)
+                }
                 observer.onNext(true)
                 observer.onCompleted()
             }

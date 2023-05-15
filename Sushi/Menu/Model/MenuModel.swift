@@ -42,21 +42,26 @@ class MenuStrModel: NSObject {
 class MenuModelData: NSObject {
      
     var data: [MenuModel] = []
+    var ad: [AdModel] = []
     
-    init(_ data: Any? = nil) {
+    init(_ model: Any? = nil) {
         var dic: [String: MenuModel] = [:]
-        if let data = data as? [String: Any] {
+        guard let model = model as? [String: Any] else { return }
+        if let data = model["Data"] as? [String: Any] {
             for (key, value) in data {
                 dic[key] = MenuModel().data(key, value)
             }
+            
+            let menuSort = dic.keys.sorted(by: <)
+            var dataAry: [MenuModel] = []
+            for key in menuSort {
+                dataAry.append(unwrap(dic[key], MenuModel()))
+            }
+            self.data = dataAry
         }
-         
-        let menuSort = dic.keys.sorted(by: <)
-        var dataAry: [MenuModel] = []
-        for key in menuSort {
-            dataAry.append(unwrap(dic[key], MenuModel()))
+        if let data = model["AD"] as? [Any] {
+            self.ad = AdModel().data(data)
         }
-        self.data = dataAry
     }
 }
 
@@ -120,6 +125,34 @@ class SushiModel: NSObject, Codable {
         snapshotValue["eng"] = self.eng
         snapshotValue["price"] = self.price
         return snapshotValue
+    }
+    
+    func toSushi(dic: [String: String]) -> SushiModel {
+        let model = SushiModel()
+        model.title = dic["title"] ?? ""
+        model.img = dic["img"] ?? ""
+        model.eng = dic["eng"] ?? ""
+        model.price = dic["price"] ?? ""
+        return model
+    }
+}
+
+class AdModel: NSObject, Codable {
+    var title: String = ""
+    var imgUrl: String = ""
+    var url: String = ""
+    
+    init(title: String = "", imgUrl: String = "", url: String = "") {
+        self.title = title
+        self.imgUrl = imgUrl
+        self.url = url
+    }
+    
+    func data(_ ad: [Any]) -> [AdModel] {
+        if let data = try? JSONSerialization.data(withJSONObject: ad, options: []), let resultAry = try? JSONDecoder().decode([AdModel].self, from: data) {
+            return resultAry
+        }
+        return []
     }
 }
 

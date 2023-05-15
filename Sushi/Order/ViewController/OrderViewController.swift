@@ -7,8 +7,7 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
-import Kingfisher
+import RxCocoa 
 
 protocol OrderVcProtocol: AnyObject {
     func sendOrder(model: [SushiModel])
@@ -68,20 +67,18 @@ class OrderViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(hexString: viewModel.bgColor)
+        self.view.backgroundColor = UIColor(viewModel.bgColor)
         bind()
     }
     
     private func bind() {
         let modelObserver: Binder<SushiModel> = Binder(self) { [weak self] vc, model in
             guard let `self` = self else { return }
+            vc.mImageView.loadImage(url: model.img, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously])
             if SuShiSingleton.share().getIsEng() {
                 vc.mTitleLabel.text = model.eng
             } else {
                 vc.mTitleLabel.attributedText = self.viewModel.setAttributedString(model.title, model.eng)
-            }
-            if let url = URL(string: model.img) {
-                vc.mImageView.kf.setImage(with: url, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously])
             }
         }
         viewModel.sushiModel.bind(to: modelObserver).disposed(by: bag)

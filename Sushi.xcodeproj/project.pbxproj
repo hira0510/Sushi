@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2AC2D9E14BFE58A42955DD0F /* Pods_Sushi_SushiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E4AE337EF37E1B11BF1E89 /* Pods_Sushi_SushiUITests.framework */; };
+		841A7B4E2A0E21D7006330A8 /* YTPlayer.html in Resources */ = {isa = PBXBuildFile; fileRef = 841A7B4D2A0E21D7006330A8 /* YTPlayer.html */; };
 		843B3E7729F8F06100FB3969 /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B3E7429F8F06100FB3969 /* OrderViewModel.swift */; };
 		843B3E7829F8F06100FB3969 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B3E7529F8F06100FB3969 /* OrderViewController.swift */; };
 		843B3E7929F8F06100FB3969 /* OrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B3E7629F8F06100FB3969 /* OrderViewController.xib */; };
@@ -18,6 +19,13 @@
 		843B3E8829F90AEA00FB3969 /* OrderListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843B3E8629F90AEA00FB3969 /* OrderListCollectionViewCell.xib */; };
 		843B3E8A29F90B4D00FB3969 /* NGSCustomizableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B3E8929F90B4D00FB3969 /* NGSCustomizableImageView.swift */; };
 		8498F5CC29FBC41000FC23EB /* StarscreamWebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8498F5CB29FBC41000FC23EB /* StarscreamWebSocketManager.swift */; };
+		849B23F12A0DDECB008C86C8 /* TYCycleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B23EF2A0DDECB008C86C8 /* TYCycleCell.swift */; };
+		849B23F22A0DDECB008C86C8 /* TYCycleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B23F02A0DDECB008C86C8 /* TYCycleCell.xib */; };
+		849B23F72A0E0579008C86C8 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B23F52A0E0579008C86C8 /* PlayerViewController.swift */; };
+		849B23F82A0E0579008C86C8 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B23F62A0E0579008C86C8 /* PlayerViewController.xib */; };
+		849B23FA2A0E1275008C86C8 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B23F92A0E1275008C86C8 /* PlayerView.swift */; };
+		849B23FC2A0E127E008C86C8 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B23FB2A0E127E008C86C8 /* PlayerView.xib */; };
+		849B23FE2A0E1FE3008C86C8 /* YouTubePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B23FD2A0E1FE3008C86C8 /* YouTubePlayer.swift */; };
 		849B471B29F0E888002E4C60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471A29F0E888002E4C60 /* AppDelegate.swift */; };
 		849B471D29F0E888002E4C60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471C29F0E888002E4C60 /* SceneDelegate.swift */; };
 		849B471F29F0E888002E4C60 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471E29F0E888002E4C60 /* ViewController.swift */; };
@@ -77,9 +85,12 @@
 		84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */; };
 		84A5FAB229F6157100781C03 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB129F6157100781C03 /* FireBaseManager.swift */; };
 		84A5FAB429F6352500781C03 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB329F6352500781C03 /* ToastView.swift */; };
+		84A85FCD2A0C780700E81D0C /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A85FCC2A0C780700E81D0C /* ShimmerView.swift */; };
+		84A85FCF2A0C9C3700E81D0C /* FillingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A85FCE2A0C9C3700E81D0C /* FillingLayout.swift */; };
+		84A85FD52A0CD8E600E81D0C /* UrlSchemeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A85FD42A0CD8E600E81D0C /* UrlSchemeFactory.swift */; };
+		84A85FD92A0CEC1F00E81D0C /* BannerTYCycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A85FD82A0CEC1F00E81D0C /* BannerTYCycleView.swift */; };
+		84A85FDB2A0CEC2A00E81D0C /* BannerTYCycleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A85FDA2A0CEC2A00E81D0C /* BannerTYCycleView.xib */; };
 		84AA819529F7A2C3009DA56D /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */; };
-		84AC6A182A08F5BE00E629E8 /* ToggleLayoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AC6A162A08F5BE00E629E8 /* ToggleLayoutView.xib */; };
-		84AC6A192A08F5BE00E629E8 /* ToggleLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AC6A172A08F5BE00E629E8 /* ToggleLayoutView.swift */; };
 		84AC6A1C2A08FAE500E629E8 /* SushiLinearCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AC6A1A2A08FAE500E629E8 /* SushiLinearCollectionViewCell.swift */; };
 		84AC6A1D2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AC6A1B2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib */; };
 		84B2AF0429FB911000ABC4D9 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2AF0329FB911000ABC4D9 /* Operators.swift */; };
@@ -124,6 +135,7 @@
 		38AA86006685883A7C423889 /* Pods-SushiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SushiTests.release.xcconfig"; path = "Target Support Files/Pods-SushiTests/Pods-SushiTests.release.xcconfig"; sourceTree = "<group>"; };
 		5470DC83A478BDA252752B8B /* Pods-SushiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SushiTests.debug.xcconfig"; path = "Target Support Files/Pods-SushiTests/Pods-SushiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7144797BA434190504EF2093 /* Pods-Sushi-SushiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi-SushiUITests.release.xcconfig"; path = "Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests.release.xcconfig"; sourceTree = "<group>"; };
+		841A7B4D2A0E21D7006330A8 /* YTPlayer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YTPlayer.html; sourceTree = "<group>"; };
 		843B3E7429F8F06100FB3969 /* OrderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
 		843B3E7529F8F06100FB3969 /* OrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		843B3E7629F8F06100FB3969 /* OrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderViewController.xib; sourceTree = "<group>"; };
@@ -134,6 +146,13 @@
 		843B3E8629F90AEA00FB3969 /* OrderListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderListCollectionViewCell.xib; sourceTree = "<group>"; };
 		843B3E8929F90B4D00FB3969 /* NGSCustomizableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NGSCustomizableImageView.swift; sourceTree = "<group>"; };
 		8498F5CB29FBC41000FC23EB /* StarscreamWebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarscreamWebSocketManager.swift; sourceTree = "<group>"; };
+		849B23EF2A0DDECB008C86C8 /* TYCycleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TYCycleCell.swift; sourceTree = "<group>"; };
+		849B23F02A0DDECB008C86C8 /* TYCycleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TYCycleCell.xib; sourceTree = "<group>"; };
+		849B23F52A0E0579008C86C8 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		849B23F62A0E0579008C86C8 /* PlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
+		849B23F92A0E1275008C86C8 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		849B23FB2A0E127E008C86C8 /* PlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
+		849B23FD2A0E1FE3008C86C8 /* YouTubePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlayer.swift; sourceTree = "<group>"; };
 		849B471729F0E888002E4C60 /* Sushi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sushi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849B471A29F0E888002E4C60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		849B471C29F0E888002E4C60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -197,9 +216,12 @@
 		84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84A5FAB129F6157100781C03 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
 		84A5FAB329F6352500781C03 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		84A85FCC2A0C780700E81D0C /* ShimmerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
+		84A85FCE2A0C9C3700E81D0C /* FillingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FillingLayout.swift; sourceTree = "<group>"; };
+		84A85FD42A0CD8E600E81D0C /* UrlSchemeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSchemeFactory.swift; sourceTree = "<group>"; };
+		84A85FD82A0CEC1F00E81D0C /* BannerTYCycleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerTYCycleView.swift; sourceTree = "<group>"; };
+		84A85FDA2A0CEC2A00E81D0C /* BannerTYCycleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerTYCycleView.xib; sourceTree = "<group>"; };
 		84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip4Sequence.swift; sourceTree = "<group>"; };
-		84AC6A162A08F5BE00E629E8 /* ToggleLayoutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToggleLayoutView.xib; sourceTree = "<group>"; };
-		84AC6A172A08F5BE00E629E8 /* ToggleLayoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleLayoutView.swift; sourceTree = "<group>"; };
 		84AC6A1A2A08FAE500E629E8 /* SushiLinearCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SushiLinearCollectionViewCell.swift; sourceTree = "<group>"; };
 		84AC6A1B2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SushiLinearCollectionViewCell.xib; sourceTree = "<group>"; };
 		84B2AF0329FB911000ABC4D9 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
@@ -306,7 +328,8 @@
 				843B3E7B29F8F08100FB3969 /* Order */,
 				84DDFE7529FA39F100EABFEE /* Record */,
 				84C0EB5129F28BA700B7D2CE /* Add */,
-				849B475529F10E6A002E4C60 /* Tool */,
+				849E7D122A11C34D00D1CAB1 /* Player */,
+				849B475529F10E6A002E4C60 /* Other */,
 				849B471A29F0E888002E4C60 /* AppDelegate.swift */,
 				849B471C29F0E888002E4C60 /* SceneDelegate.swift */,
 				849B471E29F0E888002E4C60 /* ViewController.swift */,
@@ -354,39 +377,23 @@
 				84AC6A1B2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib */,
 				843B3E7F29F9019000FB3969 /* OrderListView.swift */,
 				843B3E8129F9019800FB3969 /* OrderListView.xib */,
-				84AC6A172A08F5BE00E629E8 /* ToggleLayoutView.swift */,
-				84AC6A162A08F5BE00E629E8 /* ToggleLayoutView.xib */,
 				843B3E8529F90AEA00FB3969 /* OrderListCollectionViewCell.swift */,
 				843B3E8629F90AEA00FB3969 /* OrderListCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		849B475529F10E6A002E4C60 /* Tool */ = {
+		849B475529F10E6A002E4C60 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				849E7D102A11C2E700D1CAB1 /* Singleton */,
+				849E7D0F2A11C2A000D1CAB1 /* Factory */,
+				849E7D0D2A11C22900D1CAB1 /* Extension */,
+				849E7D0E2A11C23B00D1CAB1 /* CustomUI */,
+				849E7D112A11C2FE00D1CAB1 /* Tool */,
 				84A0135C2A02593700D4139E /* MP3 */,
-				849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */,
-				8498F5CB29FBC41000FC23EB /* StarscreamWebSocketManager.swift */,
-				849FB4F329F280FA002340F9 /* SystemInfo.swift */,
-				849B475129F10E4C002E4C60 /* GlobalUtil.swift */,
-				849B475329F10E54002E4C60 /* Extension.swift */,
-				849FC40029FB6E9100A86794 /* ExtensionUI.swift */,
-				849FC3FC29FB6DA400A86794 /* ExtensionRx.swift */,
-				849FC3FE29FB6E3400A86794 /* ExtensionStoryboard.swift */,
-				849CA9402A00D597008779B0 /* ExtensionUserDefaults.swift */,
-				849B475D29F11D8A002E4C60 /* NGSCustomizableButton.swift */,
-				843B3E8329F9095B00FB3969 /* NGSCustomizableView.swift */,
-				843B3E8929F90B4D00FB3969 /* NGSCustomizableImageView.swift */,
-				849B476829F12612002E4C60 /* RoundCornersView.swift */,
-				849FB4EF29F24151002340F9 /* Validations.swift */,
-				849B474F29F10E44002E4C60 /* NibOwnerLoadable.swift */,
-				84A5FAB129F6157100781C03 /* FireBaseManager.swift */,
-				84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */,
-				84B2AF0329FB911000ABC4D9 /* Operators.swift */,
-				849FC3ED29FB53F600A86794 /* TwToEng.swift */,
 			);
-			path = Tool;
+			path = Other;
 			sourceTree = "<group>";
 		};
 		849B475829F11A91002E4C60 /* ViewController */ = {
@@ -433,6 +440,92 @@
 				84A013692A025BEB00D4139E /* RecordFooterView.xib */,
 			);
 			path = Server;
+			sourceTree = "<group>";
+		};
+		849E7D0D2A11C22900D1CAB1 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				849B474F29F10E44002E4C60 /* NibOwnerLoadable.swift */,
+				849B475329F10E54002E4C60 /* Extension.swift */,
+				849FC40029FB6E9100A86794 /* ExtensionUI.swift */,
+				849FC3FC29FB6DA400A86794 /* ExtensionRx.swift */,
+				849FC3FE29FB6E3400A86794 /* ExtensionStoryboard.swift */,
+				849CA9402A00D597008779B0 /* ExtensionUserDefaults.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		849E7D0E2A11C23B00D1CAB1 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				849B475D29F11D8A002E4C60 /* NGSCustomizableButton.swift */,
+				843B3E8329F9095B00FB3969 /* NGSCustomizableView.swift */,
+				843B3E8929F90B4D00FB3969 /* NGSCustomizableImageView.swift */,
+				849B476829F12612002E4C60 /* RoundCornersView.swift */,
+			);
+			path = CustomUI;
+			sourceTree = "<group>";
+		};
+		849E7D0F2A11C2A000D1CAB1 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4F329F280FA002340F9 /* SystemInfo.swift */,
+				849B475129F10E4C002E4C60 /* GlobalUtil.swift */,
+				84A85FD42A0CD8E600E81D0C /* UrlSchemeFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		849E7D102A11C2E700D1CAB1 /* Singleton */ = {
+			isa = PBXGroup;
+			children = (
+				849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */,
+				8498F5CB29FBC41000FC23EB /* StarscreamWebSocketManager.swift */,
+				84A5FAB129F6157100781C03 /* FireBaseManager.swift */,
+			);
+			path = Singleton;
+			sourceTree = "<group>";
+		};
+		849E7D112A11C2FE00D1CAB1 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				84A85FCC2A0C780700E81D0C /* ShimmerView.swift */,
+				849FB4EF29F24151002340F9 /* Validations.swift */,
+				84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */,
+				84B2AF0329FB911000ABC4D9 /* Operators.swift */,
+				849FC3ED29FB53F600A86794 /* TwToEng.swift */,
+				84A85FCE2A0C9C3700E81D0C /* FillingLayout.swift */,
+				849B23FD2A0E1FE3008C86C8 /* YouTubePlayer.swift */,
+				841A7B4D2A0E21D7006330A8 /* YTPlayer.html */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		849E7D122A11C34D00D1CAB1 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				849E7D132A11C35600D1CAB1 /* ViewController */,
+				849E7D142A11C35F00D1CAB1 /* View */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		849E7D132A11C35600D1CAB1 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				849B23F52A0E0579008C86C8 /* PlayerViewController.swift */,
+				849B23F62A0E0579008C86C8 /* PlayerViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		849E7D142A11C35F00D1CAB1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				849B23F92A0E1275008C86C8 /* PlayerView.swift */,
+				849B23FB2A0E127E008C86C8 /* PlayerView.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		849FB4E729F2277B002340F9 /* Menu */ = {
@@ -509,6 +602,10 @@
 				84A5FAB329F6352500781C03 /* ToastView.swift */,
 				84C0EB5A29F28FE600B7D2CE /* CameraView.swift */,
 				84C0EB5C29F2900100B7D2CE /* CameraView.xib */,
+				84A85FD82A0CEC1F00E81D0C /* BannerTYCycleView.swift */,
+				84A85FDA2A0CEC2A00E81D0C /* BannerTYCycleView.xib */,
+				849B23EF2A0DDECB008C86C8 /* TYCycleCell.swift */,
+				849B23F02A0DDECB008C86C8 /* TYCycleCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -737,6 +834,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A85FDB2A0CEC2A00E81D0C /* BannerTYCycleView.xib in Resources */,
 				84A013622A02594300D4139E /* service.mp3 in Resources */,
 				849B472729F0E889002E4C60 /* LaunchScreen.storyboard in Resources */,
 				843B3E8229F9019800FB3969 /* OrderListView.xib in Resources */,
@@ -753,7 +851,7 @@
 				84DDFE8229FA5EDD00EABFEE /* RecordTableViewCell.xib in Resources */,
 				84A013642A025A9400D4139E /* arrived.mp3 in Resources */,
 				84A0136A2A025BEC00D4139E /* RecordFooterView.xib in Resources */,
-				84AC6A182A08F5BE00E629E8 /* ToggleLayoutView.xib in Resources */,
+				849B23F82A0E0579008C86C8 /* PlayerViewController.xib in Resources */,
 				849FB4F229F27A44002340F9 /* LoginViewController.xib in Resources */,
 				84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */,
 				843B3E8829F90AEA00FB3969 /* OrderListCollectionViewCell.xib in Resources */,
@@ -762,8 +860,11 @@
 				849CA94D2A01020E008779B0 /* ServerView.xib in Resources */,
 				84DDFE7C29FA3A2200EABFEE /* RecordViewController.xib in Resources */,
 				849B477029F1344E002E4C60 /* SushiCollectionViewCell.xib in Resources */,
+				849B23F22A0DDECB008C86C8 /* TYCycleCell.xib in Resources */,
+				841A7B4E2A0E21D7006330A8 /* YTPlayer.html in Resources */,
 				84C0EB5929F28F0B00B7D2CE /* AddSushiViewController.xib in Resources */,
 				84A013612A02594300D4139E /* checkout.mp3 in Resources */,
+				849B23FC2A0E127E008C86C8 /* PlayerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -897,6 +998,8 @@
 				8498F5CC29FBC41000FC23EB /* StarscreamWebSocketManager.swift in Sources */,
 				84AA819529F7A2C3009DA56D /* Zip4Sequence.swift in Sources */,
 				84DDFE8129FA5EDD00EABFEE /* RecordTableViewCell.swift in Sources */,
+				84A85FCD2A0C780700E81D0C /* ShimmerView.swift in Sources */,
+				849B23F12A0DDECB008C86C8 /* TYCycleCell.swift in Sources */,
 				849B476029F11E2D002E4C60 /* MenuViewController.swift in Sources */,
 				849B471F29F0E888002E4C60 /* ViewController.swift in Sources */,
 				849B476529F12123002E4C60 /* MenuViewModel.swift in Sources */,
@@ -904,6 +1007,7 @@
 				849CA9412A00D597008779B0 /* ExtensionUserDefaults.swift in Sources */,
 				849B475429F10E54002E4C60 /* Extension.swift in Sources */,
 				84AC6A1C2A08FAE500E629E8 /* SushiLinearCollectionViewCell.swift in Sources */,
+				84A85FD52A0CD8E600E81D0C /* UrlSchemeFactory.swift in Sources */,
 				849FB4E629F22765002340F9 /* LoginModel.swift in Sources */,
 				849FC3FF29FB6E3400A86794 /* ExtensionStoryboard.swift in Sources */,
 				849B474B29F10E01002E4C60 /* MenuInfoView.swift in Sources */,
@@ -912,6 +1016,7 @@
 				849FC40129FB6E9100A86794 /* ExtensionUI.swift in Sources */,
 				849CA94B2A010200008779B0 /* ServerView.swift in Sources */,
 				849B476929F12612002E4C60 /* RoundCornersView.swift in Sources */,
+				849B23FE2A0E1FE3008C86C8 /* YouTubePlayer.swift in Sources */,
 				849FC3FD29FB6DA400A86794 /* ExtensionRx.swift in Sources */,
 				843B3E8A29F90B4D00FB3969 /* NGSCustomizableImageView.swift in Sources */,
 				84B2AF0429FB911000ABC4D9 /* Operators.swift in Sources */,
@@ -921,6 +1026,8 @@
 				843B3E7829F8F06100FB3969 /* OrderViewController.swift in Sources */,
 				84A464592A0A0CF4003ED6E0 /* SushiContanerCollectionViewCell.swift in Sources */,
 				84A55DCB2A03AE630055C5A7 /* OrderSQLModel.swift in Sources */,
+				849B23FA2A0E1275008C86C8 /* PlayerView.swift in Sources */,
+				849B23F72A0E0579008C86C8 /* PlayerViewController.swift in Sources */,
 				84A5FAB229F6157100781C03 /* FireBaseManager.swift in Sources */,
 				84A4645C2A0A2863003ED6E0 /* BaseCollectionViewCell.swift in Sources */,
 				849B471B29F0E888002E4C60 /* AppDelegate.swift in Sources */,
@@ -928,10 +1035,10 @@
 				849FB4F429F280FA002340F9 /* SystemInfo.swift in Sources */,
 				84B2AF0B29FBAB4900ABC4D9 /* WebViewViewController.swift in Sources */,
 				84A25FAB2A04C70C0079996E /* BaseView.swift in Sources */,
+				84A85FCF2A0C9C3700E81D0C /* FillingLayout.swift in Sources */,
 				849B476229F11E75002E4C60 /* MenuViews.swift in Sources */,
 				849B471D29F0E888002E4C60 /* SceneDelegate.swift in Sources */,
 				849B476C29F1272A002E4C60 /* MenuModel.swift in Sources */,
-				84AC6A192A08F5BE00E629E8 /* ToggleLayoutView.swift in Sources */,
 				843B3E8029F9019000FB3969 /* OrderListView.swift in Sources */,
 				84A5FAB429F6352500781C03 /* ToastView.swift in Sources */,
 				849B475E29F11D8A002E4C60 /* NGSCustomizableButton.swift in Sources */,
@@ -949,6 +1056,7 @@
 				84A013682A025BE400D4139E /* RecordFooterView.swift in Sources */,
 				849B475029F10E44002E4C60 /* NibOwnerLoadable.swift in Sources */,
 				843B3E7729F8F06100FB3969 /* OrderViewModel.swift in Sources */,
+				84A85FD92A0CEC1F00E81D0C /* BannerTYCycleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1054,7 +1162,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1108,7 +1216,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1129,6 +1237,7 @@
 				DEVELOPMENT_TEAM = MM8C3J2A56;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sushi/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "N多壽司";
 				INFOPLIST_KEY_NSCameraUsageDescription = "是否授权使用相机？";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要使用您的相册";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1159,6 +1268,7 @@
 				DEVELOPMENT_TEAM = MM8C3J2A56;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sushi/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "N多壽司";
 				INFOPLIST_KEY_NSCameraUsageDescription = "是否授权使用相机？";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要使用您的相册";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

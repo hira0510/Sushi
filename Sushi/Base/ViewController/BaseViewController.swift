@@ -9,6 +9,8 @@ import UIKit
 import RxSwift
 
 class BaseViewController: UIViewController {
+    /// 轉換url
+    internal lazy var urlSchemeFactory: UrlSchemeFactory = UrlSchemeFactory()
     
     internal lazy var bag: DisposeBag! = {
         return DisposeBag()
@@ -48,6 +50,26 @@ class BaseViewController: UIViewController {
         toastView.type = type
         self.view.addSubview(toastView)
     }
+    typealias GetSchemesHandler = (UrlSchemeFactory) -> ()
+    public func changeSchemes(url: String, suc: GetSchemesHandler? = nil) {
+        urlSchemeFactory.getUrlSchemeInfo(urlScheme: url)
+
+        switch urlSchemeFactory.mAction {
+        case "webview":
+            let webView = UIStoryboard.loadWebViewVC(url: urlSchemeFactory.mValue)
+            self.present(webView, animated: true, completion: nil)
+        case "browser":
+            guard let url = URL(string: urlSchemeFactory.mValue) else { break }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        case "order":
+            guard !SuShiSingleton.share().getIsAdmin() else { return }
+            suc?(urlSchemeFactory)
+        case "player":
+            suc?(urlSchemeFactory)
+        default: break
+        }
+    }
+
     
     // MARK: - private
     /// 加入返回上一頁的手勢

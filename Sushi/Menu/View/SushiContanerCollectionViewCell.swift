@@ -17,13 +17,30 @@ protocol SushiContanerCellToMenuVcProtocol: AnyObject {
 }
 
 class SushiContanerCollectionViewCell: BaseCollectionViewCell {
+    enum cellType {
+        case normal_1x1
+        case linear_2x1
+        case big_2x2
+        static func getType(_ index: Int) -> cellType {
+            guard index > 0 else { return .normal_1x1 }
+//            let isBig = GlobalUtil.isPortrait() ? (index + 1) % 5 == 0: (index % 10 == 2 || index % 10 == 5)
+            let isLinear = GlobalUtil.isPortrait() ? (index + 1) % 5 == 0: (index % 6 == 2 || index % 6 == 3)
+//            if isBig {
+//                return .linear_2x1
+//            } else
+            if isLinear {
+                return .linear_2x1
+            } else {
+                return .normal_1x1
+            }
+        }
+    }
 
     @IBOutlet weak var sushiCollectionView: UICollectionView!
 
     private var selectItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     private var sushiCollectionFrame: BehaviorRelay<CGRect> = BehaviorRelay<CGRect>(value: .zero)
     private var isNotEdit: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: true)
-    private var layoutType: BehaviorRelay<ToggleLayoutView.LayoutType> = BehaviorRelay<ToggleLayoutView.LayoutType>(value: .grid)
     private var deleteIndexAry: BehaviorRelay<[IndexPath]> = BehaviorRelay<[IndexPath]>(value: [])
 
     private var sushiModel: [SushiModel] = []
@@ -45,10 +62,9 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         self.delegate = delegate
         self.sushiCollectionFrame.accept(frame)
     }
-    
-    func bindData(select: BehaviorRelay<Int>, layoutType: BehaviorRelay<ToggleLayoutView.LayoutType>, frame: BehaviorRelay<CGRect>, isNotEdit: BehaviorRelay<Bool>, deleteAry: BehaviorRelay<[IndexPath]>) {
+
+    func bindData(select: BehaviorRelay<Int>, frame: BehaviorRelay<CGRect>, isNotEdit: BehaviorRelay<Bool>, deleteAry: BehaviorRelay<[IndexPath]>) {
         select.bind(to: self.selectItem).disposed(by: bag)
-        layoutType.bind(to: self.layoutType).disposed(by: bag)
         isNotEdit.bind(to: self.isNotEdit).disposed(by: bag)
         frame.bind(to: self.sushiCollectionFrame).disposed(by: bag)
         deleteAry.bind(to: self.deleteIndexAry).disposed(by: bag)
@@ -62,6 +78,10 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         sushiCollectionView.dropDelegate = self
         sushiCollectionView.register(SushiCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiCollectionViewCell")
         sushiCollectionView.register(SushiLinearCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiLinearCollectionViewCell")
+
+        if let layout = sushiCollectionView.collectionViewLayout as? FillingLayout {
+            layout.delegate = self
+        }
     }
 
     private func bindBehaviorRelay() {
@@ -74,17 +94,13 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         //Client結帳後不可點餐
         SuShiSingleton.share().bindIsCheckout().bind(to: sushiCollectionView.rx.allowsSelection).disposed(by: bag)
         //手機更換方向時重整collectionView
-        Observable.combineLatest(SuShiSingleton.share().bindIsEng(), selectItem, layoutType, isNotEdit, sushiCollectionFrame) { _, _, _, _, frame -> CGRect in
+        Observable.combineLatest(SuShiSingleton.share().bindIsEng(), selectItem, isNotEdit, sushiCollectionFrame) { _, _, _, frame -> CGRect in
             return frame
         }.map { $0 }.bind(to: sushiCollectionView.rx.reloadData).disposed(by: bag)
     }
 
     private func getColumn() -> Int {
-        if GlobalUtil.isPortrait() {
-            return layoutType.value == .grid ? 2 : 1
-        } else {
-            return layoutType.value == .grid ? 4 : 2
-        }
+        GlobalUtil.isPortrait() ? 2 : 4
     }
 
     private func getRow() -> Int {
@@ -95,13 +111,15 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
     private func getCellSize() -> CGSize {
         let wSpace = 10.0
         //h
-        let cellSpaceHeight: CGFloat = wSpace * (getRow().toCGFloat - 1)
+        let rowCount = getRow().toCGFloat
+        let cellSpaceHeight: CGFloat = wSpace * (rowCount - 1)
         let cellAllHeight: CGFloat = floor(sushiCollectionFrame.value.height - 15) - cellSpaceHeight
-        let cellMaxHeight: CGFloat = (cellAllHeight / getRow().toCGFloat).rounded(.down)
+        let cellMaxHeight: CGFloat = (cellAllHeight / rowCount).rounded(.down)
         //w
-        let cellSpaceWidth: CGFloat = wSpace * (getColumn().toCGFloat - 1)
+        let columnCount = getColumn().toCGFloat
+        let cellSpaceWidth: CGFloat = wSpace * (columnCount - 1)
         let cellAllWidth: CGFloat = floor(sushiCollectionFrame.value.width - 20) - cellSpaceWidth
-        let cellMaxWidth: CGFloat = (cellAllWidth / getColumn().toCGFloat).rounded(.down)
+        let cellMaxWidth: CGFloat = (cellAllWidth / columnCount).rounded(.down)
 
         return CGSize(width: cellMaxWidth, height: cellMaxHeight)
     }
@@ -120,14 +138,14 @@ extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectio
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let isSelect = !isNotEdit.value && deleteIndexAry.value.contains(indexPath)
-        switch layoutType.value {
-        case .grid:
+        switch cellType.getType(indexPath.item) {
+        case .normal_1x1, .big_2x2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiCollectionViewCell", for: indexPath) as! SushiCollectionViewCell
             guard sushiModel.count > indexPath.item else { return cell }
             cell.cellConfig(model: sushiModel[indexPath.item], isSelect: isSelect)
             cell.isSelectChangeBg(isSelect)
             return cell
-        case .linear:
+        default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiLinearCollectionViewCell", for: indexPath) as! SushiLinearCollectionViewCell
             guard sushiModel.count > indexPath.item else { return cell }
             cell.cellConfig(model: sushiModel[indexPath.item], isSelect: isSelect)
@@ -152,9 +170,21 @@ extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectio
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return getCellSize()
+        switch cellType.getType(indexPath.item) {
+        case .normal_1x1:
+            return getCellSize()
+        case .linear_2x1:
+            var size = getCellSize()
+            size.width = size.width * 2 + 10
+            return size
+        case .big_2x2:
+            var size = getCellSize()
+            size.width = size.width * 2 + 10
+            size.height = size.height * 2 + 10
+            return size
+        }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
@@ -217,5 +247,22 @@ extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectio
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
             }
         }
+    }
+}
+extension SushiContanerCollectionViewCell: FillingLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, sizeForViewAtIndexPath indexPath: IndexPath) -> CGSize {
+        return getCellSize()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, sizeScale indexPath: IndexPath) -> Int {
+        switch cellType.getType(indexPath.item) {
+        case .normal_1x1: return 1
+        case .linear_2x1: return 2
+        case .big_2x2: return 2
+        }
+    }
+
+    func numberOfColumnsInCollectionView(collectionView: UICollectionView) -> Int {
+        return getColumn()
     }
 }

@@ -1,4 +1,31 @@
 {
+    "AD": {
+        "0": {
+            "title": "鮭三味圓舞曲",
+            "imgUrl": "https://www.youtube.com/embed/FnxEutMDI40?autoplay=1&mute=1",
+            "url": "sushi://?act=player&value=https://www.youtube.com/watch?v=GQ8tjjuNRk0"
+        },
+        "1": {
+            "title": "伯爵紅茶生乳酪",
+            "imgUrl": "https://raw.githubusercontent.com/hira0510/SushiData/main/cake.jpeg",
+            "url": "https://www.youtube.com/watch?v=MV9PfkXJews"
+        },
+        "2":  {
+            "title": "赤燒天使紅蝦",
+            "imgUrl": "https://raw.githubusercontent.com/hira0510/SushiData/main/adTest2mp4.mp4",
+            "url": "sushi://?act=player&value=https://raw.githubusercontent.com/hira0510/SushiData/main/adTest2mp4.mp4"
+        },
+        "3":  {
+            "title": "九州蒜香蛤犡烏龍麵",
+            "imgUrl": "https://raw.githubusercontent.com/hira0510/SushiData/main/giphy2.gif",
+            "url": "webview://?url=https://www.youtube.com/watch?v=FnxEutMDI40?autoplay=1"
+        },
+        "4":  {
+            "title": "酥炸栗香甘藷",
+            "imgUrl": "https://raw.githubusercontent.com/hira0510/SushiData/main/potato.png",
+            "url": "sushi://?act=order&value=title:%E9%85%A5%E7%82%B8%E6%A0%97%E9%A6%99%E7%94%98%E8%97%B7,eng:Teriyaki&nbspHalibut&nbspFluke&nbspFin,img:https://www.sushiexpress.com.tw/images/Product/4210_s.png,price:40"
+        }
+  },
   "Data": {
       "menu0": {
         "title": "推薦",
@@ -270,7 +297,7 @@
                 "title": "焦糖鮭魚",
                 "eng": "Caramel Salmon",
                 "img": "https://www.sushiexpress.com.tw/images/Product/2133_s.png",
-                "price": "40:"
+                "price": "40"
             },
             "7":  {
                 "title": "起士大蝦燒",

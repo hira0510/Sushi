@@ -27,6 +27,14 @@ class MenuViewController: BaseViewController {
         setupUI()
     }
     
+    /// 在其他vc轉向，回來時重新拿frame
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if viewModel.menuCollectionFrame.value != .zero && viewModel.sushiCollectionFrame.value != .zero {
+            transitionSetupUI()
+        }
+    }
+    
     deinit {
         views.orderTimer?.invalidate()
         views.orderTimer = nil
@@ -37,9 +45,7 @@ class MenuViewController: BaseViewController {
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) -> Void in
         }, completion: { [weak self] (UIViewControllerTransitionCoordinatorContext) -> Void in
             guard let `self` = self else { return }
-            self.viewModel.menuCollectionFrame.accept(self.views.menuCollectionView.frame)
-            self.viewModel.sushiCollectionFrame.accept(self.views.sushiCollectionView.frame)
-            self.views.setupAdminServerView(self)
+            self.transitionSetupUI()
         })
         super.viewWillTransition(to: size, with: coordinator)
     }
@@ -47,6 +53,7 @@ class MenuViewController: BaseViewController {
     // MARK: - private
     private func setupUI() {
         views.orderListView.initView(order: viewModel.orderModel, delegate: self)
+        views.adBannerView.setupView(adData: viewModel.adModel, delegate: self)
         views.menuInfoViewAddTarget(self)
         views.setupCollectionView(self)
         views.deleteItemBtnAddTarget(self)
@@ -54,16 +61,26 @@ class MenuViewController: BaseViewController {
         views.addNewBtnAddTarget(self)
         views.checkoutBtnAddTarget(self)
         views.serviceBtnAddTarget(self)
-        views.cellTypeView.delegate = self
+    }
+    
+    private func transitionSetupUI() {
+        viewModel.menuCollectionFrame.accept(views.menuCollectionView.frame)
+        viewModel.sushiCollectionFrame.accept(views.sushiCollectionView.frame)
+        views.setupAdminServerView(self)
     }
     
     // MARK: - public
     /// 請求菜單api
     public func getAllMenu() {
         viewModel.getAllMenu().subscribe(onNext: { [weak self] (result) in
-            guard let `self` = self, result.count > 0 else { return }
-            self.viewModel.menuModel.accept(result)
-            self.viewModel.selectSushiItem.accept(1) 
+            guard let `self` = self else { return }
+            if result.ad.count > 0 {
+                self.viewModel.adModel.accept(result.ad)
+            }
+            if result.data.count > 0 {
+                self.viewModel.menuModel.accept(result.data)
+                self.viewModel.selectSushiItem.accept(1)
+            }
         }).disposed(by: bag)
     }
     /// 請求部分菜單
@@ -91,6 +108,9 @@ class MenuViewController: BaseViewController {
             self.requestSuc(self.viewModel.getMenu.menu)
             self.viewModel.deleteIndexAry.accept([])
             self.viewModel.isNotEdit.accept(true)
+        }, onError: { [weak self] _ in
+            guard let `self` = self else { return }
+            self.addAndRemoveToast(txt: "刪除失敗")
         }).disposed(by: bag)
     }
 }
@@ -130,8 +150,8 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiContanerCollectionViewCell", for: indexPath) as! SushiContanerCollectionViewCell
             let model = viewModel.getSushiData()
             guard model.count > indexPath.item else { return cell } 
-            cell.cellConfig(model: model[indexPath.item].sushi, frame: viewModel.sushiCollectionFrame.value, color: unwrap(UIColor(hexString: model[indexPath.item].color), .clear), delegate: self)
-            cell.bindData(select: viewModel.selectSushiItem, layoutType: viewModel.layoutType, frame: viewModel.sushiCollectionFrame, isNotEdit: viewModel.isNotEdit, deleteAry: viewModel.deleteIndexAry)
+            cell.cellConfig(model: model[indexPath.item].sushi, frame: viewModel.sushiCollectionFrame.value, color: UIColor(model[indexPath.item].color), delegate: self)
+            cell.bindData(select: viewModel.selectSushiItem, frame: viewModel.sushiCollectionFrame, isNotEdit: viewModel.isNotEdit, deleteAry: viewModel.deleteIndexAry)
             return cell
         }
     }
@@ -192,7 +212,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard scrollView == views.sushiCollectionView else { return }
-        let page = scrollView.contentOffset.x / scrollView.bounds.size.width
+        let page = (scrollView.contentOffset.x / scrollView.bounds.size.width).rounded()
         if page == 0 { // 当UIScrollView滑动到第一位停止时，将UIScrollView的偏移位置改变
             viewModel.selectSushiItem.accept(viewModel.getSushiData().count - 2)
         } else if page.toInt == (viewModel.getSushiData().count - 1) { // 当UIScrollView滑动到最后一位停止时，将UIScrollView的偏移位置改变
@@ -225,6 +245,25 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         if viewModel.selectMenuItem.value != selectIndex && modelCount > selectIndex {
             viewModel.selectMenuItem.accept(selectIndex)
+        }
+    }
+}
+
+// MARK: - 點擊輪播廣告
+extension MenuViewController: BannerTYCycleViewProtocol {
+    func didClickCycleCell(_ url: String) {
+        self.changeSchemes(url: url) { urlSchemeFactory in
+            switch urlSchemeFactory.mAction {
+            case "order":
+                let sushiDic = urlSchemeFactory.mValue.toMsgDic(",", ":")
+                let sushiData = SushiModel().toSushi(dic: sushiDic)
+                let vc = UIStoryboard.loadOrderVC(model: sushiData, color: "FFEEFF", delegate: self)
+                self.navigationController?.pushViewController(vc, animated: true)
+            case "player":
+                let vc = UIStoryboard.loadPlayerVC(url: urlSchemeFactory.mValue)
+                self.navigationController?.pushViewController(vc, animated: true)
+            default: break
+            }
         }
     }
 }
@@ -322,13 +361,6 @@ extension MenuViewController: StarscreamWebSocketManagerProtocol {
     /// Client拿到Server傳送過來的Menu重新拿資料
     func updateMenu(_ menuName: String) {
         requestMenu(menuName)
-    }
-}
-// MARK: - WebSocket訊息處理
-extension MenuViewController: ToggleLayoutViewDelegate {
-    ///點擊切換layout類型
-    func onToggleLayoutClick(layoutType: ToggleLayoutView.LayoutType) {
-        self.viewModel.layoutType.accept(layoutType)
     }
 }
 

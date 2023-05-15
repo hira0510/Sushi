@@ -5,8 +5,7 @@
 //  Created by Hira on 2023/4/26.
 //
 
-import UIKit
-import Kingfisher
+import UIKit 
 import RxSwift
 import RxCocoa
 
@@ -40,9 +39,8 @@ class OrderListCollectionViewCell: BaseCollectionViewCell {
     }
 
     func cellConfig(model: SushiModel, delegate: OrderListCellProtocol?) {
-        mModel = model
+        self.mModel = model
         self.delegate = delegate
-        guard let url = URL(string: model.img) else { return }
-        self.mImageView.kf.setImage(with: url, placeholder: nil, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously])
+        self.mImageView.loadImage(url: model.img, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously])
     }
 }

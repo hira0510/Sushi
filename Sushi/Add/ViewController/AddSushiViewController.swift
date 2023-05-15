@@ -8,7 +8,6 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import Kingfisher
 
 class AddSushiViewController: BaseViewController {
 
@@ -101,22 +100,23 @@ class AddSushiViewController: BaseViewController {
 
     // MARK: - private
     private func setupEditUI() {
-        guard let model = viewModel.editModel.data, let img = URL(string: model.img) else { return }
+        guard let model = viewModel.editModel.data else { return }
         menuPickerView.isHidden = true
  
         viewModel.mName.accept(model.title)
         viewModel.mPrice.accept(model.price)
         viewModel.mNameEng.accept(model.eng)
-        mImageView.kf.setImage(with: img, placeholder: UIImage(named: "noImg"), options: [.transition(.fade(0.5)), .loadDiskFileSynchronously], completionHandler: { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let value):
-                    self.viewModel.mTempEditImage.accept(value.image)
-                    self.viewModel.mImage.accept(value.image)
-                case .failure(let error):
-                    print("Error: \(error)")
-                }
-            })
+        
+        mImageView.loadImage(url: model.img, placeholder: UIImage(named: "noImg"), options: [.transition(.fade(0.5)), .loadDiskFileSynchronously]) { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let value):
+                self.viewModel.mTempEditImage.accept(value.image)
+                self.viewModel.mImage.accept(value.image)
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
     }
 
     private func addStorageImage() {
@@ -131,6 +131,9 @@ class AddSushiViewController: BaseViewController {
         viewModel.addStorageImg(name, img).subscribe(onNext: { [weak self] (imgUrl) in
             guard let `self` = self, !imgUrl.isEmpty else { return }
             self.addRequset(imgUrl)
+        }, onError: { [weak self] _ in
+            guard let `self` = self else { return }
+            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增失敗" : "修改失敗")
         }).disposed(by: bag)
     }
 
@@ -144,6 +147,9 @@ class AddSushiViewController: BaseViewController {
             guard let `self` = self else { return }
             self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增成功" : "修改成功")
             self.viewModel.delegate?.requestSuc(menu)
+        }, onError: { [weak self] _ in
+            guard let `self` = self else { return }
+            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增失敗" : "修改失敗")
         }).disposed(by: bag)
     }
 

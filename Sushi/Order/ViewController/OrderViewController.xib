@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -38,8 +39,10 @@
                         <constraint firstAttribute="width" secondItem="rVB-9t-t9s" secondAttribute="height" id="Vku-dd-inj"/>
                     </constraints>
                     <color key="tintColor" name="previous"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="arrowshape.turn.up.left.fill" catalog="system"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="arrowshape.turn.up.left.fill" catalog="system">
+                        <color key="titleColor" name="previous"/>
+                    </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cb5-cp-vNd">
                     <rect key="frame" x="10" y="395" width="355" height="97.5"/>
@@ -362,7 +365,7 @@
             <color red="0.7369999885559082" green="0.75300002098083496" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main_btn_isDisable_shadow">
-            <color red="0.68999999759999997" green="0.69400000569999998" blue="0.69800001379999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.44699999690055847" green="0.43500000238418579" blue="0.42399999499320984" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main_btn_isDisable_title">
             <color red="0.45899999141693115" green="0.42399999499320984" blue="0.43900001049041748" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -371,7 +374,7 @@
             <color red="0.68999999761581421" green="0.54100000858306885" blue="0.36500000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main_btn_isEnable_shadow">
-            <color red="0.41200000050000002" green="0.30199998620000001" blue="0.15299999710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41200000047683716" green="0.30199998617172241" blue="0.15299999713897705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="previous">
             <color red="0.25499999523162842" green="0.25099998712539673" blue="0.2669999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
