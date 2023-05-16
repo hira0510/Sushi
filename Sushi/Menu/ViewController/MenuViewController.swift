@@ -157,9 +157,15 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiContanerCollectionViewCell", for: indexPath) as! SushiContanerCollectionViewCell
             let model = viewModel.getSushiData()
             guard model.count > indexPath.item else { return cell } 
-            cell.cellConfig(model: model[indexPath.item].sushi, delegate: self)
+            cell.cellConfig(model: model[indexPath.item].sushi, color: UIColor(model[indexPath.item].color), delegate: self)
             cell.bindData(select: viewModel.selectSushiItem, frame: viewModel.sushiCollectionFrame, isNotEdit: viewModel.isNotEdit, deleteAry: viewModel.deleteIndexAry)
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? SushiContanerCollectionViewCell {
+            cell.setupCollecctionViewFrame(viewModel.sushiCollectionFrame.value)
         }
     }
     
@@ -180,7 +186,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return CGSize(width: GlobalUtil.calculateWidthScaleWithSize(width: 70), height: viewModel.menuCollectionFrame.value.height)
         case .sushi:
             let frame = viewModel.sushiCollectionFrame.value
-            return CGSize(width: frame.width, height: frame.height - 20)
+            return CGSize(width: frame.width, height: frame.height)
         }
     }
     
@@ -195,13 +201,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let type: CollectionViewType = collectionView == views.menuCollectionView ? .menu: .sushi
-        switch type {
-        case .menu:
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        case .sushi:
-            return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-        }
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
     /// 偏移cell

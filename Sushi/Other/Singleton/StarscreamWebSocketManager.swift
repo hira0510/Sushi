@@ -69,7 +69,7 @@ class StarscreamWebSocketManager: NSObject {
     
     public func writeMsg(_ strDic: [String: String]) {
         let str = strDic.toWebMsg
-        webSocket?.write(string: str)
+        webSocket?.write(string: "APP:SUSHI " + str)
         print(GlobalUtil.dateStr() + "\n🟢Client: " + str + "\n")
     }
     
@@ -129,6 +129,7 @@ extension StarscreamWebSocketManager: WebSocketDelegate {
             print("🟢🟢結束\(reason)")
             print(GlobalUtil.dateStr() + "\n🟢Server: " + "結束連接" + "\n===========================")
         case .text(let string):
+            guard string.contains("APP:SUSHI") else { return }
             print(GlobalUtil.dateStr() + "\n🟢Server: " + string + "\n")
             getServiceText(string)
         case .binary(let data):

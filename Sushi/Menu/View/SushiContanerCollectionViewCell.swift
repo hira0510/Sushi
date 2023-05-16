@@ -53,7 +53,8 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         setupCollectionView()
     }
 
-    func cellConfig(model: [SushiModel], delegate: SushiContanerCellToMenuVcProtocol) {
+    func cellConfig(model: [SushiModel], color: UIColor, delegate: SushiContanerCellToMenuVcProtocol) {
+        self.backgroundColor = color
         self.sushiModel = model
         self.delegate = delegate
         self.sushiCollectionView.reloadData()
@@ -70,6 +71,10 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
+    
+    /// 點擊上下頁顯示其他項目
+    /// - Parameter isNext: 是否是點擊下一頁
+    /// - Returns: 是否成功顯示其他項目，否則換一頁
     func isScrollNotVisibleItems(_ isNext: Bool) -> Bool {
         guard sushiCollectionView != nil, sushiModel.count > 0 else { return false }
         if let max = sushiCollectionView.indexPathsForVisibleItems.max(), isNext && sushiModel.count > max.item + 1 {
@@ -81,6 +86,11 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         } else {
             return false
         }
+    }
+    
+    /// 套件需要重整layout
+    func setupCollecctionViewFrame(_ frame: CGRect) {
+        self.sushiCollectionView.frame = CGRect(x: frame.minX + 10, y: frame.minY + 10, width: frame.width - 20, height: frame.height - 20)
     }
 
     /// 初始CollectionView
@@ -107,10 +117,8 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         //Client結帳後不可點餐
         SuShiSingleton.share().bindIsCheckout().bind(to: sushiCollectionView.rx.allowsSelection).disposed(by: bag)
         //手機更換方向時重整collectionView
-        Observable.combineLatest(SuShiSingleton.share().bindIsEng(), isNotEdit, sushiCollectionFrame) { [weak self] _, _, frame -> CGRect in
-            guard let `self` = self else { return CGRect.zero }
-            self.sushiCollectionView.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: frame.height - 20)
-            return frame
+        Observable.combineLatest(SuShiSingleton.share().bindIsEng(), isNotEdit) { _, _ -> CGRect in
+            return CGRect.zero
         }.map { $0 }.bind(to: sushiCollectionView.rx.reloadData).disposed(by: bag)
     }
 
@@ -213,7 +221,7 @@ extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectio
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {

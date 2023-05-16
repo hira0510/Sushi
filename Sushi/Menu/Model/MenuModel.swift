@@ -98,6 +98,7 @@ class MenuModel: NSObject {
             snapshotValue["img"] = data.img
             snapshotValue["eng"] = data.eng
             snapshotValue["price"] = data.price
+            snapshotValue["size"] = data.size
             result[i.toStr] = snapshotValue
         }
         return result

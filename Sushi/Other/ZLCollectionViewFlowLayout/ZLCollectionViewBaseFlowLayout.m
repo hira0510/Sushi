@@ -79,9 +79,9 @@ typedef NS_ENUM(NSUInteger, LewScrollDirction) {
 
 - (void)dealloc {
     //這邊改成try, 因為有機率會閃退 By Hira
-    @try{
+    @try {
         [self removeObserver:self forKeyPath:@"collectionView"];
-    }@catch(id anException){
+    }@catch(NSException *exception){
        //do nothing, obviously it wasn't attached because an exception was thrown
     }
 }

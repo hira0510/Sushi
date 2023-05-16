@@ -18,9 +18,9 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="9l0-nc-qJ6">
-                        <rect key="frame" x="0.0" y="0.0" width="248" height="362"/>
+                        <rect key="frame" x="10" y="10" width="228" height="342"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="tZ6-CF-m1X" customClass="ZLCollectionViewVerticalLayout">
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="tZ6-CF-m1X" customClass="ZLCollectionViewVerticalLayout">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -32,10 +32,10 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="9l0-nc-qJ6" secondAttribute="trailing" id="Ry3-Jf-2Nu"/>
-                <constraint firstAttribute="bottom" secondItem="9l0-nc-qJ6" secondAttribute="bottom" id="i8S-Ld-xWa"/>
-                <constraint firstItem="9l0-nc-qJ6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ySt-5A-gu7"/>
-                <constraint firstItem="9l0-nc-qJ6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yr3-mB-HLk"/>
+                <constraint firstAttribute="trailing" secondItem="9l0-nc-qJ6" secondAttribute="trailing" constant="10" id="Ry3-Jf-2Nu"/>
+                <constraint firstAttribute="bottom" secondItem="9l0-nc-qJ6" secondAttribute="bottom" constant="10" id="i8S-Ld-xWa"/>
+                <constraint firstItem="9l0-nc-qJ6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="ySt-5A-gu7"/>
+                <constraint firstItem="9l0-nc-qJ6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="yr3-mB-HLk"/>
             </constraints>
             <size key="customSize" width="248" height="362"/>
             <connections>
