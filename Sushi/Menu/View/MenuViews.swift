@@ -31,7 +31,11 @@ class MenuViews: NSObject {
             }.map { $0 }.bind(to: sushiCollectionView.rx.reloadData).disposed(by: bag)
             
             //選擇頁面時頁面滑至同index
-            Observable.combineLatest(viewModel.selectSushiItem, viewModel.sushiCollectionFrame) { index, frame -> CGFloat in
+            Observable.combineLatest(viewModel.selectSushiItem, viewModel.sushiCollectionFrame) { [weak self] index, frame -> CGFloat in
+                guard let `self` = self else { return 0 }
+                if self.viewModel.getSushiData().count > 0 {
+                    self.sushiCollectionView.backgroundColor = UIColor(self.viewModel.getSushiData()[index].color)
+                }
                 return index.toCGFloat * frame.width
             }.map { $0 }.bind(to: sushiCollectionView.rx.sushiScrollContentOffset).disposed(by: bag)
         }
@@ -98,9 +102,12 @@ class MenuViews: NSObject {
         didSet {
             //文字中英轉換
             SuShiSingleton.share().bindIsEng().bind(to: previousPageBtn.rx.isSelected).disposed(by: bag)
-            //點擊上一頁
+            //點擊上一頁跳到還沒看過的cell, 如果已經到頂了就往上一頁
             previousPageBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
+                guard let contanerCell = self.sushiCollectionView.cellForItem(at: IndexPath(item: self.viewModel.selectSushiItem.value, section: 0)) as? SushiContanerCollectionViewCell else { return }
+                
+                guard !contanerCell.isScrollNotVisibleItems(false) else { return }
                 if self.viewModel.selectMenuItem.value == 0 { //如果是第一頁就做特殊處理到最後一頁
                     self.viewModel.selectMenuItem.accept(self.viewModel.menuModel.value.count - 1)
                     self.viewModel.selectSushiItem.accept(self.viewModel.getSushiData().count - 2)
@@ -116,10 +123,14 @@ class MenuViews: NSObject {
         didSet {
             //文字中英轉換
             SuShiSingleton.share().bindIsEng().bind(to: nextPageBtn.rx.isSelected).disposed(by: bag)
-            //點擊下一頁
+            //點擊下一頁跳到還沒看過的cell, 如果已經到底了就往下一頁
             nextPageBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
-                if self.viewModel.selectSushiItem.value + 1 == self.viewModel.getSushiData().count - 1 { //如果是最後一頁就做特殊處理到第一頁
+                guard let contanerCell = self.sushiCollectionView.cellForItem(at: IndexPath(item: self.viewModel.selectSushiItem.value, section: 0)) as? SushiContanerCollectionViewCell else { return }
+                
+                guard !contanerCell.isScrollNotVisibleItems(true) else { return }
+                let isLastPage = self.viewModel.selectSushiItem.value + 1 == self.viewModel.getSushiData().count - 1
+                if isLastPage { //如果是最後一頁就做特殊處理到第一頁
                     self.viewModel.selectMenuItem.accept(0)
                     self.viewModel.selectSushiItem.accept(1)
                 } else {

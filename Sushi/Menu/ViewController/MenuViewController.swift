@@ -19,7 +19,6 @@ class MenuViewController: BaseViewController {
     }
     
     private let viewModel = MenuViewModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         StarscreamWebSocketManager.shard.delegate = self
@@ -64,9 +63,11 @@ class MenuViewController: BaseViewController {
     }
     
     private func transitionSetupUI() {
-        viewModel.menuCollectionFrame.accept(views.menuCollectionView.frame)
-        viewModel.sushiCollectionFrame.accept(views.sushiCollectionView.frame)
-        views.setupAdminServerView(self)
+        if viewModel.menuCollectionFrame.value != views.menuCollectionView.frame || viewModel.sushiCollectionFrame.value != views.sushiCollectionView.frame {
+            viewModel.menuCollectionFrame.accept(views.menuCollectionView.frame)
+            viewModel.sushiCollectionFrame.accept(views.sushiCollectionView.frame)
+            views.setupAdminServerView(self)
+        }
     }
     
     // MARK: - public
@@ -81,6 +82,9 @@ class MenuViewController: BaseViewController {
                 self.viewModel.menuModel.accept(result.data)
                 self.viewModel.selectSushiItem.accept(1)
             }
+        }, onError: { [weak self] _ in
+            guard let `self` = self else { return }
+            self.getAllMenu()
         }).disposed(by: bag)
     }
     /// 請求部分菜單
@@ -88,6 +92,9 @@ class MenuViewController: BaseViewController {
         viewModel.requestMenu(menuName).subscribe(onNext: { [weak self] (result) in
             guard let `self` = self else { return }
             self.viewModel.updateMenuModel(result)
+        }, onError: { [weak self] _ in
+            guard let `self` = self else { return }
+            self.requestMenu(menuName)
         }).disposed(by: bag)
     }
     
@@ -150,7 +157,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiContanerCollectionViewCell", for: indexPath) as! SushiContanerCollectionViewCell
             let model = viewModel.getSushiData()
             guard model.count > indexPath.item else { return cell } 
-            cell.cellConfig(model: model[indexPath.item].sushi, frame: viewModel.sushiCollectionFrame.value, color: UIColor(model[indexPath.item].color), delegate: self)
+            cell.cellConfig(model: model[indexPath.item].sushi, delegate: self)
             cell.bindData(select: viewModel.selectSushiItem, frame: viewModel.sushiCollectionFrame, isNotEdit: viewModel.isNotEdit, deleteAry: viewModel.deleteIndexAry)
             return cell
         }
@@ -173,7 +180,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return CGSize(width: GlobalUtil.calculateWidthScaleWithSize(width: 70), height: viewModel.menuCollectionFrame.value.height)
         case .sushi:
             let frame = viewModel.sushiCollectionFrame.value
-            return CGSize(width: frame.width, height: frame.height)
+            return CGSize(width: frame.width, height: frame.height - 20)
         }
     }
     
@@ -188,7 +195,13 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let type: CollectionViewType = collectionView == views.menuCollectionView ? .menu: .sushi
+        switch type {
+        case .menu:
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        case .sushi:
+            return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        }
     }
     
     /// 偏移cell

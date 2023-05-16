@@ -40,8 +40,10 @@ class AddSushiViewModel: BaseViewModel {
     var mName: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     var mNameEng: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     var mPrice: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
+    var mSize: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     var mImage: BehaviorRelay<UIImage> = BehaviorRelay<UIImage>(value: UIImage(named: "noImg")!)
     var mTempEditImage: BehaviorRelay<UIImage> = BehaviorRelay<UIImage>(value: UIImage(named: "noImg")!)
+    let sizeModel = ["1x1", "2x1", "2x2"]
     
     let stringPickerAdapter = RxPickerViewStringAdapter<[String]>(
         components: [],
@@ -53,6 +55,6 @@ class AddSushiViewModel: BaseViewModel {
     )
     
     func toSushiModel(_ img: String) -> SushiModel {
-        return SushiModel(title: mName.value, eng: mNameEng.value, img: img, price: mPrice.value)
+        return SushiModel(title: mName.value, eng: mNameEng.value, img: img, price: mPrice.value, size: mSize.value)
     }
 }

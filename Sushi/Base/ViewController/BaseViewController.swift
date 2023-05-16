@@ -50,6 +50,7 @@ class BaseViewController: UIViewController {
         toastView.type = type
         self.view.addSubview(toastView)
     }
+    
     typealias GetSchemesHandler = (UrlSchemeFactory) -> ()
     public func changeSchemes(url: String, suc: GetSchemesHandler? = nil) {
         urlSchemeFactory.getUrlSchemeInfo(urlScheme: url)

@@ -83,12 +83,6 @@ class BaseViewModel: NSObject {
         let firebaseManager = FireBaseManager()
         let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
             firebaseManager.delDatabase(type: type) { suc, err in
-                guard let _ = suc else {
-                    if let err = err {
-                        observer.onError(err)
-                    }
-                    return
-                }
                 observer.onNext(true)
                 observer.onCompleted()
             }
@@ -119,9 +113,6 @@ class BaseViewModel: NSObject {
         let firebaseManager = FireBaseManager()
         let json: Observable<Bool> = Observable.create { (observer) -> Disposable in
             firebaseManager.delStorageImg(title) { _, err in
-                if let err = err {
-                    observer.onError(err)
-                }
                 observer.onNext(true)
                 observer.onCompleted()
             }

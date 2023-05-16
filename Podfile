@@ -18,8 +18,7 @@ target 'Sushi' do
   pod 'SnapKit'
   pod 'Starscream', '4.0.4'
   pod 'SQLite.swift'
-  pod 'TYCyclePagerView', '1.2.0' 
-
+  pod 'TYCyclePagerView', '1.2.0'  
 
   target 'SushiTests' do
     inherit! :search_paths

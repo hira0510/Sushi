@@ -110,12 +110,14 @@ class SushiModel: NSObject, Codable {
     var eng: String = ""
     var img: String = ""
     var price: String = ""
+    var size: String = ""
 
-    init(title: String = "", eng: String = "", img: String = "", price: String = "") {
+    init(title: String = "", eng: String = "", img: String = "", price: String = "", size: String = "") {
         self.title = title
         self.eng = eng
         self.img = img
         self.price = price
+        self.size = size
     }
     
     func toAnyObject() -> [String: Any] {
@@ -124,6 +126,7 @@ class SushiModel: NSObject, Codable {
         snapshotValue["img"] = self.img
         snapshotValue["eng"] = self.eng
         snapshotValue["price"] = self.price
+        snapshotValue["size"] = self.size
         return snapshotValue
     }
     
@@ -133,6 +136,7 @@ class SushiModel: NSObject, Codable {
         model.img = dic["img"] ?? ""
         model.eng = dic["eng"] ?? ""
         model.price = dic["price"] ?? ""
+        model.size = dic["size"] ?? ""
         return model
     }
 }

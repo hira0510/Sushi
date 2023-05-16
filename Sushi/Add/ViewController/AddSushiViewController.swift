@@ -69,11 +69,20 @@ class AddSushiViewController: BaseViewController {
             }).disposed(by: bag)
         }
     }
+    
+    @IBOutlet weak var mSizeSegmented: UISegmentedControl! {
+        didSet {
+            mSizeSegmented.rx.selectedSegmentIndex.subscribe(onNext: { [weak self] (index) in
+                guard let `self` = self else { return }
+                self.viewModel.mSize.accept(self.viewModel.sizeModel[index])
+            }).disposed(by: bag)
+        }
+    }
 
     @IBOutlet weak var sendBtn: NGSCustomizableButton! {
         didSet {
-            Observable.combineLatest(viewModel.mName, viewModel.mNameEng, viewModel.mPrice, viewModel.mImage) { name, nameEng, price, img -> Bool in
-                return !name.isEmpty && !nameEng.isEmpty && !price.isEmpty && Validation().isValidPrice(price) && img != UIImage(named: "noImg")!
+            Observable.combineLatest(viewModel.mName, viewModel.mNameEng, viewModel.mPrice, viewModel.mSize, viewModel.mImage) { name, nameEng, price, size, img -> Bool in
+                return !name.isEmpty && !nameEng.isEmpty && !price.isEmpty && !size.isEmpty && Validation().isValidPrice(price) && img != UIImage(named: "noImg")!
             }.map { $0 }.bind(to: sendBtn.rx.isEnabled).disposed(by: bag)
 
             sendBtn.rx.tap.subscribe { [weak self] event in
@@ -105,7 +114,10 @@ class AddSushiViewController: BaseViewController {
  
         viewModel.mName.accept(model.title)
         viewModel.mPrice.accept(model.price)
+        viewModel.mSize.accept(model.size)
         viewModel.mNameEng.accept(model.eng)
+         
+        mSizeSegmented.selectedSegmentIndex = unwrap(viewModel.sizeModel.firstIndex(of: model.size), 0)
         
         mImageView.loadImage(url: model.img, placeholder: UIImage(named: "noImg"), options: [.transition(.fade(0.5)), .loadDiskFileSynchronously]) { [weak self] result in
             guard let `self` = self else { return }
