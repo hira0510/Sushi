@@ -98,9 +98,7 @@ class StarscreamWebSocketManager: NSObject {
                 delegate?.alreadyArrived(unwrap(dic["numId"], ""))
             }
         }
-        if dic.keys.contains("menu") && dic["msg"] == "reloadData" && dic["account"] != SuShiSingleton.share().getAccount() {
-            delegate?.updateMenu(unwrap(dic["menu"], ""))
-        } else if dic.keys.contains("menu") && dic["msg"] == "addReloadData" {
+        if dic.keys.contains("menu") && dic["msg"] == "addReloadData" {
             delegate?.updateMenu(unwrap(dic["menu"], ""))
         }
     }

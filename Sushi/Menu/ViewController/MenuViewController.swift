@@ -102,7 +102,7 @@ class MenuViewController: BaseViewController {
     func updateDropModel() {
         let menu = viewModel.getMenu
         viewModel.addData(.dropEditSushi(menu.menu), menu.getSushiData()).subscribe(onNext: { (result) in
-            StarscreamWebSocketManager.shard.writeMsg(["account": SuShiSingleton.share().getAccount(), "menu": menu.menu, "msg": "reloadData"])
+            StarscreamWebSocketManager.shard.writeMsg(["menu": menu.menu, "msg": "addReloadData"])
         }).disposed(by: bag)
     }
     
