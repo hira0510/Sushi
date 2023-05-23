@@ -126,7 +126,6 @@ class ServerView: BaseView {
         mTableView.register(RecordTableViewCell.nib, forCellReuseIdentifier: "RecordTableViewCell")
         mTableView.register(RecordFooterView.nib, forHeaderFooterViewReuseIdentifier: "RecordFooterView")
         mTableView.register(ServiceHeaderView.nib, forHeaderFooterViewReuseIdentifier: "ServiceHeaderView")
-        mTableView.allowsMultipleSelectionDuringEditing = false
         mTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0)
         mTableView.rowHeight = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 35)
         mTableView.separatorColor = .black

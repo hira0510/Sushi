@@ -40,18 +40,18 @@
                 "size": "1x1"
             },
             "1":  {
-                "title": "鮭三味圓舞曲",
-                "eng": "Smoked Salmon Cheese Blini",
-                "img": "https://www.sushiexpress.com.tw/images/Product/6303_s.png",
-                "price": "120",
-                "size": "2x1"
-            },
-            "2":  {
                 "title": "花蛤味噌湯",
                 "eng": "Clam Miso Soup",
                 "img": "https://www.sushiexpress.com.tw/images/Product/1190_s.png",
                 "price": "40",
                 "size": "1x1"
+            },
+            "2":  {
+                "title": "鮭三味圓舞曲",
+                "eng": "Smoked Salmon Cheese Blini",
+                "img": "https://www.sushiexpress.com.tw/images/Product/6303_s.png",
+                "price": "120",
+                "size": "2x1"
             },
             "3":  {
                 "title": "品鮑土瓶蒸",

@@ -16,7 +16,7 @@ class MenuViews: NSObject {
     public var bag: DisposeBag!
     
     /// Server的收發通知頁面
-    public var adminServerView: ServerView = ServerView()
+    public lazy var adminServerView: ServerView = ServerView()
     /// Client懸浮點餐View對右的tConstraints
     private var orderListViewRightConstraints: Constraint? = nil
     /// 送達時間到數Timer
@@ -26,8 +26,7 @@ class MenuViews: NSObject {
     @IBOutlet weak var sushiCollectionView: UICollectionView! {
         didSet {
             //手機更換方向時重整collectionView
-            Observable.combineLatest(viewModel.menuModel, viewModel.sushiCollectionFrame) { _, frame -> CGRect in
-                return frame
+            Observable.combineLatest(viewModel.menuModel, viewModel.sushiCollectionFrame) { _, _ -> CGRect in return .zero
             }.map { $0 }.bind(to: sushiCollectionView.rx.reloadData).disposed(by: bag)
             
             //選擇頁面時頁面滑至同index
@@ -48,8 +47,7 @@ class MenuViews: NSObject {
                 return index
             }.map { $0 }.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag) 
             //拿到資料&拿到點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
-            Observable.combineLatest(viewModel.menuModel, viewModel.selectMenuItem, viewModel.menuCollectionFrame, SuShiSingleton.share().bindIsEng()) { _, index, _, _ -> Int in
-                return index
+            Observable.combineLatest(viewModel.menuModel, viewModel.selectMenuItem, viewModel.menuCollectionFrame, SuShiSingleton.share().bindIsEng()) { _, _, _, _ -> Int in return .zero
             }.map { $0 }.bind(to: menuCollectionView.rx.reloadData).disposed(by: bag)
         }
     }
@@ -109,11 +107,9 @@ class MenuViews: NSObject {
                 
                 guard !contanerCell.isScrollNotVisibleItems(false) else { return }
                 if self.viewModel.selectMenuItem.value == 0 { //如果是第一頁就做特殊處理到最後一頁
-                    self.viewModel.selectMenuItem.accept(self.viewModel.menuModel.value.count - 1)
-                    self.viewModel.selectSushiItem.accept(self.viewModel.getSushiData().count - 2)
+                    self.viewModel.selectItem(sushi: self.viewModel.getSushiData().count - 2, menu: self.viewModel.menuModel.value.count - 1)
                 } else {
-                    self.viewModel.selectMenuItem.accept(self.viewModel.selectMenuItem.value - 1)
-                    self.viewModel.selectSushiItem.accept(self.viewModel.selectSushiItem.value - 1)
+                    self.viewModel.selectItem(sushi: self.viewModel.selectSushiItem.value - 1, menu: self.viewModel.selectMenuItem.value - 1)
                 }
             }.disposed(by: bag)
         }
@@ -131,11 +127,9 @@ class MenuViews: NSObject {
                 guard !contanerCell.isScrollNotVisibleItems(true) else { return }
                 let isLastPage = self.viewModel.selectSushiItem.value + 1 == self.viewModel.getSushiData().count - 1
                 if isLastPage { //如果是最後一頁就做特殊處理到第一頁
-                    self.viewModel.selectMenuItem.accept(0)
-                    self.viewModel.selectSushiItem.accept(1)
-                } else {
-                    self.viewModel.selectMenuItem.accept(self.viewModel.selectMenuItem.value + 1)
-                    self.viewModel.selectSushiItem.accept(self.viewModel.selectSushiItem.value + 1)
+                    self.viewModel.selectItem(sushi: 1, menu: 0)
+                } else { 
+                    self.viewModel.selectItem(sushi: self.viewModel.selectSushiItem.value + 1, menu: self.viewModel.selectMenuItem.value + 1)
                 }
             }.disposed(by: bag)
         }
@@ -376,6 +370,7 @@ class MenuViews: NSObject {
         
         //如果只是為了橫式轉方向就不往下執行
         guard let views = view else {
+            guard baseVc.view.subviews.contains(adminServerView) else { return }
             var views: UIView
             switch adminServerView.getType() {
             case .service: views = serviceView

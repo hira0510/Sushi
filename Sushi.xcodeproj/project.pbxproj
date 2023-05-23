@@ -109,7 +109,6 @@
 		84C0EB5B29F28FE600B7D2CE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5A29F28FE600B7D2CE /* CameraView.swift */; };
 		84C0EB5D29F2900100B7D2CE /* CameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0EB5C29F2900100B7D2CE /* CameraView.xib */; };
 		84C0EB5F29F2967000B7D2CE /* AddSushiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5E29F2967000B7D2CE /* AddSushiViewModel.swift */; };
-		84D99E512A11F85A00B998DF /* CollectionViewWaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D99E502A11F85A00B998DF /* CollectionViewWaterfallLayout.swift */; };
 		84DDFE7B29FA3A2200EABFEE /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DDFE7929FA3A2200EABFEE /* RecordViewController.swift */; };
 		84DDFE7C29FA3A2200EABFEE /* RecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84DDFE7A29FA3A2200EABFEE /* RecordViewController.xib */; };
 		84DDFE8129FA5EDD00EABFEE /* RecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DDFE7F29FA5EDD00EABFEE /* RecordTableViewCell.swift */; };
@@ -258,7 +257,6 @@
 		84C0EB5A29F28FE600B7D2CE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		84C0EB5C29F2900100B7D2CE /* CameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraView.xib; sourceTree = "<group>"; };
 		84C0EB5E29F2967000B7D2CE /* AddSushiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSushiViewModel.swift; sourceTree = "<group>"; };
-		84D99E502A11F85A00B998DF /* CollectionViewWaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewWaterfallLayout.swift; sourceTree = "<group>"; };
 		84DDFE7929FA3A2200EABFEE /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		84DDFE7A29FA3A2200EABFEE /* RecordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordViewController.xib; sourceTree = "<group>"; };
 		84DDFE7F29FA5EDD00EABFEE /* RecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordTableViewCell.swift; sourceTree = "<group>"; };
@@ -523,7 +521,6 @@
 				849FC3ED29FB53F600A86794 /* TwToEng.swift */,
 				849B23FD2A0E1FE3008C86C8 /* YouTubePlayer.swift */,
 				841A7B4D2A0E21D7006330A8 /* YTPlayer.html */,
-				84D99E502A11F85A00B998DF /* CollectionViewWaterfallLayout.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -659,24 +656,24 @@
 		84A3326F2A132A23005E9042 /* ZLCollectionViewFlowLayout */ = {
 			isa = PBXGroup;
 			children = (
+				84A332812A132A23005E9042 /* ZLCollectionViewBaseFlowLayout.h */,
+				84A332782A132A23005E9042 /* ZLCollectionViewBaseFlowLayout.m */,
+				84A332752A132A23005E9042 /* ZLCollectionViewVerticalLayout.h */,
+				84A332802A132A23005E9042 /* ZLCollectionViewVerticalLayout.m */,
+				84A3327F2A132A23005E9042 /* ZLCollectionViewHorzontalLayout.h */,
+				84A332762A132A23005E9042 /* ZLCollectionViewHorzontalLayout.m */,
+				84A3327B2A132A23005E9042 /* ZLCollectionBaseDecorationView.h */,
 				84A332702A132A23005E9042 /* ZLCollectionBaseDecorationView.m */,
+				84A3327A2A132A23005E9042 /* ZLCellFakeView.h */,
 				84A332712A132A23005E9042 /* ZLCellFakeView.m */,
+				84A332792A132A23005E9042 /* ZLCollectionViewLayoutAttributes.h */,
 				84A332722A132A23005E9042 /* ZLCollectionViewLayoutAttributes.m */,
 				84A332732A132A23005E9042 /* ZLBaseEventModel.h */,
-				84A332742A132A23005E9042 /* ZLCollectionViewBackgroundViewLayoutAttributes.h */,
-				84A332752A132A23005E9042 /* ZLCollectionViewVerticalLayout.h */,
-				84A332762A132A23005E9042 /* ZLCollectionViewHorzontalLayout.m */,
-				84A332772A132A23005E9042 /* ZLCollectionReusableView.m */,
-				84A332782A132A23005E9042 /* ZLCollectionViewBaseFlowLayout.m */,
-				84A332792A132A23005E9042 /* ZLCollectionViewLayoutAttributes.h */,
-				84A3327A2A132A23005E9042 /* ZLCellFakeView.h */,
-				84A3327B2A132A23005E9042 /* ZLCollectionBaseDecorationView.h */,
-				84A3327C2A132A23005E9042 /* ZLCollectionViewBackgroundViewLayoutAttributes.m */,
 				84A3327D2A132A23005E9042 /* ZLBaseEventModel.m */,
+				84A332742A132A23005E9042 /* ZLCollectionViewBackgroundViewLayoutAttributes.h */,
+				84A3327C2A132A23005E9042 /* ZLCollectionViewBackgroundViewLayoutAttributes.m */,
 				84A3327E2A132A23005E9042 /* ZLCollectionReusableView.h */,
-				84A3327F2A132A23005E9042 /* ZLCollectionViewHorzontalLayout.h */,
-				84A332802A132A23005E9042 /* ZLCollectionViewVerticalLayout.m */,
-				84A332812A132A23005E9042 /* ZLCollectionViewBaseFlowLayout.h */,
+				84A332772A132A23005E9042 /* ZLCollectionReusableView.m */,
 			);
 			path = ZLCollectionViewFlowLayout;
 			sourceTree = "<group>";
@@ -1097,7 +1094,6 @@
 				849B476229F11E75002E4C60 /* MenuViews.swift in Sources */,
 				849B471D29F0E888002E4C60 /* SceneDelegate.swift in Sources */,
 				849B476C29F1272A002E4C60 /* MenuModel.swift in Sources */,
-				84D99E512A11F85A00B998DF /* CollectionViewWaterfallLayout.swift in Sources */,
 				843B3E8029F9019000FB3969 /* OrderListView.swift in Sources */,
 				84A5FAB429F6352500781C03 /* ToastView.swift in Sources */,
 				849B475E29F11D8A002E4C60 /* NGSCustomizableButton.swift in Sources */,

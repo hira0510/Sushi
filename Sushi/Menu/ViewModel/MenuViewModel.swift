@@ -50,6 +50,17 @@ class MenuViewModel: BaseViewModel {
         return menuModel.value.count > selectMenuItem.value ? menuModel.value[selectMenuItem.value]: MenuModel()
     }
     
+    /// 跳轉選擇的menu
+    func selectItem(sushi: Int? = nil, menu: Int? = nil) {
+        if let sushi = sushi {
+            selectSushiItem.accept(sushi)
+            deleteIndexAry.accept([])
+        }
+        if let menu = menu {
+            selectMenuItem.accept(menu)
+        }
+    }
+    
     /// 拿到特殊處理的menu資料
     func getSushiData() -> [MenuModel] {
         var newArray: [MenuModel] = menuModel.value

@@ -64,7 +64,7 @@ typedef NS_ENUM(NSUInteger, LewScrollDirction) {
     //外部调用relaodData或变更任意数据时则认为需要进行全量布局的刷新
     //好处是在外部变更数据时内部布局会及时刷新
     //劣势是在你在上拉加载某一页时,布局会全部整体重新计算一遍,并非只计算新增的布局
-    _isNeedReCalculateAllLayout = context.invalidateEverything || context.invalidateDataSourceCounts;
+//    _isNeedReCalculateAllLayout = context.invalidateEverything || context.invalidateDataSourceCounts;
     [super invalidateLayoutWithContext:context];
 }
 

@@ -68,7 +68,7 @@ class LoginViewController: BaseViewController {
                 return !self.changeLoginBtn.isSelected
             }.do { [weak self] isSelect in
                 guard let `self` = self else { return }
-                self.passwordTextField.keyboardType = isSelect ? .numbersAndPunctuation: .numberPad
+                self.passwordTextField.keyboardType = isSelect ? .asciiCapable: .numberPad
                 self.passwordTextField.reloadInputViews()
                 self.accountLabel.text = isSelect ? "員工帳號": "店舖號碼"
                 self.passwordLabel.text = isSelect ? "員工密碼": "店舖桌號"

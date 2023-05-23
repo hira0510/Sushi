@@ -142,12 +142,17 @@
                 }
                 
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:index];
-                CGSize itemSize = CGSizeZero;
-                if (self.delegate && [self.delegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)]) {
-                    itemSize = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:indexPath];
-                } else {
-                    itemSize = self.itemSize;
-                }
+//                CGSize itemSize = CGSizeZero;
+//                if (self.delegate && [self.delegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)]) {
+//                    itemSize = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:indexPath];
+//                } else {
+//                    itemSize = self.itemSize;
+//                }
+                //這邊改成自定義的size, 以及防呆機制
+                if (self.cellSize.count <= i) { return; }
+                NSValue *sizeValue = [self.cellSize objectAtIndex:i];
+                CGSize itemSize = [sizeValue CGSizeValue];
+//                NSLog(@"🫠%d, frame: %@", i,NSStringFromCGSize(itemSize));
                 ZLCollectionViewLayoutAttributes *attributes = [ZLCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
                 
                 NSInteger preRow = self.attributesArray.count - 1;
@@ -695,7 +700,7 @@
 //    for (ZLCollectionViewLayoutAttributes* attr in self.attributesArray) {
 //        NSLog(@"类型=%@,尺寸=%@",attr.representedElementKind, NSStringFromCGRect(attr.frame));
 //    }
-    [self forceSetIsNeedReCalculateAllLayout:NO];
+//    [self forceSetIsNeedReCalculateAllLayout:NO];
 }
 
 #pragma mark - CollectionView的滚动范围

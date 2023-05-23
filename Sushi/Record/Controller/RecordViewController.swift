@@ -22,7 +22,6 @@ class RecordViewController: BaseViewController {
             mTableView.register(RecordTableViewCell.nib, forCellReuseIdentifier: "RecordTableViewCell")
             mTableView.estimatedSectionFooterHeight = 0
             mTableView.estimatedSectionHeaderHeight = 0
-            mTableView.allowsMultipleSelectionDuringEditing = false
             mTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             mTableView.rowHeight = GlobalUtil.calculateWidthHorizontalScaleWithSize(width: 35)
             mTableView.separatorColor = .black

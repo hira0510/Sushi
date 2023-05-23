@@ -98,6 +98,13 @@ extension Reactive where Base: UICollectionView {
             }
         }
     }
+    var reloadDatas: Binder<Bool> {
+        get {
+            return Binder(self.base) { collectionView, _ in
+                collectionView.reloadData()
+            }
+        }
+    }
     
     var reloadOrderData: Binder<[SushiModel]> {
         get {
@@ -107,7 +114,7 @@ extension Reactive where Base: UICollectionView {
         }
     }
 
-    var allowsMultipleSelection: Binder<Bool> {
+    var multipleSelectAndDrag: Binder<Bool> {
         get {
             return Binder(self.base) { collectionView, isNotEdit in
                 collectionView.dragInteractionEnabled = !isNotEdit
@@ -137,7 +144,9 @@ extension Reactive where Base: UICollectionView {
         get {
             return Binder(self.base) { collectionView, index in
                 guard collectionView.visibleCells.count > 0 else { return }
-                collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+                }
             }
         }
     }

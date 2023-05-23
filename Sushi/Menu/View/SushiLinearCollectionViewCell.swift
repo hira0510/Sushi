@@ -36,7 +36,7 @@ class SushiLinearCollectionViewCell: BaseCollectionViewCell {
         self.mSubLabel.text = isEng ? model.title: model.eng
         self.moneyLabel.text = isEng ? "$\(model.price)": "\(model.price)元"
         
-        self.mImageView.loadImage(url: model.img, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously]) 
-        self.isSelected = isSelect
+        self.mImageView.loadImage(url: model.img, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously])
+        self.isSelectChangeBg(isSelect)
     }
 }

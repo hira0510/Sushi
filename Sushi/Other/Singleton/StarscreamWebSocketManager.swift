@@ -98,7 +98,9 @@ class StarscreamWebSocketManager: NSObject {
                 delegate?.alreadyArrived(unwrap(dic["numId"], ""))
             }
         }
-        if dic.keys.contains("menu") && dic["msg"] == "reloadData" {
+        if dic.keys.contains("menu") && dic["msg"] == "reloadData" && dic["account"] != SuShiSingleton.share().getAccount() {
+            delegate?.updateMenu(unwrap(dic["menu"], ""))
+        } else if dic.keys.contains("menu") && dic["msg"] == "addReloadData" {
             delegate?.updateMenu(unwrap(dic["menu"], ""))
         }
     }
@@ -132,9 +134,9 @@ extension StarscreamWebSocketManager: WebSocketDelegate {
             guard string.contains("APP:SUSHI") else { return }
             print(GlobalUtil.dateStr() + "\n🟢Server: " + string + "\n")
             getServiceText(string)
-        case .binary(let data):
-            let text = String(data: data, encoding: .utf16) ?? ""
-            print(GlobalUtil.dateStr() + "\n🟢Server: " + text + "\n")
+        case .binary(_): break
+//            let text = String(data: data, encoding: .utf16) ?? ""
+//            print(GlobalUtil.dateStr() + "\n🟢Server: " + text + "\n")
         case .cancelled:
             connect()
             print(GlobalUtil.dateStr() + "\n🟢Server: " + "結束連接" + "\n")

@@ -7,125 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F32BBCE0-F6D0-43A0-9665-0387C87DBCC3"
+            uuid = "A3C78BC7-C802-4531-A2E4-1524B6E672E0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sushi/Login/Model/LoginModel.swift"
+            filePath = "Sushi/Menu/View/SushiContanerCollectionViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "init(_:_:_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F32BBCE0-F6D0-43A0-9665-0387C87DBCC3 - be380f2bdd9b63c1"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "default argument 0 of Sushi.IsLoginModel.init(Swift.String, Swift.String, Sushi.AccountType) -&gt; Sushi.IsLoginModel"
-                  moduleName = "Sushi"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Hira/Hira/Sushi/Sushi/Login/Model/LoginModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  uuid = "F32BBCE0-F6D0-43A0-9665-0387C87DBCC3 - dbb657244c5bb1ce"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "default argument 1 of Sushi.IsLoginModel.init(Swift.String, Swift.String, Sushi.AccountType) -&gt; Sushi.IsLoginModel"
-                  moduleName = "Sushi"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Hira/Hira/Sushi/Sushi/Login/Model/LoginModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  uuid = "F32BBCE0-F6D0-43A0-9665-0387C87DBCC3 - 7735bf20fc18c7cf"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "default argument 2 of Sushi.IsLoginModel.init(Swift.String, Swift.String, Sushi.AccountType) -&gt; Sushi.IsLoginModel"
-                  moduleName = "Sushi"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Hira/Hira/Sushi/Sushi/Login/Model/LoginModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  uuid = "F32BBCE0-F6D0-43A0-9665-0387C87DBCC3 - 3c504a2d45cb9e83"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Sushi.IsLoginModel.__allocating_init(Swift.String, Swift.String, Sushi.AccountType) -&gt; Sushi.IsLoginModel"
-                  moduleName = "Sushi"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Hira/Hira/Sushi/Sushi/Login/Model/LoginModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  uuid = "F32BBCE0-F6D0-43A0-9665-0387C87DBCC3 - a5f1d48b8478dc9c"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Sushi.IsLoginModel.init(Swift.String, Swift.String, Sushi.AccountType) -&gt; Sushi.IsLoginModel"
-                  moduleName = "Sushi"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Hira/Hira/Sushi/Sushi/Login/Model/LoginModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16"
-                  offsetFromSymbolStart = "172">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "86AC2ECA-FAF8-47F3-8D3B-96CCFA61897B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Sushi/Player/View/PlayerView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "play()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A47F1255-8BE4-4821-A016-0D412AA111BD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Sushi/Player/View/PlayerView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "play()"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
+            landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

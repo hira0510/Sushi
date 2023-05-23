@@ -14,53 +14,82 @@ protocol SushiContanerCellToMenuVcProtocol: AnyObject {
     func pushToOrderVC(sushi: SushiModel)
     func updateMenuModel(removeIndex: Int, insertIndex: Int, insertModel: SushiModel)
     func updateDeleteIndexAry(_ indexPath: [IndexPath])
+    func isCollectionViewScroll(_ embar: Bool)
 }
 
 class SushiContanerCollectionViewCell: BaseCollectionViewCell {
     enum cellType {
-        case normal_1x1
-        case linear_2x1
-        case big_2x2
-        
+        case normal_1x1, linear_2x1, big_2x2
         static func getType(_ str: String) -> cellType {
-            if str == "2x2" {
-                return .big_2x2
-            } else if str == "2x1" {
-                return .linear_2x1
-            } else {
-                return .normal_1x1
+            switch str {
+            case "2x2": return .big_2x2
+            case "2x1": return .linear_2x1
+            default: return .normal_1x1
             }
         }
     }
 
     @IBOutlet weak var sushiCollectionView: UICollectionView!
-
+    
+    private let cellSpacing: CGFloat = 10
+    private let collectionSpacing: CGFloat = 10
+    
+    private weak var delegate: SushiContanerCellToMenuVcProtocol?
     private var selectItem: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     private var sushiCollectionFrame: BehaviorRelay<CGRect> = BehaviorRelay<CGRect>(value: .zero)
     private var isNotEdit: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: true)
+    private var isCanMultiple: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: true)
+    private var isCanDrag: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: true)
     private var deleteIndexAry: BehaviorRelay<[IndexPath]> = BehaviorRelay<[IndexPath]>(value: [])
 
+    private var dropToIndex: (from: Int, to: Int) = (-1, -1)
     private var sushiModel: [SushiModel] = []
     private var firstInit: Bool = true
-    private weak var delegate: SushiContanerCellToMenuVcProtocol?
-
+    private var columnCount: Int {
+        get {
+            return GlobalUtil.isPortrait() ? 2 : 4
+        }
+    }
+    private var rowCount: Int {
+        get {
+            return GlobalUtil.isPortrait() ? 4 : 2
+        }
+    }
+    
     static var nib: UINib {
         return UINib(nibName: "SushiContanerCollectionViewCell", bundle: Bundle(for: self))
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCollectionView()
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        print("🫠layoutSubviews🫠")
+        resetLayout()
+    }
 
-    func cellConfig(model: [SushiModel], color: UIColor, delegate: SushiContanerCellToMenuVcProtocol) {
+// MARK: - public
+    
+    public func cellConfig(model: [SushiModel], color: UIColor, delegate: SushiContanerCellToMenuVcProtocol) {
         self.backgroundColor = color
         self.sushiModel = model
         self.delegate = delegate
         self.sushiCollectionView.reloadData()
     }
 
-    func bindData(select: BehaviorRelay<Int>, frame: BehaviorRelay<CGRect>, isNotEdit: BehaviorRelay<Bool>, deleteAry: BehaviorRelay<[IndexPath]>) {
+    /// 套件需要重整layout
+    public func setupCollecctionViewFrame(_ frame: CGRect) {
+        self.sushiCollectionView.frame = CGRect(x: frame.minX + collectionSpacing, y: frame.minY + collectionSpacing, width: frame.width - (2 * collectionSpacing), height: frame.height - (2 * collectionSpacing))
+
+        if let layout = sushiCollectionView.collectionViewLayout as? ZLCollectionViewVerticalLayout {
+            layout.cellSize = NSMutableArray(array: setSushiSizeModel().map { NSValue(cgSize: $0) })
+        }
+    }
+
+    public func bindData(select: BehaviorRelay<Int>, frame: BehaviorRelay<CGRect>, isNotEdit: BehaviorRelay<Bool>, deleteAry: BehaviorRelay<[IndexPath]>) {
         if firstInit {
             firstInit = false
             bindBehaviorRelay()
@@ -70,13 +99,12 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
             deleteAry.bind(to: self.deleteIndexAry).disposed(by: bag)
         }
     }
-    
-    
+
     /// 點擊上下頁顯示其他項目
     /// - Parameter isNext: 是否是點擊下一頁
     /// - Returns: 是否成功顯示其他項目，否則換一頁
-    func isScrollNotVisibleItems(_ isNext: Bool) -> Bool {
-        guard sushiCollectionView != nil, sushiModel.count > 0 else { return false }
+    public func isScrollNotVisibleItems(_ isNext: Bool) -> Bool {
+        guard sushiCollectionView != nil, !sushiModel.isEmpty else { return false }
         if let max = sushiCollectionView.indexPathsForVisibleItems.max(), isNext && sushiModel.count > max.item + 1 {
             self.sushiCollectionView.scrollToItem(at: IndexPath(item: max.item + 1, section: max.section), at: .top, animated: true)
             return true
@@ -87,69 +115,104 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
             return false
         }
     }
-    
-    /// 套件需要重整layout
-    func setupCollecctionViewFrame(_ frame: CGRect) {
-        self.sushiCollectionView.frame = CGRect(x: frame.minX + 10, y: frame.minY + 10, width: frame.width - 20, height: frame.height - 20)
-    }
 
+// MARK: - private
     /// 初始CollectionView
     private func setupCollectionView() {
         sushiCollectionView.delegate = self
         sushiCollectionView.dataSource = self
         sushiCollectionView.dragDelegate = self
         sushiCollectionView.dropDelegate = self
+        sushiCollectionView.reorderingCadence = .fast
         sushiCollectionView.register(SushiCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiCollectionViewCell")
         sushiCollectionView.register(SushiLinearCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiLinearCollectionViewCell")
-        
-        if let layout = sushiCollectionView.collectionViewLayout as? ZLCollectionViewVerticalLayout {
-            layout.delegate = self
-        }
-    } 
+
+        let layout = ZLCollectionViewVerticalLayout()
+        layout.minimumLineSpacing = cellSpacing
+        layout.minimumInteritemSpacing = cellSpacing
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.delegate = self
+        layout.isNeedReCalculateAllLayout = true
+        sushiCollectionView.collectionViewLayout = layout
+    }
 
     private func bindBehaviorRelay() {
         //如果[indexPath]為空就取消全選
         self.deleteIndexAry.bind(to: sushiCollectionView.rx.cancelAllSelect).disposed(by: bag)
-        //Server編輯時可多選＆可拖曳
-        self.isNotEdit.bind(to: sushiCollectionView.rx.allowsMultipleSelection).disposed(by: bag)
         //切換頁面移至Top
         self.selectItem.bind(to: sushiCollectionView.rx.sushiScrollTop).disposed(by: bag)
         //Client結帳後不可點餐
         SuShiSingleton.share().bindIsCheckout().bind(to: sushiCollectionView.rx.allowsSelection).disposed(by: bag)
-        //手機更換方向時重整collectionView
-        Observable.combineLatest(SuShiSingleton.share().bindIsEng(), isNotEdit) { _, _ -> CGRect in
-            return CGRect.zero
-        }.map { $0 }.bind(to: sushiCollectionView.rx.reloadData).disposed(by: bag)
-    }
+        //切換語言或編輯時reload
+        SuShiSingleton.share().bindIsEng().bind(to: sushiCollectionView.rx.reloadDatas).disposed(by: bag)
 
-    private func getColumn() -> Int {
-        GlobalUtil.isPortrait() ? 2 : 4
-    }
-
-    private func getRow() -> Int {
-        GlobalUtil.isPortrait() ? 4 : 2
+        //多選時不拖曳，拖曳時不多選
+        Observable.combineLatest(isCanMultiple, isCanDrag).subscribe(onNext: { [weak self] multiple, drag in
+            guard let `self` = self else { return }
+            self.sushiCollectionView.dragInteractionEnabled = drag
+            self.sushiCollectionView.allowsMultipleSelection = multiple
+        }).disposed(by: self.bag)
+        //Server編輯時可多選＆可拖曳
+        let isNotEditObs: Binder<Bool> = Binder(sushiCollectionView) { [weak self] collectionView, isNotEdit in
+            guard let `self` = self else { return }
+            if isNotEdit {
+                self.delegate?.updateDeleteIndexAry([])
+            }
+            collectionView.dragInteractionEnabled = !isNotEdit
+            collectionView.allowsMultipleSelection = !isNotEdit
+        }
+        isNotEdit.bind(to: isNotEditObs).disposed(by: bag)
     }
 
     /// 拿取cell的寬高
     private func getCellSize() -> CGSize {
-        let wSpace = 10.0
         //h
-        let rowCount = getRow().toCGFloat
-        let cellSpaceHeight: CGFloat = wSpace * (rowCount - 1)
-        let cellAllHeight: CGFloat = floor(sushiCollectionFrame.value.height - 21) - cellSpaceHeight
+        let rowCount = rowCount.toCGFloat
+        let cellSpaceHeight: CGFloat = cellSpacing * (rowCount - 1)
+        let cellAllHeight: CGFloat = floor(sushiCollectionFrame.value.height - (2*collectionSpacing)) - cellSpaceHeight
         let cellMaxHeight: CGFloat = (cellAllHeight / rowCount).rounded(.down)
         //w
-        let columnCount = getColumn().toCGFloat
-        let cellSpaceWidth: CGFloat = wSpace * (columnCount - 1)
-        let cellAllWidth: CGFloat = floor(sushiCollectionFrame.value.width - 20) - cellSpaceWidth
+        let columnCount = columnCount.toCGFloat
+        let cellSpaceWidth: CGFloat = cellSpacing * (columnCount - 1)
+        let cellAllWidth: CGFloat = floor(sushiCollectionFrame.value.width - (2*collectionSpacing)) - cellSpaceWidth
         let cellMaxWidth: CGFloat = (cellAllWidth / columnCount).rounded(.down)
 
         return CGSize(width: cellMaxWidth, height: cellMaxHeight)
     }
+
+    /// 拿取放大後cell的寬高
+    private func getScaleCellSize(_ type: cellType) -> CGSize {
+        var size = getCellSize()
+        if type == .linear_2x1 || type == .big_2x2 {
+            size.width = size.width * 2 + cellSpacing
+        }
+        if type == .big_2x2 {
+            size.height = size.height * 2 + cellSpacing
+        }
+        return size
+    }
+    
+    private func setSushiSizeModel() -> [CGSize] {
+        let sizes = sushiModel.map { $0.size }
+        let types = sizes.map { cellType.getType($0) }
+        let sizeAry = types.map { getScaleCellSize($0) }
+        return sizeAry
+    }
+
+    /// 重新整理layout
+    private func resetLayout() {
+        print("🫠resetLayout🫠")
+        DispatchQueue.main.async {
+            if let layout = self.sushiCollectionView.collectionViewLayout as? ZLCollectionViewVerticalLayout {
+                layout.cellSize = NSMutableArray(array: self.setSushiSizeModel().map { NSValue(cgSize: $0) })
+                self.sushiCollectionView.performBatchUpdates({ }, completion: nil)
+            }
+        }
+    }
 }
 
 // MARK: - CollectionView
-extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -168,13 +231,11 @@ extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectio
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiCollectionViewCell", for: indexPath) as! SushiCollectionViewCell
             guard sushiModel.count > indexPath.item else { return cell }
             cell.cellConfig(model: sushiModel[indexPath.item], isSelect: isSelect)
-            cell.isSelectChangeBg(isSelect)
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SushiLinearCollectionViewCell", for: indexPath) as! SushiLinearCollectionViewCell
             guard sushiModel.count > indexPath.item else { return cell }
             cell.cellConfig(model: sushiModel[indexPath.item], isSelect: isSelect)
-            cell.isSelectChangeBg(isSelect)
             return cell
         }
     }
@@ -191,98 +252,111 @@ extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectio
             let cell = collectionView.cellForItem(at: indexPath) as! BaseCollectionViewCell
             cell.isSelectChangeBg(true)
             delegate?.updateDeleteIndexAry(unwrap(collectionView.indexPathsForSelectedItems, []))
+            isCanDrag.accept(unwrap(collectionView.indexPathsForSelectedItems?.count, 0) <= 0)
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let isHaveData = sushiModel.count > indexPath.item
-        let type = isHaveData ? cellType.getType(sushiModel[indexPath.item].size) : .normal_1x1
-        switch type {
-        case .normal_1x1:
-            return getCellSize()
-        case .linear_2x1:
-            var size = getCellSize()
-            size.width = size.width * 2 + 10
-            return size
-        case .big_2x2:
-            var size = getCellSize()
-            size.width = size.width * 2 + 10
-            size.height = size.height * 2 + 10
-            return size
-        }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        isCanDrag.accept(unwrap(collectionView.indexPathsForSelectedItems?.count, 0) <= 0)
+        delegate?.updateDeleteIndexAry(unwrap(collectionView.indexPathsForSelectedItems, []))
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
+}
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
+// MARK: - CollectionView-Drop/Drag
+extension SushiContanerCollectionViewCell: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-
+    /// 開始拖曳
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        //可用indexpath判断某section或某item是否可拖动,若不可拖动则返回空数组
         let dragItem = UIDragItem(itemProvider: NSItemProvider(object: "\(indexPath)" as NSString))
         dragItem.localObject = sushiModel[indexPath.item]
+        dropToIndex = (indexPath.item, indexPath.item)
         return [dragItem]
     }
 
-    //拖着移动时-可选实现，但一般都实现，频繁调用，代码尽可能快速简单执行
-    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        //若需实现section间不可拖拽的功能:可定全局变量dragingIndexPath(拖拽起始位置)，在itemsForBeginning中赋值为indexPath，然后对比他的section是否等于destinationIndexPath(拖拽结束位置)的section，若不等于则返回forbidden，
+    /// 拖曳搬移
+    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        if originalIndexPath != proposedIndexPath {
+            var sushiSizeModel = setSushiSizeModel()
+            let removedSize = sushiSizeModel.remove(at: dropToIndex.from)
+            sushiSizeModel.insert(removedSize, at: proposedIndexPath.item)
+            // 這邊只重新設定size而已，因為func會自動跑prepare()
+            if let layout = collectionView.collectionViewLayout as? ZLCollectionViewVerticalLayout {
+                layout.cellSize = NSMutableArray(array: sushiSizeModel.map { NSValue(cgSize: $0) })
+            }
+            dropToIndex = (dropToIndex.from, proposedIndexPath.item)
+            print("🫠targetIndexPathForMoveFromItemAt🫠")
+        }
+        return proposedIndexPath
+    }
 
-        //可用session.localDragSession来判断是否在同一app中操作
+    /// 拖曳超過邊界
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidExit session: UIDropSession) {
+        guard dropToIndex.to >= 0 && dropToIndex.from != dropToIndex.to else { return }
+        resetLayout()
+    }
+
+    /// 拖曳結束
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidEnd session: UIDropSession) {
+        isCanMultiple.accept(true)
+        delegate?.isCollectionViewScroll(false)
+        print("🫠End🫠")
+
+    }
+
+    /// 拖着移动时(频繁调用)
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        /*拖動後無法多選item，父collection也不能滑動(防止多選一起拖曳&拖曳到別的collectionview)；
+         本來想把這段放在itemsForBeginning，但發現原地放下item的話 並不會觸發dropSessionDidEnd，所以寫在拖動的這一瞬間*/
+        if isCanMultiple.value {
+            isCanMultiple.accept(false)
+            delegate?.isCollectionViewScroll(true)
+        }
+
+        guard session.items.count == 1 else {
+            return .init(operation: .cancel)
+        }
+
         if collectionView.hasActiveDrag {
             return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }
         return UICollectionViewDropProposal(operation: .forbidden)
     }
 
-    // 添加拖动的任务
-    // 下面的代码，一次拖动一个
-    // 可以通过这个方法，开始拖动后，继续添加拖动的任务
-    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        let data = sushiModel[indexPath.item]
-        let itemProvider = NSItemProvider(object: "\(indexPath)" as NSString)
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = data
-        return [dragItem]
-    }
-
-    // 放下cell时（手指离开屏幕）
+    /// 放下cell时（手指离开屏幕）
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        if let _ = coordinator.destinationIndexPath, case UIDropOperation.move = coordinator.proposal.operation {
+        print("🫠performDropWith🫠")
+        if let _ = coordinator.destinationIndexPath, coordinator.proposal.operation == .move {
+            print("🫠performDropWith in????🫠")
             let items = coordinator.items
             if items.count == 1, let item = items.first, //拖拽单个
-                let sourceIndexPath = item.sourceIndexPath,
-                let destinationIndexPath = coordinator.destinationIndexPath {
+                let fromIndexPath = item.sourceIndexPath,
+                let toIndexPath = coordinator.destinationIndexPath,
+                let data = item.dragItem.localObject as? SushiModel,
+                sushiModel[toIndexPath.item] != data {
 
+                self.delegate?.updateMenuModel(removeIndex: fromIndexPath.item, insertIndex: toIndexPath.item, insertModel: data)
                 //将多个操作合并为一个动画
-                let data = item.dragItem.localObject as! SushiModel
-                delegate?.updateMenuModel(removeIndex: sourceIndexPath.item, insertIndex: destinationIndexPath.item, insertModel: data)
                 collectionView.performBatchUpdates ({
-                    sushiModel.remove(at: sourceIndexPath.item)
-                    sushiModel.insert(data, at: destinationIndexPath.item)
-                    collectionView.deleteItems(at: [sourceIndexPath])
-                    collectionView.insertItems(at: [destinationIndexPath])
+                    sushiModel.remove(at: fromIndexPath.item)
+                    sushiModel.insert(data, at: toIndexPath.item)
+                    collectionView.deleteItems(at: [fromIndexPath])
+                    collectionView.insertItems(at: [toIndexPath])
                 })
                 //固定操作,让拖拽变得自然
-                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                coordinator.drop(item.dragItem, toItemAt: toIndexPath)
+                print("🫠performDropWith INININININNIn🫠")
             }
         }
     }
 }
 
+// MARK: - FlowLayout
 extension SushiContanerCollectionViewCell: ZLCollectionViewBaseFlowLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlowLayout, typeOfLayout section: Int) -> ZLLayoutType {
         return FillLayout
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlowLayout, columnCountOfSection section: Int) -> Int {
-        getColumn()
+        return columnCount
     }
 }

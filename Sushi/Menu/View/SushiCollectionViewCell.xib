@@ -28,9 +28,12 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tLH-ze-9Ys">
-                        <rect key="frame" x="150" y="105" width="0.0" height="0.0"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tLH-ze-9Ys">
+                        <rect key="frame" x="150" y="77" width="0.0" height="28"/>
                         <color key="backgroundColor" white="0.31173513986013984" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="T3t-On-tIC"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <color key="textColor" white="0.84765625" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -40,11 +43,12 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="gfp-y9-5bJ" firstAttribute="top" secondItem="aCH-fW-4de" secondAttribute="bottom" constant="3" id="AQB-BN-oWz"/>
                 <constraint firstAttribute="trailing" secondItem="gfp-y9-5bJ" secondAttribute="trailing" constant="5" id="Bec-sM-Cqk"/>
                 <constraint firstItem="tLH-ze-9Ys" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailing" id="Feg-Np-RRj"/>
+                <constraint firstItem="tLH-ze-9Ys" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="HwL-vl-eHA"/>
                 <constraint firstItem="tLH-ze-9Ys" firstAttribute="bottom" secondItem="aCH-fW-4de" secondAttribute="bottom" id="MsY-ib-Mgw"/>
                 <constraint firstAttribute="trailing" secondItem="aCH-fW-4de" secondAttribute="trailing" id="OVg-D4-DGb"/>
+                <constraint firstItem="aCH-fW-4de" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.755396" id="P2u-pR-VPs"/>
                 <constraint firstItem="aCH-fW-4de" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="U3j-FV-Oep"/>
                 <constraint firstItem="gfp-y9-5bJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Zxz-Ba-Z4H"/>
                 <constraint firstItem="aCH-fW-4de" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="bVB-zD-FFf"/>

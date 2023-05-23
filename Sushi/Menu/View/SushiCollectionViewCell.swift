@@ -27,13 +27,13 @@ class SushiCollectionViewCell: BaseCollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-    } 
+    }
 
     func cellConfig(model: SushiModel, isSelect: Bool) {
         let isEng = SuShiSingleton.share().getIsEng()
         self.mLabel.text = isEng ? model.eng: model.title
         self.moneyLabel.text = isEng ? "$\(model.price)": "\(model.price)元"
-        self.isSelected = isSelect
+        self.isSelectChangeBg(isSelect)
         
         DispatchQueue.main.async { 
             self.mImageView.loadImage(url: model.img, options: [.transition(.fade(0.5)), .loadDiskFileSynchronously])

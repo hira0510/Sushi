@@ -80,7 +80,7 @@ class MenuViewController: BaseViewController {
             }
             if result.data.count > 0 {
                 self.viewModel.menuModel.accept(result.data)
-                self.viewModel.selectSushiItem.accept(1)
+                self.viewModel.selectItem(sushi: 1)
             }
         }, onError: { [weak self] _ in
             guard let `self` = self else { return }
@@ -102,7 +102,7 @@ class MenuViewController: BaseViewController {
     func updateDropModel() {
         let menu = viewModel.getMenu
         viewModel.addData(.dropEditSushi(menu.menu), menu.getSushiData()).subscribe(onNext: { (result) in
-            StarscreamWebSocketManager.shard.writeMsg(["menu": menu.menu, "msg": "reloadData"])
+            StarscreamWebSocketManager.shard.writeMsg(["account": SuShiSingleton.share().getAccount(), "menu": menu.menu, "msg": "reloadData"])
         }).disposed(by: bag)
     }
     
@@ -173,8 +173,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let type: CollectionViewType = collectionView == views.menuCollectionView ? .menu: .sushi
         switch type {
         case .menu:
-            viewModel.selectMenuItem.accept(indexPath.item)
-            viewModel.selectSushiItem.accept(indexPath.item + 1)
+            self.viewModel.selectItem(sushi: indexPath.item + 1, menu: indexPath.item)
         case .sushi: break
         }
     }
@@ -226,12 +225,14 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard scrollView == views.sushiCollectionView else { return }
         let page = (scrollView.contentOffset.x / scrollView.bounds.size.width).rounded()
-        if page == 0 { // 当UIScrollView滑动到第一位停止时，将UIScrollView的偏移位置改变
-            viewModel.selectSushiItem.accept(viewModel.getSushiData().count - 2)
-        } else if page.toInt == (viewModel.getSushiData().count - 1) { // 当UIScrollView滑动到最后一位停止时，将UIScrollView的偏移位置改变
-            viewModel.selectSushiItem.accept(1)
+        if page == 0 {
+            // 当UIScrollView滑动到第一位停止时，将UIScrollView的偏移位置改变
+            self.viewModel.selectItem(sushi: viewModel.getSushiData().count - 2)
+        } else if page.toInt == (viewModel.getSushiData().count - 1) {
+            // 当UIScrollView滑动到最后一位停止时，将UIScrollView的偏移位置改变
+            self.viewModel.selectItem(sushi: 1)
         } else {
-            viewModel.selectSushiItem.accept(page.toInt)
+            self.viewModel.selectItem(sushi: page.toInt)
         } 
     }
     
@@ -257,7 +258,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         if viewModel.selectMenuItem.value != selectIndex && modelCount > selectIndex {
-            viewModel.selectMenuItem.accept(selectIndex)
+            self.viewModel.selectItem(menu: selectIndex)
         }
     }
 }
@@ -286,7 +287,7 @@ extension MenuViewController: AddSushiVcProtocol {
     /// Server新增品項後重新打api
     func requestSuc(_ menuName: String) {
         requestMenu(menuName)
-        StarscreamWebSocketManager.shard.writeMsg(["menu": menuName, "msg": "reloadData"])
+        StarscreamWebSocketManager.shard.writeMsg(["menu": menuName, "msg": "addReloadData"])
     }
 }
 
@@ -402,5 +403,9 @@ extension MenuViewController: SushiContanerCellToMenuVcProtocol {
     /// 更新要刪除的IndexPath
     func updateDeleteIndexAry(_ indexPath: [IndexPath]) {
         viewModel.deleteIndexAry.accept(indexPath)
+    }
+    /// 拖曳時不開啟Scroll
+    func isCollectionViewScroll(_ embar: Bool) {
+        views.sushiCollectionView.isScrollEnabled = !embar
     }
 }

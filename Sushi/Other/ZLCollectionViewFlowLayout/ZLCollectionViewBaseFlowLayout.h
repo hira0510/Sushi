@@ -113,6 +113,8 @@ typedef enum {
 
 @property (nonatomic,assign) CGFloat xBeyond;           //x轴允许超出的偏移量（仅填充布局，默认3px）
 
+@property (nonatomic, strong) NSMutableArray *cellSize; //存放cellSize
+
 //每个section的每一列的高度
 @property (nonatomic, strong) NSMutableArray *collectionHeightsArray;
 //存放每一个cell的属性
@@ -122,7 +124,7 @@ typedef enum {
 
 //是否需要重新计算所有布局
 //内部控制，一般情况外部无需干预(内部会在外部调用reloadData,insertSections,insertItems,deleteItems...等方法调用时将此属性自动置为YES)
-@property (nonatomic, assign, readonly) BOOL isNeedReCalculateAllLayout;
+@property (nonatomic, assign) BOOL isNeedReCalculateAllLayout;
 
 //提供一个方法来设置isNeedReCalculateAllLayout (之所以提供是因为特殊情况下外部可能需要强制重新计算布局)
 //比如需要强制刷新布局时，可以先调用此函数设置为YES, 一般情况外部无需干预
