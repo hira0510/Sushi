@@ -98,9 +98,10 @@ extension Reactive where Base: UICollectionView {
             }
         }
     }
-    var reloadDatas: Binder<Bool> {
+    var reloadSections: Binder<Bool> {
         get {
             return Binder(self.base) { collectionView, _ in
+                CATransaction.setDisableActions(true)
                 collectionView.reloadData()
             }
         }

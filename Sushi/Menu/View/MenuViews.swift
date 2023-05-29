@@ -32,7 +32,7 @@ class MenuViews: NSObject {
             //選擇頁面時頁面滑至同index
             Observable.combineLatest(viewModel.selectSushiItem, viewModel.sushiCollectionFrame) { [weak self] index, frame -> CGFloat in
                 guard let `self` = self else { return 0 }
-                if self.viewModel.getSushiData().count > 0 {
+                if self.viewModel.getSushiData().count > index {
                     self.sushiCollectionView.backgroundColor = UIColor(self.viewModel.getSushiData()[index].color)
                 }
                 return index.toCGFloat * frame.width
@@ -45,7 +45,7 @@ class MenuViews: NSObject {
             //點擊menu選擇頁面&手機更換方向時頁面滑至同index
             Observable.combineLatest(viewModel.selectMenuItem, viewModel.menuCollectionFrame) { index, _ -> Int in
                 return index
-            }.map { $0 }.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag) 
+            }.map { $0 }.bind(to: menuCollectionView.rx.menuScrollIndex).disposed(by: bag)
             //拿到資料&拿到點擊menu選擇頁面＆手機更換方向＆中英轉換時重整collectionView
             Observable.combineLatest(viewModel.menuModel, viewModel.selectMenuItem, viewModel.menuCollectionFrame, SuShiSingleton.share().bindIsEng()) { _, _, _, _ -> Int in return .zero
             }.map { $0 }.bind(to: menuCollectionView.rx.reloadData).disposed(by: bag)
@@ -128,7 +128,7 @@ class MenuViews: NSObject {
                 let isLastPage = self.viewModel.selectSushiItem.value + 1 == self.viewModel.getSushiData().count - 1
                 if isLastPage { //如果是最後一頁就做特殊處理到第一頁
                     self.viewModel.selectItem(sushi: 1, menu: 0)
-                } else { 
+                } else {
                     self.viewModel.selectItem(sushi: self.viewModel.selectSushiItem.value + 1, menu: self.viewModel.selectMenuItem.value + 1)
                 }
             }.disposed(by: bag)
@@ -284,7 +284,7 @@ class MenuViews: NSObject {
     func deleteItemBtnAddTarget(_ baseVc: MenuViewController) {
         deleteItemBtn.rx.tap.subscribe { [weak self] event in
             guard let `self` = self else { return }
-            let indexPathArr = viewModel.deleteIndexAry.value.sorted(by: >)
+            let indexPathArr = self.viewModel.deleteIndexAry.value.sorted(by: >)
             guard indexPathArr.count > 0 else { return }
             let oldModel = self.viewModel.menuModel.value
             baseVc.addToast(txt: "刪除中...", type: .sending)
@@ -297,7 +297,7 @@ class MenuViews: NSObject {
                 guard let `self` = self, index == indexPathArr.last?.item else { return }
                 self.viewModel.menuModel.accept(oldModel)
                 baseVc.updateEditModel()
-            }).disposed(by: bag)
+            }).disposed(by: self.bag)
         }.disposed(by: bag)
     }
     
@@ -313,7 +313,7 @@ class MenuViews: NSObject {
     func addNewBtnAddTarget(_ baseVc: MenuViewController) {
         addNewBtn.rx.tap.subscribe { [weak self] _ in
             guard let `self` = self else { return }
-            let model = viewModel.menuModel.value
+            let model = self.viewModel.menuModel.value
             guard model.count > 0 else { return }
             let menu: [MenuStrModel] = MenuStrModel().getAry(model)
             let vc = UIStoryboard.loadAddVC(type: .add, delegate: baseVc, menu: menu)
@@ -341,7 +341,7 @@ class MenuViews: NSObject {
             guard let `self` = self else { return }
             if SuShiSingleton.share().getIsAdmin() {
                 self.setupAdminServerView(baseVc, self.checkoutView)
-            } else if viewModel.recordModel.value.count > 0 {
+            } else if self.viewModel.recordModel.value.count > 0 {
                 baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
                 let table = SuShiSingleton.share().getPassword()
                 StarscreamWebSocketManager.shard.writeMsg(["桌號": table, "msg": "結帳"])

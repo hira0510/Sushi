@@ -26,27 +26,16 @@ class MenuViewController: BaseViewController {
         setupUI()
     }
     
-    /// 在其他vc轉向，回來時重新拿frame
+    /// 重新整理Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if viewModel.menuCollectionFrame.value != .zero && viewModel.sushiCollectionFrame.value != .zero {
-            transitionSetupUI()
-        }
+        self.views.menuCollectionView.collectionViewLayout.invalidateLayout()
+        self.views.sushiCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     deinit {
         views.orderTimer?.invalidate()
         views.orderTimer = nil
-    }
-    
-    /// 設定collection的frame
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) -> Void in
-        }, completion: { [weak self] (UIViewControllerTransitionCoordinatorContext) -> Void in
-            guard let `self` = self else { return }
-            self.transitionSetupUI()
-        })
-        super.viewWillTransition(to: size, with: coordinator)
     }
     
     // MARK: - private
@@ -60,14 +49,6 @@ class MenuViewController: BaseViewController {
         views.addNewBtnAddTarget(self)
         views.checkoutBtnAddTarget(self)
         views.serviceBtnAddTarget(self)
-    }
-    
-    private func transitionSetupUI() {
-        if viewModel.menuCollectionFrame.value != views.menuCollectionView.frame || viewModel.sushiCollectionFrame.value != views.sushiCollectionView.frame {
-            viewModel.menuCollectionFrame.accept(views.menuCollectionView.frame)
-            viewModel.sushiCollectionFrame.accept(views.sushiCollectionView.frame)
-            views.setupAdminServerView(self)
-        }
     }
     
     // MARK: - public
@@ -102,7 +83,7 @@ class MenuViewController: BaseViewController {
     func updateDropModel() {
         let menu = viewModel.getMenu
         viewModel.addData(.dropEditSushi(menu.menu), menu.getSushiData()).subscribe(onNext: { (result) in
-            StarscreamWebSocketManager.shard.writeMsg(["menu": menu.menu, "msg": "addReloadData"])
+            StarscreamWebSocketManager.shard.writeMsg(["account": SuShiSingleton.share().getAccount(), "menu": menu.menu, "msg": "reloadData"])
         }).disposed(by: bag)
     }
     
@@ -182,10 +163,16 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let type: CollectionViewType = collectionView == views.menuCollectionView ? .menu: .sushi
         switch type {
         case .menu:
+            if viewModel.menuCollectionFrame.value != collectionView.frame {
+                viewModel.menuCollectionFrame.accept(collectionView.frame)
+            }
             return CGSize(width: GlobalUtil.calculateWidthScaleWithSize(width: 70), height: viewModel.menuCollectionFrame.value.height)
         case .sushi:
-            let frame = viewModel.sushiCollectionFrame.value
-            return CGSize(width: frame.width, height: frame.height)
+            if viewModel.sushiCollectionFrame.value != collectionView.frame {
+                viewModel.sushiCollectionFrame.accept(collectionView.frame)
+                views.setupAdminServerView(self)
+            }
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
         }
     }
     
@@ -244,8 +231,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // 拿取每次scroll後scrollView總偏移X的中間值
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
         // 用偏移的point來計算當前cell是哪個indexPath
-        let indexPath = unwrap(views.sushiCollectionView.indexPathForItem(at: visiblePoint), IndexPath(item: 0, section: 0))
-        let page = indexPath.item
+        let page = (visiblePoint.x / viewModel.sushiCollectionFrame.value.width).toInt
         let modelCount = viewModel.menuModel.value.count
         var selectIndex = 0
  

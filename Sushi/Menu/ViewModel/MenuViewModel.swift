@@ -137,7 +137,7 @@ class MenuViewModel: BaseViewModel {
             Observable.zip(self.delData(.addSushi(menu, index.toStr)), self.delStorageImg(title)).subscribe(onNext: { _, _ in
                 observer.onNext(index)
                 observer.onCompleted()
-            }).disposed(by: bag)
+            }).disposed(by: self.bag)
             return Disposables.create()
         }
         return json

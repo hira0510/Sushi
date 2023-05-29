@@ -42,7 +42,7 @@ class LoginViewController: BaseViewController {
             //點擊後核對帳密，成功後轉到主要頁面
             loginBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
-                Observable.zip(viewModel.account, viewModel.password, viewModel.accountType).subscribe(onNext: { [weak self] (account, password, type) in
+                Observable.zip(self.viewModel.account, self.viewModel.password, self.viewModel.accountType).subscribe(onNext: { [weak self] (account, password, type) in
                     guard let `self` = self else { return }
                     let isValidAccount = Validation.shared.validate(values: (type: .account, inputValue: account))
                     let isValidPsw = Validation.shared.validate(values: (type: type == .normal ? .num: .password, inputValue: password))

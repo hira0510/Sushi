@@ -116,6 +116,7 @@
 		84DDFE8529FA7DAC00EABFEE /* BaseNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DDFE8429FA7DAC00EABFEE /* BaseNavViewController.swift */; };
 		B9E5FCDD0539B79B73547A2E /* Pods_Sushi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1789481A2B1D64D36D2B93 /* Pods_Sushi.framework */; };
 		C07CC5796BFB25B329B0C5D7 /* Pods_SushiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381382C7FC6030484D9A4C99 /* Pods_SushiTests.framework */; };
+		FE6CE30C2A20A3F70074E1E3 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6CE30B2A20A3F70074E1E3 /* CustomFlowLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -265,6 +266,7 @@
 		9C885B475CDE0C1EBF986587 /* Pods-Sushi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi.debug.xcconfig"; path = "Target Support Files/Pods-Sushi/Pods-Sushi.debug.xcconfig"; sourceTree = "<group>"; };
 		B76EC51EFCEFA6B4455C0384 /* Pods-Sushi-SushiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi-SushiUITests.debug.xcconfig"; path = "Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C85A19EA684BBF897C4BEBEF /* Pods-Sushi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi.release.xcconfig"; path = "Target Support Files/Pods-Sushi/Pods-Sushi.release.xcconfig"; sourceTree = "<group>"; };
+		FE6CE30B2A20A3F70074E1E3 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -656,6 +658,7 @@
 		84A3326F2A132A23005E9042 /* ZLCollectionViewFlowLayout */ = {
 			isa = PBXGroup;
 			children = (
+				FE6CE30B2A20A3F70074E1E3 /* CustomFlowLayout.swift */,
 				84A332812A132A23005E9042 /* ZLCollectionViewBaseFlowLayout.h */,
 				84A332782A132A23005E9042 /* ZLCollectionViewBaseFlowLayout.m */,
 				84A332752A132A23005E9042 /* ZLCollectionViewVerticalLayout.h */,
@@ -1071,6 +1074,7 @@
 				849B476929F12612002E4C60 /* RoundCornersView.swift in Sources */,
 				849B23FE2A0E1FE3008C86C8 /* YouTubePlayer.swift in Sources */,
 				849FC3FD29FB6DA400A86794 /* ExtensionRx.swift in Sources */,
+				FE6CE30C2A20A3F70074E1E3 /* CustomFlowLayout.swift in Sources */,
 				843B3E8A29F90B4D00FB3969 /* NGSCustomizableImageView.swift in Sources */,
 				84B2AF0429FB911000ABC4D9 /* Operators.swift in Sources */,
 				849FB4E029F21B1C002340F9 /* BaseViewController.swift in Sources */,
@@ -1290,7 +1294,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MM8C3J2A56;
+				DEVELOPMENT_TEAM = J86D5LTY88;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sushi/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "N多壽司";
@@ -1322,7 +1326,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MM8C3J2A56;
+				DEVELOPMENT_TEAM = J86D5LTY88;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sushi/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "N多壽司";

@@ -67,7 +67,6 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("🫠layoutSubviews🫠")
         resetLayout()
     }
 
@@ -77,16 +76,14 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         self.backgroundColor = color
         self.sushiModel = model
         self.delegate = delegate
+        CATransaction.setDisableActions(true)
         self.sushiCollectionView.reloadData()
     }
 
     /// 套件需要重整layout
     public func setupCollecctionViewFrame(_ frame: CGRect) {
-        self.sushiCollectionView.frame = CGRect(x: frame.minX + collectionSpacing, y: frame.minY + collectionSpacing, width: frame.width - (2 * collectionSpacing), height: frame.height - (2 * collectionSpacing))
-
-        if let layout = sushiCollectionView.collectionViewLayout as? ZLCollectionViewVerticalLayout {
-            layout.cellSize = NSMutableArray(array: setSushiSizeModel().map { NSValue(cgSize: $0) })
-        }
+        self.sushiCollectionView.frame = CGRect(x: collectionSpacing, y: collectionSpacing, width: frame.width - (2 * collectionSpacing), height: frame.height - (2 * collectionSpacing))
+        resetLayout()
     }
 
     public func bindData(select: BehaviorRelay<Int>, frame: BehaviorRelay<CGRect>, isNotEdit: BehaviorRelay<Bool>, deleteAry: BehaviorRelay<[IndexPath]>) {
@@ -127,7 +124,7 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         sushiCollectionView.register(SushiCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiCollectionViewCell")
         sushiCollectionView.register(SushiLinearCollectionViewCell.nib, forCellWithReuseIdentifier: "SushiLinearCollectionViewCell")
 
-        let layout = ZLCollectionViewVerticalLayout()
+        let layout = CustomFlowLayout()
         layout.minimumLineSpacing = cellSpacing
         layout.minimumInteritemSpacing = cellSpacing
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -144,7 +141,7 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
         //Client結帳後不可點餐
         SuShiSingleton.share().bindIsCheckout().bind(to: sushiCollectionView.rx.allowsSelection).disposed(by: bag)
         //切換語言或編輯時reload
-        SuShiSingleton.share().bindIsEng().bind(to: sushiCollectionView.rx.reloadDatas).disposed(by: bag)
+        SuShiSingleton.share().bindIsEng().bind(to: sushiCollectionView.rx.reloadSections).disposed(by: bag)
 
         //多選時不拖曳，拖曳時不多選
         Observable.combineLatest(isCanMultiple, isCanDrag).subscribe(onNext: { [weak self] multiple, drag in
@@ -201,9 +198,8 @@ class SushiContanerCollectionViewCell: BaseCollectionViewCell {
 
     /// 重新整理layout
     private func resetLayout() {
-        print("🫠resetLayout🫠")
         DispatchQueue.main.async {
-            if let layout = self.sushiCollectionView.collectionViewLayout as? ZLCollectionViewVerticalLayout {
+            if let layout = self.sushiCollectionView.collectionViewLayout as? CustomFlowLayout {
                 layout.cellSize = NSMutableArray(array: self.setSushiSizeModel().map { NSValue(cgSize: $0) })
                 self.sushiCollectionView.performBatchUpdates({ }, completion: nil)
             }
@@ -255,6 +251,13 @@ extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectio
             isCanDrag.accept(unwrap(collectionView.indexPathsForSelectedItems?.count, 0) <= 0)
         }
     }
+    
+    /// 補上這func減少reload時的動畫
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard sushiModel.count > indexPath.item else { return .zero }
+        let type = cellType.getType(sushiModel[indexPath.item].size)
+        return getScaleCellSize(type)
+    }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         isCanDrag.accept(unwrap(collectionView.indexPathsForSelectedItems?.count, 0) <= 0)
@@ -280,11 +283,10 @@ extension SushiContanerCollectionViewCell: UICollectionViewDragDelegate, UIColle
             let removedSize = sushiSizeModel.remove(at: dropToIndex.from)
             sushiSizeModel.insert(removedSize, at: proposedIndexPath.item)
             // 這邊只重新設定size而已，因為func會自動跑prepare()
-            if let layout = collectionView.collectionViewLayout as? ZLCollectionViewVerticalLayout {
+            if let layout = collectionView.collectionViewLayout as? CustomFlowLayout {
                 layout.cellSize = NSMutableArray(array: sushiSizeModel.map { NSValue(cgSize: $0) })
             }
             dropToIndex = (dropToIndex.from, proposedIndexPath.item)
-            print("🫠targetIndexPathForMoveFromItemAt🫠")
         }
         return proposedIndexPath
     }
@@ -299,7 +301,6 @@ extension SushiContanerCollectionViewCell: UICollectionViewDragDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, dropSessionDidEnd session: UIDropSession) {
         isCanMultiple.accept(true)
         delegate?.isCollectionViewScroll(false)
-        print("🫠End🫠")
 
     }
 
@@ -324,9 +325,7 @@ extension SushiContanerCollectionViewCell: UICollectionViewDragDelegate, UIColle
 
     /// 放下cell时（手指离开屏幕）
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        print("🫠performDropWith🫠")
         if let _ = coordinator.destinationIndexPath, coordinator.proposal.operation == .move {
-            print("🫠performDropWith in????🫠")
             let items = coordinator.items
             if items.count == 1, let item = items.first, //拖拽单个
                 let fromIndexPath = item.sourceIndexPath,
@@ -344,7 +343,6 @@ extension SushiContanerCollectionViewCell: UICollectionViewDragDelegate, UIColle
                 })
                 //固定操作,让拖拽变得自然
                 coordinator.drop(item.dragItem, toItemAt: toIndexPath)
-                print("🫠performDropWith INININININNIn🫠")
             }
         }
     }

@@ -236,7 +236,7 @@ extension ServerView: ServiceHeaderProtocol {
             StarscreamWebSocketManager.shard.writeMsg(["桌號": model.tableNumber, "msg": "已送達", "numId": model.numId])
             orderSqlite.updateIsCompleteData(_id: model.id, _isComplete: true, success: { [weak self] in
                 guard let `self` = self else { return }
-                let recordModel = orderSqlite.readData()
+                let recordModel = self.orderSqlite.readData()
                 self.setupType(.record(recordModel), section)
             })
         }
@@ -255,7 +255,7 @@ extension ServerView: RecordFooterViewProtocol {
             let timeStamp = min.toTime * 60 + GlobalUtil.getCurrentTime()
             orderSqlite.updateTimeData(_id: model.id, _timeStamp: timeStamp, success: { [weak self] in
                 guard let `self` = self else { return }
-                let recordModel = orderSqlite.readData()
+                let recordModel = self.orderSqlite.readData()
                 self.setupType(.record(recordModel), section)
             })
         }
