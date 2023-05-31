@@ -185,11 +185,15 @@ class AddOrderItem {
     var item: String = ""
     var itemPrice: String = ""
     var numId: String = ""
+    var isComplete: String = ""
     
     init(_ dic: [String : String]) {
         self.table = unwrap(dic["桌號"], "")
         self.item = unwrap(dic["點餐"], "")
         self.itemPrice = unwrap(dic["價格"], "")
         self.numId = unwrap(dic["單號"], "")
+        let countAry = item.toAry
+        let isCompleteAry = Array(repeating: "false", count: countAry.count)
+        self.isComplete = isCompleteAry.aryToStr
     }
 }

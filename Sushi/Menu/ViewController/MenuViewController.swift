@@ -329,7 +329,7 @@ extension MenuViewController: StarscreamWebSocketManagerProtocol {
     func orderHint(data: AddOrderItem) {
         let sqlite = OrderSQLite()
         UserDefaults.standard.recordHintIsHidden = false
-        sqlite.insertData(_tableNumber: data.table, _numId: data.numId, _itemName: data.item, _itemPrice: data.itemPrice)
+        sqlite.insertData(_tableNumber: data.table, _numId: data.numId, _itemName: data.item, _itemPrice: data.itemPrice, _isComplete: data.isComplete)
          
         //如果當前在點餐紀錄通知頁面就不用顯示紅點
         guard views.adminServerView.getType() == .record() && self.view.subviews.contains(views.adminServerView) else { return }
@@ -346,16 +346,20 @@ extension MenuViewController: StarscreamWebSocketManagerProtocol {
     /// Client拿到Server傳送過來的等待時間
     func getMin(_ min: Int, _ numId: String) {
          let timeStamp: TimeInterval = (min * 60).toTimeInterval + GlobalUtil.getCurrentTime()
-         viewModel.setupRecordModel(timeStamp, numId)
+        viewModel.setupRecordModel([], timeStamp, numId, true)
          viewModel.orderTimeDic.accept(viewModel.orderTimeDic.value.merging([numId: timeStamp]){ (_, new) in new })
          views.addOrderTimer()
      }
     
     /// Client拿到Server傳送過來的"送達"的處理
-    func alreadyArrived(_ numId: String) {
-        viewModel.setupRecordModel(GlobalUtil.getCurrentTime(), numId)
-        viewModel.orderTimeDic.accept(viewModel.orderTimeDic.value.merging([numId: 0]){ (_, new) in new })
-        views.addOrderTimer()
+    func alreadyArrived(_ numId: String, _ sendItem: String) {
+        let sendItemAry = sendItem.toAry
+        viewModel.setupRecordModel(sendItemAry, GlobalUtil.getCurrentTime(), numId, false)
+        let record = (viewModel.recordModel.value.filter { $0.numId == numId && $0.arrivedTime > GlobalUtil.getCurrentTime() })
+        if record.count == 0 {
+            viewModel.orderTimeDic.accept(viewModel.orderTimeDic.value.merging([numId: 0]) { (_, new) in new })
+            views.addOrderTimer()
+        }
     }
     
     /// Client拿到Server傳送過來的Menu重新拿資料

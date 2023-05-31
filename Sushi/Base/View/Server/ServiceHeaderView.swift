@@ -23,7 +23,7 @@ class ServiceHeaderView: UITableViewHeaderFooterView {
         return UINib(nibName: "ServiceHeaderView", bundle: Bundle(for: self))
     }
     
-    public func configView(model: RecordModel, section: Int, text: String, delegate: ServiceHeaderProtocol, type: ServerViewType) {
+    public func configView(model: RecordModel, section: Int, text: String, delegate: ServiceHeaderProtocol, type: ServerViewType, selectCount: Int) {
         self.delegate = delegate
         self.mSection = section
         
@@ -33,7 +33,7 @@ class ServiceHeaderView: UITableViewHeaderFooterView {
         self.titleLabel.textColor = UIColor.white
         
         self.completeBtn.addTarget(self, action: #selector(clickComplete), for: .touchUpInside)
-        self.completeBtn.isEnabled = type == .checkout() || !model.timestamp.isZero
+        self.completeBtn.isEnabled = type == .checkout() || ((!model.timestamp.isZero && selectCount > 0) || model.isComplete)
         self.completeBtn.isSelected = model.isComplete
         self.isUserInteractionEnabled = !model.isComplete
     }

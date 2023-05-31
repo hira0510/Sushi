@@ -46,6 +46,8 @@ class ServerView: BaseView {
     private var mType: BehaviorRelay<ServerViewType> = BehaviorRelay<ServerViewType>(value: .record())
     private var triangleImgViewConstraints: Constraint? = nil
     private var orderTimer: Timer?
+    /// 已選取的項目
+    private var selectIndexAry: [IndexPath] = []
 
     override class func awakeFromNib() {
         super.awakeFromNib()
@@ -75,6 +77,8 @@ class ServerView: BaseView {
     public func getType() -> ServerViewType { return mType.value }
     public func setupType(_ type: ServerViewType, _ section: Int? = nil) {
         mType.accept(type)
+        mTableView.allowsSelection = type == .record()
+        mTableView.allowsMultipleSelection = type == .record()
         guard let section = section else { return mTableView.toReloadData() }
         mTableView.toReloadSection(section)
     }
@@ -171,14 +175,41 @@ extension ServerView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecordTableViewCell", for: indexPath) as! RecordTableViewCell
         switch getType() {
         case .service(let model):
-            cell.adminServiceCellConfig(model[indexPath.item])
-        case .record(let model):
-            let type: RecordType = RecordType.getType(model[indexPath.section].timestamp)
-            cell.adminRecordCellConfig(model[indexPath.section].item[indexPath.item], type: type)
+            cell.adminServiceCellConfig(model[indexPath.row])
+        case .record(let models):
+            let model = models[indexPath.section]
+            let item = model.item[indexPath.row]
+            let isSelect = selectIndexAry.contains(indexPath)
+            let type: RecordType = RecordType.getType(model.timestamp, item.isComplete)
+            cell.adminRecordCellConfig(item, type: type, isSelect: isSelect)
         case .checkout(let model, _):
-            cell.adminCheckoutCellConfig(model[indexPath.section].item[indexPath.item])
+            cell.adminCheckoutCellConfig(model[indexPath.section].item[indexPath.row])
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch getType() {
+        case .service, .checkout: return
+        case .record(let model):
+            guard !model[indexPath.section].item[indexPath.row].isComplete, let cell = tableView.cellForRow(at: indexPath) as? RecordTableViewCell else { return }
+            cell.isSelectChangeBg(true, false)
+            selectIndexAry = unwrap(tableView.indexPathsForSelectedRows, [])
+            guard let header = tableView.headerView(forSection: indexPath.section) as? ServiceHeaderView else { return }
+            header.completeBtn.isEnabled = selectIndexAry.count > 0
+        }
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        switch getType() {
+        case .service, .checkout: return
+        case .record(let model):
+            guard !model[indexPath.section].item[indexPath.row].isComplete, let cell = tableView.cellForRow(at: indexPath) as? RecordTableViewCell else { return }
+            cell.isSelectChangeBg(false, false)
+            selectIndexAry = unwrap(tableView.indexPathsForSelectedRows, [])
+            guard let header = tableView.headerView(forSection: indexPath.section) as? ServiceHeaderView else { return }
+            header.completeBtn.isEnabled = selectIndexAry.count > 0
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -187,12 +218,12 @@ extension ServerView: UITableViewDelegate, UITableViewDataSource {
         case .service:
             return nil
         case .record(let model):
-            header.configView(model: model[section], section: section, text: "桌", delegate: self, type: getType())
+            header.configView(model: model[section], section: section, text: "桌", delegate: self, type: getType(), selectCount: selectIndexAry.count)
         case .checkout(let model, let time):
             let price = model[section].item.map { $0.price.toInt }
             let resultPrice = price.reduce(0, { $0 + $1 })
             let text = "桌 " + resultPrice.toStr + "元 " + GlobalUtil.specificTimeIntervalStr(timeInterval: time[section], format: "HH:mm:ss")
-            header.configView(model: model[section], section: section, text: text, delegate: self, type: getType())
+            header.configView(model: model[section], section: section, text: text, delegate: self, type: getType(), selectCount: 0)
         }
         return header
     }
@@ -233,8 +264,17 @@ extension ServerView: ServiceHeaderProtocol {
             orderSqlite.delData(_tableNumber: table)
         case .record(let models):
             let model = models[section]
-            StarscreamWebSocketManager.shard.writeMsg(["桌號": model.tableNumber, "msg": "已送達", "numId": model.numId])
-            orderSqlite.updateIsCompleteData(_id: model.id, _isComplete: true, success: { [weak self] in
+            var sendData: [String] = []
+            self.selectIndexAry.forEach { indexpath in
+                model.item[indexpath.item].isComplete = true
+                sendData.append(model.item[indexpath.item].name)
+                self.mTableView.deselectRow(at: indexpath, animated: false)
+            }
+            self.selectIndexAry = []
+            StarscreamWebSocketManager.shard.writeMsg(["桌號": model.tableNumber, "msg": "已送達", "numId": model.numId, "item": sendData.aryToStr])
+            let isComplete = model.item.compactMap { $0.isComplete }
+            let isCompleteStr = isComplete.aryToStr
+            self.orderSqlite.updateIsCompleteData(_id: model.id, _isComplete: isCompleteStr, success: { [weak self] in
                 guard let `self` = self else { return }
                 let recordModel = self.orderSqlite.readData()
                 self.setupType(.record(recordModel), section)

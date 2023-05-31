@@ -65,6 +65,18 @@ extension Dictionary {
     }
 }
 
+extension Array {
+    var aryToStr: String {
+        if let strAry = self as? [String] {
+            return strAry.joined(separator: ",")
+        } else if let boolAry = self as? [Bool] {
+            let boolStrAry = boolAry.compactMap { return $0.toStr }
+            return boolStrAry.joined(separator: ",")
+        }
+        return ""
+    }
+}
+
 // MARK: - Int
 extension Int {
     var toDouble: Double {
@@ -98,6 +110,17 @@ extension CGFloat {
     }
 }
 
+// MARK: - Bool
+extension Bool {
+    var toStr: String {
+        return String(self)
+    }
+    
+    var toAry: [String] {
+        return self.toStr.components(separatedBy: ",")
+    }
+}
+
 // MARK: - String
 extension String {
     
@@ -120,6 +143,10 @@ extension String {
             return int
         }
         return 0
+    }
+    
+    var toAry: [String] {
+        return self.components(separatedBy: ",")
     }
     
     var htmlToAttributedString: NSAttributedString? {

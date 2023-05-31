@@ -16,13 +16,17 @@ class RecordModel: NSObject {
     var timestamp: TimeInterval = 0.0
     var item: [RecordItemModel] = []
 
-    init(_ id: Int64 = 0, _ numId: String, _ tableNumber: String = "", _ item: [RecordItemModel] = [], _ timestamp: TimeInterval = 0.0, _ isComplete: Bool = false) {
+    init(_ id: Int64 = 0, _ numId: String, _ tableNumber: String = "", _ item: [RecordItemModel] = [], _ timestamp: TimeInterval = 0.0) {
         self.id = id
         self.numId = numId
         self.tableNumber = tableNumber
         self.item = item
         self.timestamp = timestamp
-        self.isComplete = isComplete
+        
+        let isFalse = self.item.firstIndex(where: { model in
+            return !model.isComplete
+        })
+        self.isComplete = isFalse == nil
     }
 }
 
@@ -30,9 +34,11 @@ class RecordItemModel: NSObject {
 
     var name: String = ""
     var price: String = ""
+    var isComplete: Bool = false
 
-    init(_ name: String = "", _ price: String = "") {
+    init(_ name: String = "", _ price: String = "", _ isComplete: Bool = false) {
         self.name = name
         self.price = price
+        self.isComplete = isComplete
     }
 }

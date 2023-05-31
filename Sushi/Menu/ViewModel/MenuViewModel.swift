@@ -98,33 +98,38 @@ class MenuViewModel: BaseViewModel {
     }
     
     /// 更新送達時間&更新點餐紀錄vc的資料
-    func setupRecordModel(_ timeStamp: TimeInterval, _ numId: String) {
+    func setupRecordModel(_ sendItem: [String], _ timeStamp: TimeInterval, _ numId: String, _ isGetTime: Bool) {
+        var sendItem = sendItem
         var newValue = recordModel.value
         newValue = newValue.map { model in
             if model.numId == numId {
-                model.arrivedTime = timeStamp
+                if isGetTime {
+                    model.arrivedTime = timeStamp
+                } else if sendItem.count > 0 {
+                    for (i, title) in sendItem.enumerated() {
+                        if model.title == title && model.arrivedTime > timeStamp {
+                            sendItem.remove(at: i)
+                            model.arrivedTime = timeStamp
+                            break
+                        }
+                    }
+                }
             }
             return model
         }
+        
         recordModel.accept(newValue)
         delegate?.setupRecordVcData(recordModel.value)
     }
     
     /// 整理送出餐點資訊
     func sendOrderWriteData(_ numId: Int) -> [String: String] {
-        let model = orderModel.value
         let table = SuShiSingleton.share().getPassword()
-        var item: String = ""
-        var price: String = ""
-        for (i, data) in model.enumerated() {
-            item.append(data.title)
-            price.append(data.price)
-            if i < model.count - 1 {
-                item.append(",")
-                price.append(",")
-            }
-        }
-        return ["桌號": table, "點餐": item, "價格": price, "單號": numId.toStr]
+        let itemAry = orderModel.value.compactMap { $0.title }
+        let priceAry = orderModel.value.compactMap { $0.price }
+        let itemAryStr = itemAry.aryToStr
+        let priceAryStr = priceAry.aryToStr
+        return ["桌號": table, "點餐": itemAryStr, "價格": priceAryStr, "單號": numId.toStr]
     }
     
     /// Server編輯刪除品項api

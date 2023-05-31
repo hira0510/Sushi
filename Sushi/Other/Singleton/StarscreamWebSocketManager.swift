@@ -20,7 +20,7 @@ protocol StarscreamWebSocketManagerProtocol: AnyObject {
     func getMin(_ min: Int, _ numId: String)
     func otherHint(_ str: String, _ type: ServiceType)
     func orderHint(data: AddOrderItem)
-    func alreadyArrived(_ numId: String)
+    func alreadyArrived(_ numId: String, _ sendItem: String)
     func alreadyCheckedOut()
     func updateMenu(_ menuName: String)
 }
@@ -95,7 +95,7 @@ class StarscreamWebSocketManager: NSObject {
                 delegate?.alreadyCheckedOut()
             } else if dic["桌號"] == table && dic["msg"] == "已送達" { //接收Server的送達通知
                 playTheSoundEffects(forResource: "arrived")
-                delegate?.alreadyArrived(unwrap(dic["numId"], ""))
+                delegate?.alreadyArrived(unwrap(dic["numId"], ""), unwrap(dic["item"], ""))
             }
         }
         if dic.keys.contains("menu") && dic["msg"] == "reloadData" && dic["account"] != SuShiSingleton.share().getAccount() {

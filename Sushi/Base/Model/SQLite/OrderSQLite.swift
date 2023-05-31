@@ -16,7 +16,7 @@ struct OrderSQLite {
     private let numId = Expression<String>("numId") //同桌號送單的index
     private let tableNumber = Expression<String>("tableNumber") //桌號
     private let timeStamp = Expression<TimeInterval>("timeStamp") //預定送達時間
-    private let isComplete = Expression<Bool>("isComplete") //是否已送達
+    private let isComplete = Expression<String>("isComplete") //是否已送達可轉陣列Str ex:"true,false,true"
     private let itemName = Expression<String>("itemName") //名稱可轉陣列Str ex:"1,2,3"
     private let itemPrice = Expression<String>("itemPrice") //價格可轉陣列Str
 
@@ -49,14 +49,16 @@ struct OrderSQLite {
         var collectionData: [RecordModel] = []
         for user in try! db.prepare(collection) {
             var itemData: [RecordItemModel] = []
-            let itemName = user[itemName].components(separatedBy: [","])
-            let itemPrice = user[itemPrice].components(separatedBy: [","])
+            let itemName = user[itemName].toAry
+            let itemPrice = user[itemPrice].toAry
+            let itemIsComplete = user[isComplete].toAry
+            let itemIsCompleteBool = itemIsComplete.compactMap { Bool($0) }
             
-            itemData = zip(itemName, itemPrice).map() {
-                return RecordItemModel($0, $1)
+            for (name, price, isComplete) in zip(itemName, itemPrice, itemIsCompleteBool) {
+                itemData.append(RecordItemModel(name, price, isComplete))
             }
 
-            collectionData.append(RecordModel(user[id], user[numId], user[tableNumber], itemData, user[timeStamp], user[isComplete]))
+            collectionData.append(RecordModel(user[id], user[numId], user[tableNumber], itemData, user[timeStamp]))
         }
         return collectionData.reversed()
     }
@@ -69,6 +71,7 @@ struct OrderSQLite {
             let tableCollectionData: [RecordModel] = readSingleData(_tableNumber: table)
             let newItemModel = tableCollectionData.flatMap { $0.item }
             let newRecordModel = RecordModel(0, "", table, newItemModel)
+            newRecordModel.isComplete = false
             itemData.append(newRecordModel)
         }
         return itemData
@@ -87,9 +90,9 @@ struct OrderSQLite {
     }
 
     //插入數據
-    func insertData(_tableNumber: String, _numId: String, _itemName: String, _itemPrice: String) {
+    func insertData(_tableNumber: String, _numId: String, _itemName: String, _itemPrice: String, _isComplete: String) {
         do {
-            let insert = collection.insert(tableNumber <- _tableNumber, numId <- _numId, itemName <- _itemName, itemPrice <- _itemPrice, timeStamp <- 0.0, isComplete <- false)
+            let insert = collection.insert(tableNumber <- _tableNumber, numId <- _numId, itemName <- _itemName, itemPrice <- _itemPrice, timeStamp <- 0.0, isComplete <- _isComplete)
             try db.run(insert)
         } catch {
             print("[DEBUG] insert error => \(error)")
@@ -118,10 +121,15 @@ struct OrderSQLite {
     }
     
     //更新是否送達數據
-    func updateIsCompleteData(_id: Int64, _isComplete: Bool, success: @escaping () -> ()) {
+    func updateIsCompleteData(_id: Int64, _isComplete: String, success: @escaping () -> ()) {
         let currUser = collection.filter(id == _id)
+        let _isCompleteAry = _isComplete.toAry.filter { $0 == "false" }
         do {
-            try db.run(currUser.update(isComplete <- _isComplete, timeStamp <- GlobalUtil.getCurrentTime()))
+            if _isCompleteAry.count == 0 {
+                try db.run(currUser.update(isComplete <- _isComplete, timeStamp <- GlobalUtil.getCurrentTime()))
+            } else {
+                try db.run(currUser.update(isComplete <- _isComplete))
+            }
             success()
         } catch {
             print(error)

@@ -251,17 +251,17 @@ extension SushiContanerCollectionViewCell: UICollectionViewDelegate, UICollectio
             isCanDrag.accept(unwrap(collectionView.indexPathsForSelectedItems?.count, 0) <= 0)
         }
     }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        isCanDrag.accept(unwrap(collectionView.indexPathsForSelectedItems?.count, 0) <= 0)
+        delegate?.updateDeleteIndexAry(unwrap(collectionView.indexPathsForSelectedItems, []))
+    }
     
     /// 補上這func減少reload時的動畫
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard sushiModel.count > indexPath.item else { return .zero }
         let type = cellType.getType(sushiModel[indexPath.item].size)
         return getScaleCellSize(type)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        isCanDrag.accept(unwrap(collectionView.indexPathsForSelectedItems?.count, 0) <= 0)
-        delegate?.updateDeleteIndexAry(unwrap(collectionView.indexPathsForSelectedItems, []))
     }
 }
 
