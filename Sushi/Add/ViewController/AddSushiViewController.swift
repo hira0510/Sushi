@@ -12,10 +12,26 @@ import RxSwift
 class AddSushiViewController: BaseViewController {
 
     public let viewModel = AddSushiViewModel()
-
+     
+    @IBOutlet weak var nameLabel: UILabel! {
+        didSet {
+            nameLabel.text = SuShiSingleton.share().getIsEng() ? "CH:": "名稱:"
+        }
+    }
+    @IBOutlet weak var engLabel: UILabel! {
+        didSet {
+            engLabel.text = SuShiSingleton.share().getIsEng() ? "EN:": "英文:"
+        }
+    }
+    @IBOutlet weak var priceLabel: UILabel! {
+        didSet {
+            priceLabel.text = SuShiSingleton.share().getIsEng() ? "$:": "價格:"
+        }
+    }
     @IBOutlet weak var menuPickerView: UIPickerView! {
         didSet {
-            let strAry = viewModel.menuStrAry.map { $0.title }
+            let isEng = SuShiSingleton.share().getIsEng()
+            let strAry = viewModel.menuStrAry.map { isEng ? $0.titleEng: $0.title }
             Observable.just(strAry)
                 .bind(to: menuPickerView.rx.items(adapter: viewModel.stringPickerAdapter))
                 .disposed(by: bag)
@@ -81,6 +97,9 @@ class AddSushiViewController: BaseViewController {
 
     @IBOutlet weak var sendBtn: NGSCustomizableButton! {
         didSet {
+            let txt = SuShiSingleton.share().getIsEng() ? "Send": "送出"
+            sendBtn.setTitle(txt, for: .normal)
+            
             Observable.combineLatest(viewModel.mName, viewModel.mNameEng, viewModel.mPrice, viewModel.mSize, viewModel.mImage) { name, nameEng, price, size, img -> Bool in
                 return !name.isEmpty && !nameEng.isEmpty && !price.isEmpty && !size.isEmpty && Validation().isValidPrice(price) && img != UIImage(named: "noImg")!
             }.map { $0 }.bind(to: sendBtn.rx.isEnabled).disposed(by: bag)
@@ -89,10 +108,10 @@ class AddSushiViewController: BaseViewController {
                 guard let `self` = self else { return }
                 if self.viewModel.mType == .add {
                     self.addStorageImage()
-                    self.addToast(txt: "新增中...", type: .sending)
+                    self.addToast(txt: "新增中...".twEng(), type: .sending)
                 } else {
                     self.editRequset()
-                    self.addToast(txt: "修改中...", type: .sending)
+                    self.addToast(txt: "修改中...".twEng(), type: .sending)
                 }
             }.disposed(by: bag)
         }
@@ -145,7 +164,7 @@ class AddSushiViewController: BaseViewController {
             self.addRequset(imgUrl)
         }, onError: { [weak self] _ in
             guard let `self` = self else { return }
-            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增失敗" : "修改失敗")
+            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增失敗".twEng() : "修改失敗".twEng())
         }).disposed(by: bag)
     }
 
@@ -157,11 +176,11 @@ class AddSushiViewController: BaseViewController {
         let model: SushiModel = viewModel.toSushiModel(imgUrl)
         viewModel.addData(.addSushi(menu, sushiCount.toStr), model.toAnyObject()).subscribe(onNext: { [weak self] (result) in
             guard let `self` = self else { return }
-            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增成功" : "修改成功")
+            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增成功".twEng() : "修改成功".twEng())
             self.viewModel.delegate?.requestSuc(menu)
         }, onError: { [weak self] _ in
             guard let `self` = self else { return }
-            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增失敗" : "修改失敗")
+            self.addAndRemoveToast(txt: self.viewModel.mType == .add ? "新增失敗".twEng() : "修改失敗".twEng())
         }).disposed(by: bag)
     }
 
@@ -177,32 +196,17 @@ class AddSushiViewController: BaseViewController {
     // MARK: - @objc
     /// 點擊相機
     @objc private func didClickCameraBtn() {
-
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-
-        let mView = CameraView(frame: self.view.frame)
-        mView.clickCameraBtnHandler = { [weak self] in
+        bottomAlert(delegate: self, btn1Title: "相機".twEng(), btn1func: { [weak self] _ in
             guard let `self` = self else { return }
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = true
             imagePicker.sourceType = .camera
             imagePicker.cameraDevice = .rear
             imagePicker.cameraCaptureMode = .photo
             imagePicker.cameraFlashMode = .off
-            self.show(imagePicker, sender: self)
-        }
-        mView.clickAlbumBtnHandler = { [weak self] in
-            guard let `self` = self else { return }
-            imagePicker.sourceType = .photoLibrary
-            if #available(iOS 13.0, *) {
-                imagePicker.modalPresentationStyle = .automatic
-            } else {
-                imagePicker.modalPresentationStyle = .overFullScreen
-            }
-            self.show(imagePicker, sender: self)
-        }
-
-        self.view.addSubview(mView)
+            self.present(imagePicker, animated: true)
+        })
     }
 }
 // MARK: - UIImagePickerControllerDelegate - 相片編輯完成

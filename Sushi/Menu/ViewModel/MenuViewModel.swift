@@ -122,14 +122,56 @@ class MenuViewModel: BaseViewModel {
         delegate?.setupRecordVcData(recordModel.value)
     }
     
+    /// 拿取登入前已經點的餐點
+    func getRecordData() {
+        if recordModel.value.isEmpty {
+            let shopNum = SuShiSingleton.share().getAccount()
+            let table = SuShiSingleton.share().getPassword()
+            StarscreamWebSocketManager.shard.writeMsg(["table": table, "msg": "requestGetRecord", "deviceId": SystemInfo.getDeviceId(), "shopNum": shopNum])
+        }
+    }
+    
     /// 整理送出餐點資訊
-    func sendOrderWriteData(_ numId: Int) -> [String: String] {
+    func sendOrderWriteData() -> [String: String] {
+        let numIdStr = sendOrderCount.value.toStr
+        let shopNum = SuShiSingleton.share().getAccount()
         let table = SuShiSingleton.share().getPassword()
-        let itemAry = orderModel.value.compactMap { $0.title }
-        let priceAry = orderModel.value.compactMap { $0.price }
-        let itemAryStr = itemAry.aryToStr
-        let priceAryStr = priceAry.aryToStr
-        return ["桌號": table, "點餐": itemAryStr, "價格": priceAryStr, "單號": numId.toStr]
+        let itemAryStr = (orderModel.value.compactMap { $0.title }).aryToStr
+        let priceAryStr = (orderModel.value.compactMap { $0.price }).aryToStr
+        let titleEngAryStr = (orderModel.value.compactMap { $0.eng.replacingOccurrences(of: " ", with: "") }).aryToStr
+        return ["table": table, "msg": "order", "order": itemAryStr, "titleEng": titleEngAryStr, "price": priceAryStr, "numId": numIdStr, "deviceId": SystemInfo.getDeviceId(), "shopNum": shopNum]
+    }
+    
+    /// 整理送出紀錄資訊
+    func sendRecordDatas() -> [String: String] {
+        let shopNum = SuShiSingleton.share().getAccount()
+        let table = SuShiSingleton.share().getPassword()
+        let numIdStr = sendOrderCount.value.toStr
+        let numIdAryStr = (recordModel.value.compactMap { $0.numId }).aryToStr
+        let itemAryStr = (recordModel.value.compactMap { $0.title }).aryToStr
+        let priceAryStr = (recordModel.value.compactMap { $0.money }).aryToStr
+        let arrivedTimeAryStr = (recordModel.value.compactMap { $0.arrivedTime }).aryToStr
+        let titleEngAryStr = (recordModel.value.compactMap { $0.titleEng.replacingOccurrences(of: " ", with: "") }).aryToStr
+        return ["table": table, "msg": "sendRecord", "order": itemAryStr, "price": priceAryStr, "titleEng": titleEngAryStr, "arrivedTime": arrivedTimeAryStr, "numId": numIdAryStr, "numIdStr": numIdStr, "deviceId": SystemInfo.getDeviceId(), "shopNum": shopNum]
+    }
+    
+    /// 拿到別的Client送出的紀錄資訊
+    func getRecordDatas(_ data: [String: String]) {
+        var resultAry: [SushiRecordModel] = []
+        sendOrderCount.accept(unwrap(data["numIdStr"]?.toInt, sendOrderCount.value))
+        let numIdAry = unwrap(data["numId"]?.toAry, [])
+        let itemAry = unwrap(data["order"]?.toAry, [])
+        let priceAry = unwrap(data["price"]?.toAry, [])
+        let arrivedTimeAry = unwrap(data["arrivedTime"]?.toTimeIntervalAry, [])
+        let titleEngAry = unwrap(data["titleEng"]?.toAry, [])
+        
+        for (numId, item, price, arrived, titleEng) in zip(numIdAry, itemAry, priceAry, arrivedTimeAry, titleEngAry) {
+            resultAry.append(SushiRecordModel(numId, arrived, item, price, titleEng.addSpacesToCamelCase))
+            if arrived > GlobalUtil.getCurrentTime() {
+                orderTimeDic.accept(orderTimeDic.value.merging([numId: arrived]) { (_, new) in new })
+            }
+        }
+        recordModel.accept(resultAry)
     }
     
     /// Server編輯刪除品項api

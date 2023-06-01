@@ -18,6 +18,7 @@ struct OrderSQLite {
     private let timeStamp = Expression<TimeInterval>("timeStamp") //預定送達時間
     private let isComplete = Expression<String>("isComplete") //是否已送達可轉陣列Str ex:"true,false,true"
     private let itemName = Expression<String>("itemName") //名稱可轉陣列Str ex:"1,2,3"
+    private let itemEngName = Expression<String>("itemEngName") //英文名稱可轉陣列Str ex:"1,2,3"
     private let itemPrice = Expression<String>("itemPrice") //價格可轉陣列Str
 
     init() {
@@ -37,6 +38,7 @@ struct OrderSQLite {
                     t.column(timeStamp)
                     t.column(isComplete)
                     t.column(itemName)
+                    t.column(itemEngName)
                     t.column(itemPrice)
                 })
         } catch {
@@ -50,12 +52,13 @@ struct OrderSQLite {
         for user in try! db.prepare(collection) {
             var itemData: [RecordItemModel] = []
             let itemName = user[itemName].toAry
+            let itemEngName = user[itemEngName].toAry
             let itemPrice = user[itemPrice].toAry
             let itemIsComplete = user[isComplete].toAry
             let itemIsCompleteBool = itemIsComplete.compactMap { Bool($0) }
             
-            for (name, price, isComplete) in zip(itemName, itemPrice, itemIsCompleteBool) {
-                itemData.append(RecordItemModel(name, price, isComplete))
+            for (name, engName, price, isComplete) in zip(itemName, itemEngName, itemPrice, itemIsCompleteBool) {
+                itemData.append(RecordItemModel(name, engName, price, isComplete))
             }
 
             collectionData.append(RecordModel(user[id], user[numId], user[tableNumber], itemData, user[timeStamp]))
@@ -90,9 +93,9 @@ struct OrderSQLite {
     }
 
     //插入數據
-    func insertData(_tableNumber: String, _numId: String, _itemName: String, _itemPrice: String, _isComplete: String) {
+    func insertData(_tableNumber: String, _numId: String, _itemName: String, _itemEngName: String, _itemPrice: String, _isComplete: String) {
         do {
-            let insert = collection.insert(tableNumber <- _tableNumber, numId <- _numId, itemName <- _itemName, itemPrice <- _itemPrice, timeStamp <- 0.0, isComplete <- _isComplete)
+            let insert = collection.insert(tableNumber <- _tableNumber, numId <- _numId, itemName <- _itemName, itemEngName <- _itemEngName, itemPrice <- _itemPrice, timeStamp <- 0.0, isComplete <- _isComplete)
             try db.run(insert)
         } catch {
             print("[DEBUG] insert error => \(error)")

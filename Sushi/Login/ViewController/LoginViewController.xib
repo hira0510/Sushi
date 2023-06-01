@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,22 +18,32 @@
                 <outlet property="loginBtn" destination="7Xg-5F-YG2" id="zfz-tK-pyJ"/>
                 <outlet property="passwordLabel" destination="XBe-NE-Khj" id="h4G-T2-cIB"/>
                 <outlet property="passwordTextField" destination="peJ-zG-ngc" id="r4a-bG-e8h"/>
+                <outlet property="qrcodeBtn" destination="Nl0-l0-BAv" id="GRV-gu-hEv"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TwI-y1-EcU">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nl0-l0-BAv">
+                            <rect key="frame" x="615" y="50" width="36.666666666666629" height="36.666666666666657"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Nl0-l0-BAv" secondAttribute="height" multiplier="1:1" id="2I4-ba-EMv"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="qrcode"/>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hb9-nf-YjH">
-                            <rect key="frame" x="0.0" y="85" width="375" height="280"/>
+                            <rect key="frame" x="237" y="0.0" width="378" height="393"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="店舖號碼" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QM6-ru-LcJ">
-                                    <rect key="frame" x="20" y="35" width="120" height="30"/>
+                                    <rect key="frame" x="20" y="55.000000000000007" width="121" height="30.333333333333336"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="QM6-ru-LcJ" secondAttribute="height" multiplier="4:1" id="ENY-IV-DS6"/>
                                     </constraints>
@@ -42,20 +52,20 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="店舖桌號" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBe-NE-Khj">
-                                    <rect key="frame" x="20" y="115" width="120" height="30"/>
+                                    <rect key="frame" x="20" y="167.33333333333334" width="121" height="30.333333333333343"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <color key="textColor" red="0.29020979020979021" green="0.33656577797202797" blue="0.36044034090909088" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="peJ-zG-ngc">
-                                    <rect key="frame" x="150" y="115" width="150" height="30"/>
+                                    <rect key="frame" x="151" y="167.33333333333334" width="151.33333333333337" height="30.333333333333343"/>
                                     <color key="backgroundColor" white="0.90450174829999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="tintColor" white="0.10983937940000001" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAH-6M-ZIw" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
-                                    <rect key="frame" x="245" y="240" width="120" height="30"/>
+                                    <rect key="frame" x="247" y="352.66666666666669" width="121" height="30.333333333333314"/>
                                     <color key="backgroundColor" red="0.68028846153846156" green="0.45080310314685312" blue="0.34191979895104896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="TAH-6M-ZIw" secondAttribute="height" multiplier="120:30" id="miQ-QB-Zj9"/>
@@ -90,14 +100,14 @@
                                     </userDefinedRuntimeAttributes>
                                 </button>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5j3-dB-XYi">
-                                    <rect key="frame" x="150" y="35" width="150" height="30"/>
+                                    <rect key="frame" x="151" y="55.000000000000007" width="151.33333333333337" height="30.333333333333336"/>
                                     <color key="backgroundColor" white="0.90450174829999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="tintColor" white="0.10983937940000001" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next"/>
                                 </textField>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xg-5F-YG2" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
-                                    <rect key="frame" x="97.5" y="190" width="180" height="40"/>
+                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xg-5F-YG2" customClass="NGSCustomizableButton" customModule="Sushi" customModuleProvider="target">
+                                    <rect key="frame" x="98.333333333333329" y="274.66666666666669" width="181.33333333333337" height="40.333333333333314"/>
                                     <color key="backgroundColor" name="main_btn_isEnable"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="7Xg-5F-YG2" secondAttribute="height" multiplier="9:2" id="tWa-BN-bWn"/>
@@ -136,7 +146,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </button>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="輸入錯誤請重新輸入！" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jGd-sP-Soc">
-                                    <rect key="frame" x="20" y="169" width="335" height="18"/>
+                                    <rect key="frame" x="20" y="253.66666666666663" width="338" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="1" green="0.22352941176470587" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -192,10 +202,16 @@
                     </subviews>
                     <color key="backgroundColor" name="edit"/>
                     <constraints>
+                        <constraint firstItem="Nl0-l0-BAv" firstAttribute="leading" secondItem="Hb9-nf-YjH" secondAttribute="trailing" id="2GQ-Cg-amG"/>
+                        <constraint firstAttribute="trailing" secondItem="Nl0-l0-BAv" secondAttribute="trailing" constant="10" id="7r7-g0-PYt"/>
+                        <constraint firstItem="Nl0-l0-BAv" firstAttribute="height" secondItem="TwI-y1-EcU" secondAttribute="height" multiplier="35:375" id="8AR-Iz-JTt"/>
                         <constraint firstItem="Hb9-nf-YjH" firstAttribute="centerY" secondItem="TwI-y1-EcU" secondAttribute="centerY" id="9bo-cY-kpg"/>
                         <constraint firstItem="Hb9-nf-YjH" firstAttribute="centerY" secondItem="TwI-y1-EcU" secondAttribute="centerY" multiplier="450:667" id="I36-qM-rqJ"/>
                         <constraint firstItem="Hb9-nf-YjH" firstAttribute="width" secondItem="TwI-y1-EcU" secondAttribute="width" id="SJh-Wp-Eum"/>
+                        <constraint firstItem="Nl0-l0-BAv" firstAttribute="top" secondItem="TwI-y1-EcU" secondAttribute="top" constant="50" id="VIf-F4-ELd"/>
+                        <constraint firstItem="Hb9-nf-YjH" firstAttribute="top" secondItem="Nl0-l0-BAv" secondAttribute="bottom" id="gcb-2w-1EM"/>
                         <constraint firstItem="Hb9-nf-YjH" firstAttribute="centerX" secondItem="TwI-y1-EcU" secondAttribute="centerX" id="hem-Wm-urp"/>
+                        <constraint firstItem="Nl0-l0-BAv" firstAttribute="width" secondItem="TwI-y1-EcU" secondAttribute="width" multiplier="35:375" id="oOb-qU-xRy"/>
                         <constraint firstItem="Hb9-nf-YjH" firstAttribute="height" secondItem="TwI-y1-EcU" secondAttribute="height" id="wIc-D6-R1d"/>
                     </constraints>
                     <variation key="default">
@@ -203,19 +219,31 @@
                             <exclude reference="9bo-cY-kpg"/>
                             <exclude reference="I36-qM-rqJ"/>
                             <exclude reference="SJh-Wp-Eum"/>
+                            <exclude reference="gcb-2w-1EM"/>
                             <exclude reference="wIc-D6-R1d"/>
+                            <exclude reference="2GQ-Cg-amG"/>
+                            <exclude reference="7r7-g0-PYt"/>
+                            <exclude reference="8AR-Iz-JTt"/>
+                            <exclude reference="VIf-F4-ELd"/>
+                            <exclude reference="oOb-qU-xRy"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=compact">
                         <mask key="constraints">
                             <include reference="9bo-cY-kpg"/>
                             <include reference="wIc-D6-R1d"/>
+                            <include reference="2GQ-Cg-amG"/>
+                            <include reference="8AR-Iz-JTt"/>
+                            <include reference="VIf-F4-ELd"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular">
                         <mask key="constraints">
                             <include reference="I36-qM-rqJ"/>
                             <include reference="SJh-Wp-Eum"/>
+                            <include reference="gcb-2w-1EM"/>
+                            <include reference="7r7-g0-PYt"/>
+                            <include reference="oOb-qU-xRy"/>
                         </mask>
                     </variation>
                 </view>
@@ -240,6 +268,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="qrcode" width="165" height="165"/>
         <namedColor name="edit">
             <color red="0.77600002288818359" green="0.70599997043609619" blue="0.67100000381469727" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

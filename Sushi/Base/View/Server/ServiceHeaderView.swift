@@ -32,6 +32,10 @@ class ServiceHeaderView: UITableViewHeaderFooterView {
         self.titleLabel.font = UIFont(name: "PingFangTC-Regular", size: 24.0)!
         self.titleLabel.textColor = UIColor.white
         
+        self.completeBtn.setTitle("完成".twEng(), for: .normal)
+        self.completeBtn.setTitle("已完成".twEng(), for: .selected)
+        self.completeBtn.setTitle("等待中".twEng(), for: .disabled)
+        
         self.completeBtn.addTarget(self, action: #selector(clickComplete), for: .touchUpInside)
         self.completeBtn.isEnabled = type == .checkout() || ((!model.timestamp.isZero && selectCount > 0) || model.isComplete)
         self.completeBtn.isSelected = model.isComplete

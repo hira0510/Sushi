@@ -33,11 +33,13 @@ class RecordModel: NSObject {
 class RecordItemModel: NSObject {
 
     var name: String = ""
+    var nameEng: String = ""
     var price: String = ""
     var isComplete: Bool = false
 
-    init(_ name: String = "", _ price: String = "", _ isComplete: Bool = false) {
+    init(_ name: String = "", _ nameEng: String = "", _ price: String = "", _ isComplete: Bool = false) {
         self.name = name
+        self.nameEng = nameEng
         self.price = price
         self.isComplete = isComplete
     }

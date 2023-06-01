@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import AVFoundation
 
 class LoginViewController: BaseViewController {
     
@@ -15,6 +16,20 @@ class LoginViewController: BaseViewController {
     
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var accountLabel: UILabel!
+    @IBOutlet weak var qrcodeBtn: UIButton! {
+        didSet {
+            qrcodeBtn.rx.tap.subscribe { [weak self] event in
+                guard let `self` = self else { return }
+                self.view.endEditing(true)
+                self.bottomAlert(delegate: self, btn1Title: "掃描".twEng(), btn1func: { [weak self] _ in
+                    guard let `self` = self else { return }
+                    let scannerVc = ScannerViewController()
+                    scannerVc.delegate = self
+                    self.present(scannerVc, animated: true)
+                })
+            }.disposed(by: bag)
+        }
+    }
     @IBOutlet weak var accountTextField: UITextField! {
         didSet {
             accountTextField.rx.text.orEmpty.bind(to: viewModel.account).disposed(by: bag)
@@ -42,21 +57,7 @@ class LoginViewController: BaseViewController {
             //點擊後核對帳密，成功後轉到主要頁面
             loginBtn.rx.tap.subscribe { [weak self] event in
                 guard let `self` = self else { return }
-                Observable.zip(self.viewModel.account, self.viewModel.password, self.viewModel.accountType).subscribe(onNext: { [weak self] (account, password, type) in
-                    guard let `self` = self else { return }
-                    let isValidAccount = Validation.shared.validate(values: (type: .account, inputValue: account))
-                    let isValidPsw = Validation.shared.validate(values: (type: type == .normal ? .num: .password, inputValue: password))
-                     
-                    if isValidAccount.success && isValidPsw.success {
-                        SuShiSingleton.share().setIsLoginModel(account, password, type)
-                        let vc = UIStoryboard.loadBaseNavVC()
-                        SceneDelegate().changeRootVc(vc: vc)
-                        self.errorLabel.isHidden = true
-                    } else {
-                        self.errorLabel.text = isValidAccount.success ? isValidPsw.msg: isValidAccount.msg
-                        self.errorLabel.isHidden = false
-                    }
-                }).disposed(by: self.bag)
+                self.didClickLoginBtn()
             }.disposed(by: bag)
         }
     }
@@ -83,5 +84,48 @@ class LoginViewController: BaseViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    private func didClickLoginBtn() {
+        Observable.zip(self.viewModel.account, self.viewModel.password, self.viewModel.accountType).subscribe(onNext: { [weak self] (account, password, type) in
+            guard let `self` = self else { return }
+            let isValidAccount = Validation.shared.validate(values: (type: .account, inputValue: account))
+            let isValidPsw = Validation.shared.validate(values: (type: type == .normal ? .num: .password, inputValue: password))
+             
+            if isValidAccount.success && isValidPsw.success {
+                SuShiSingleton.share().setIsLoginModel(account, password, type)
+                let vc = UIStoryboard.loadBaseNavVC()
+                SceneDelegate().changeRootVc(vc: vc)
+                self.errorLabel.isHidden = true
+            } else {
+                self.errorLabel.text = isValidAccount.success ? isValidPsw.msg: isValidAccount.msg
+                self.errorLabel.isHidden = false
+            }
+        }).disposed(by: self.bag)
+    }
+}
+
+extension LoginViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    //取得相片後讀取QRCode
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage,
+        let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh]),
+        let ciImage = CIImage(image: pickedImage),
+        let features = detector.features(in: ciImage) as? [CIQRCodeFeature] else { return }
+        
+        let qrCodeLink = features.reduce("") { $0 + ($1.messageString ?? "") }
+        getQrCodeStringToDic(qrCodeLink)
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+}
+extension LoginViewController: ScannerVcProtocol {
+    /// 拿到QRCode之後的處理
+    func getQrCodeStringToDic(_ str: String) {
+        let strToDic = str.toMsgDic(",", ":")
+        self.viewModel.account.accept(unwrap(strToDic["shopNum"], ""))
+        self.viewModel.password.accept(unwrap(strToDic["table"], ""))
+        viewModel.accountType.accept(.normal)
+        didClickLoginBtn()
     }
 }

@@ -17,8 +17,8 @@ enum RecordType {
         switch self {
         case .suc: return "已送達".twEng()
         case .wait(let min): return min.toStr + " 分鐘".twEng()
-        case .waitForAdmin: return "等待中".twEng()
-        case .adminPreparing(let min): return min.toStr + "分鐘".twEng()
+        case .waitForAdmin: return "等待中..".twEng()
+        case .adminPreparing(let min): return min.toStr + " 分鐘".twEng()
         }
     }
     
@@ -83,7 +83,8 @@ class RecordTableViewCell: UITableViewCell {
     
     /// Server點餐紀錄
     func adminRecordCellConfig(_ model: RecordItemModel, type: RecordType, isSelect: Bool) {
-        titleLabel.text = model.name
+        let isEng = SuShiSingleton.share().getIsEng()
+        titleLabel.text = isEng ? model.nameEng: model.name
         statusLabel.textColor = type == .adminPreparing() ? .red: .black
         statusLabel.text = type.stringValue
         statusLabel.isHidden = false
@@ -93,8 +94,9 @@ class RecordTableViewCell: UITableViewCell {
     
     /// Server結帳
     func adminCheckoutCellConfig(_ model: RecordItemModel) {
-        priceLabel.text = model.price + "元"
-        titleLabel.text = model.name
+        let isEng = SuShiSingleton.share().getIsEng()
+        priceLabel.text = isEng ? "$" + model.price: model.price + "元"
+        titleLabel.text = isEng ? model.nameEng: model.name
         statusLabel.textColor = .black
         statusLabel.isHidden = true
         priceLabel.isHidden = false
@@ -103,7 +105,7 @@ class RecordTableViewCell: UITableViewCell {
     
     /// Server服務
     func adminServiceCellConfig(_ model: (String, TimeInterval)) {
-        titleLabel.text = "\(model.0)桌呼喚服務"
+        titleLabel.text = SuShiSingleton.share().getIsEng() ? "table:\(model.0) Service": "\(model.0)桌呼喚服務"
         statusLabel.text = GlobalUtil.specificTimeIntervalStr(timeInterval: model.1, format: "HH:mm:ss")
         statusLabel.textColor = .black
         statusLabel.isHidden = false

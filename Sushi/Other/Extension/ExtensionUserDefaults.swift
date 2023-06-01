@@ -8,6 +8,11 @@
 import UIKit
 
 extension UserDefaults {
+    /// deviceId
+    var deviceId: String? {
+        get { self.string(forKey: #function) }
+        set { self.setValue(newValue, forKey: #function) }
+    }
     /// 服務桌號以及通知時間
     var serviceTableAry: [String: TimeInterval] {
         get { self.dictionary(forKey: #function) as? [String: TimeInterval] ?? [:] }

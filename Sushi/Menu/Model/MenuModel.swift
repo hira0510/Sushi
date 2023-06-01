@@ -16,23 +16,26 @@ class MenuStrModel: NSObject {
     
     var menu: String = ""
     var title: String = ""
+    var titleEng: String = ""
     var sushiCount: Int = 0
     
-    init(_ menu: String = "", _ title: String = "", _ count: Int = 0) {
+    init(_ menu: String = "", _ title: String = "", _ titleEng: String = "", _ count: Int = 0) {
         self.menu = menu
         self.title = title
+        self.titleEng = titleEng
         self.sushiCount = count
     }
     
     func getAry(_ model: [MenuModel]) -> [MenuStrModel] {
         let titles = model.map { $0.title }
+        let titleEngs = model.map { $0.titleEng }
         let menus = model.map { $0.menu }
         let sushiCount = model.map { $0.sushi.count }
         
         var resultAry: [MenuStrModel] = [] 
         
-        for (menu, title, count) in zip(menus, titles, sushiCount) {
-            resultAry.append(MenuStrModel(menu, title, count))
+        for (menu, title, eng, count) in zip(menus, titles, titleEngs, sushiCount) {
+            resultAry.append(MenuStrModel(menu, title, eng, count))
         }
         return resultAry
     }
@@ -178,22 +181,41 @@ class SushiRecordModel: NSObject {
         self.img = model.img
         self.money = model.price
     }
+    
+    init(_ numId: String = "", _ arrivedTime: TimeInterval = 0, _ title: String, _ price: String, _ titleEng: String) {
+        self.numId = numId
+        self.arrivedTime = arrivedTime
+        self.title = title
+        self.titleEng = titleEng
+        self.img = ""
+        self.money = price
+    }
 }
 
 class AddOrderItem {
     var table: String = ""
     var item: String = ""
     var itemPrice: String = ""
+    var titleEng: String = ""
     var numId: String = ""
     var isComplete: String = ""
     
     init(_ dic: [String : String]) {
-        self.table = unwrap(dic["桌號"], "")
-        self.item = unwrap(dic["點餐"], "")
-        self.itemPrice = unwrap(dic["價格"], "")
-        self.numId = unwrap(dic["單號"], "")
+        self.table = unwrap(dic["table"], "")
+        self.item = unwrap(dic["order"], "")
+        self.titleEng = unwrap(dic["titleEng"], "")
+        self.itemPrice = unwrap(dic["price"], "")
+        self.numId = unwrap(dic["numId"], "")
         let countAry = item.toAry
         let isCompleteAry = Array(repeating: "false", count: countAry.count)
         self.isComplete = isCompleteAry.aryToStr
+    }
+    
+    func toSushiModel() -> [(title: String, price: String, titleEng: String)] {
+        var result: [(title: String, price: String, titleEng: String)] = []
+        for (txt, money, eng) in zip(item.toAry, itemPrice.toAry, titleEng.toAry) {
+            result.append((title: txt, price: money, titleEng: eng))
+        }
+        return result
     }
 }

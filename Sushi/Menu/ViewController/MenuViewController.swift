@@ -23,6 +23,7 @@ class MenuViewController: BaseViewController {
         super.viewDidLoad()
         StarscreamWebSocketManager.shard.delegate = self
         getAllMenu()
+        viewModel.getRecordData()
         setupUI()
     }
     
@@ -49,6 +50,7 @@ class MenuViewController: BaseViewController {
         views.addNewBtnAddTarget(self)
         views.checkoutBtnAddTarget(self)
         views.serviceBtnAddTarget(self)
+        views.qrcodeBtnAddTarget(self)
     }
     
     // MARK: - public
@@ -92,13 +94,13 @@ class MenuViewController: BaseViewController {
         let menu = viewModel.getMenu
         viewModel.addData(.dropEditSushi(menu.menu), menu.getSushiData()).subscribe(onNext: { [weak self] result in
             guard let `self` = self else { return }
-            self.addAndRemoveToast(txt: "刪除成功")
+            self.addAndRemoveToast(txt: "刪除成功".twEng())
             self.requestSuc(self.viewModel.getMenu.menu)
             self.viewModel.deleteIndexAry.accept([])
             self.viewModel.isNotEdit.accept(true)
         }, onError: { [weak self] _ in
             guard let `self` = self else { return }
-            self.addAndRemoveToast(txt: "刪除失敗")
+            self.addAndRemoveToast(txt: "刪除失敗".twEng())
         }).disposed(by: bag)
     }
 }
@@ -302,8 +304,8 @@ extension MenuViewController: OrderListCellProtocol {
     func clickOrderBtn() {
         let numId = viewModel.sendOrderCount.value
         viewModel.recordModel.add(viewModel.orderModel.value.map { SushiRecordModel(numId.toStr, -1, $0) })
-        StarscreamWebSocketManager.shard.writeMsg(viewModel.sendOrderWriteData(numId))
-        
+        StarscreamWebSocketManager.shard.writeMsg(viewModel.sendOrderWriteData())
+
         addToast(txt: "已送出".twEng())
         viewModel.sendOrderCount.accept(viewModel.sendOrderCount.value + 1)
         viewModel.orderModel.accept([])
@@ -312,6 +314,20 @@ extension MenuViewController: OrderListCellProtocol {
 
 // MARK: - WebSocket訊息處理
 extension MenuViewController: StarscreamWebSocketManagerProtocol {
+    /// Client接收到其他的裝置請求紀錄資料
+    func clientRequestGetRecord() {
+        if !viewModel.recordModel.value.isEmpty {
+            StarscreamWebSocketManager.shard.writeMsg(viewModel.sendRecordDatas())
+        }
+    }
+    
+    /// 其他Client傳送過來的紀錄資料
+    func clientGetRecord(_ data: [String : String]) {
+        if viewModel.recordModel.value.isEmpty {
+            viewModel.getRecordDatas(data)
+            views.addOrderTimer()
+        }
+    }
     
    /// Server新增服務紀錄、結帳紀錄
     func otherHint(_ str: String, _ type: ServiceType) {
@@ -329,13 +345,25 @@ extension MenuViewController: StarscreamWebSocketManagerProtocol {
     func orderHint(data: AddOrderItem) {
         let sqlite = OrderSQLite()
         UserDefaults.standard.recordHintIsHidden = false
-        sqlite.insertData(_tableNumber: data.table, _numId: data.numId, _itemName: data.item, _itemPrice: data.itemPrice, _isComplete: data.isComplete)
+        sqlite.insertData(_tableNumber: data.table, _numId: data.numId, _itemName: data.item, _itemEngName: data.titleEng.addSpacesToCamelCase, _itemPrice: data.itemPrice, _isComplete: data.isComplete)
          
         //如果當前在點餐紀錄通知頁面就不用顯示紅點
         guard views.adminServerView.getType() == .record() && self.view.subviews.contains(views.adminServerView) else { return }
         UserDefaults.standard.recordHintIsHidden = true
         let recordModel = viewModel.orderSqlite.readData()
         views.adminServerView.setupType(.record(recordModel))
+    }
+    
+    /// Client接收其他Client新增的點餐紀錄
+    func clientOrderHint(data: AddOrderItem) {
+        let numId = viewModel.sendOrderCount.value
+        viewModel.recordModel.add(data.toSushiModel().map { SushiRecordModel(numId.toStr, -1, $0.title, $0.price, $0.titleEng) })
+        viewModel.sendOrderCount.accept(viewModel.sendOrderCount.value + 1)
+    }
+    
+    /// Client接收其他Client的結帳通知
+    func clientCheckout() {
+        SuShiSingleton.share().setIsCheckout(true)
     }
      
     /// Client結帳後的處理

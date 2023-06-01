@@ -105,6 +105,27 @@ extension UIImageView {
             completionHandler?(result)
         }
     }
+    
+    /// url轉換成QRCode
+    ///
+    /// - Parameter urlString: String的url
+    func generateQRCode(from urlString: String) {
+        let data = urlString.data(using: String.Encoding.utf8)
+
+        if let filter = CIFilter(name: "CIQRCodeGenerator") {
+            filter.setValue(data, forKey: "inputMessage")
+            // L: 7%, M: 15%, Q: 25%, H: 30%  ％越高圖檔越大 容錯率越高
+            filter.setValue("M", forKey: "inputCorrectionLevel")
+
+            if let qrImage = filter.outputImage {
+                let scaleX = self.frame.size.width / qrImage.extent.size.width
+                let scaleY = self.frame.size.height / qrImage.extent.size.height
+                let transform = CGAffineTransform(scaleX: scaleX, y: scaleY)
+                let output = qrImage.transformed(by: transform)
+                self.image = UIImage(ciImage: output)
+            }
+        }
+    }
 }
 
 // MARK: - UIView

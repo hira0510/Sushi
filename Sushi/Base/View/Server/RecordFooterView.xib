@@ -33,10 +33,10 @@
                             <state key="normal" title="3分鐘">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
-                            <state key="disabled" title="3分鐘">
+                            <state key="disabled">
                                 <color key="titleColor" name="main_btn_isDisable_title"/>
                             </state>
-                            <state key="selected" title="3分鐘">
+                            <state key="selected">
                                 <color key="titleColor" name="main_btn_isSelect_title"/>
                             </state>
                             <userDefinedRuntimeAttributes>
@@ -77,10 +77,10 @@
                             <state key="normal" title="5分鐘">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
-                            <state key="disabled" title="5分鐘">
+                            <state key="disabled">
                                 <color key="titleColor" name="main_btn_isDisable_title"/>
                             </state>
-                            <state key="selected" title="5分鐘">
+                            <state key="selected">
                                 <color key="titleColor" name="main_btn_isSelect_title"/>
                             </state>
                             <userDefinedRuntimeAttributes>
@@ -121,10 +121,10 @@
                             <state key="normal" title="10分鐘">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
-                            <state key="disabled" title="10分鐘">
+                            <state key="disabled">
                                 <color key="titleColor" name="main_btn_isDisable_title"/>
                             </state>
-                            <state key="selected" title="10分鐘">
+                            <state key="selected">
                                 <color key="titleColor" name="main_btn_isSelect_title"/>
                             </state>
                             <userDefinedRuntimeAttributes>
@@ -165,10 +165,10 @@
                             <state key="normal" title="15分鐘">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
-                            <state key="disabled" title="15分鐘">
+                            <state key="disabled">
                                 <color key="titleColor" name="main_btn_isDisable_title"/>
                             </state>
-                            <state key="selected" title="15分鐘">
+                            <state key="selected">
                                 <color key="titleColor" name="main_btn_isSelect_title"/>
                             </state>
                             <userDefinedRuntimeAttributes>
@@ -220,6 +220,7 @@
                 <outlet property="min15Btn" destination="EUm-64-g9V" id="GV1-bX-PTE"/>
                 <outlet property="min3Btn" destination="jtf-l9-RYr" id="LvU-s7-dnb"/>
                 <outlet property="min5Btn" destination="z2O-dM-5rt" id="CJD-TJ-Dq8"/>
+                <outlet property="timeLabel" destination="ZbW-TE-7BV" id="7eO-9w-gU9"/>
             </connections>
             <point key="canvasLocation" x="130.53435114503816" y="-228.87323943661974"/>
         </view>

@@ -20,6 +20,10 @@ protocol StarscreamWebSocketManagerProtocol: AnyObject {
     func getMin(_ min: Int, _ numId: String)
     func otherHint(_ str: String, _ type: ServiceType)
     func orderHint(data: AddOrderItem)
+    func clientOrderHint(data: AddOrderItem)
+    func clientCheckout()
+    func clientRequestGetRecord()
+    func clientGetRecord(_ data: [String : String])
     func alreadyArrived(_ numId: String, _ sendItem: String)
     func alreadyCheckedOut()
     func updateMenu(_ menuName: String)
@@ -75,25 +79,38 @@ class StarscreamWebSocketManager: NSObject {
     
     public func getServiceText(_ str: String) {
         let dic = str.toMsgDic(" ", ":")
+        guard SuShiSingleton.share().getIsLogin().isLogin else { return }
         if SuShiSingleton.share().getIsAdmin() { //Server
-            if dic.keys.contains("桌號") && dic.keys.contains("點餐") { //接收Client的點餐項目
+            if dic["msg"] == "order" { //接收Client的點餐項目
                 let data = AddOrderItem(dic)
                 delegate?.orderHint(data: data)
                 playTheSoundEffects(forResource: "record")
-            } else if dic["msg"] == "結帳" { //接收Client的結帳通知
+            } else if dic["msg"] == "checkout" { //接收Client的結帳通知
                 playTheSoundEffects(forResource: "checkout")
-                delegate?.otherHint(unwrap(dic["桌號"], ""), .checkout)
-            } else if dic["msg"] == "服務" { //接收Client的服務通知
+                delegate?.otherHint(unwrap(dic["table"], ""), .checkout)
+            } else if dic["msg"] == "service" { //接收Client的服務通知
                 playTheSoundEffects(forResource: "service")
-                delegate?.otherHint(unwrap(dic["桌號"], ""), .service)
+                delegate?.otherHint(unwrap(dic["table"], ""), .service)
             }
         } else {
+            let shopNum = SuShiSingleton.share().getAccount()
             let table = SuShiSingleton.share().getPassword()
-            if dic["桌號"] == table && dic.keys.contains("分鐘") { //接收Server的時間
-                delegate?.getMin(unwrap(dic["分鐘"], "").toInt, unwrap(dic["numId"], ""))
-            } else if dic["桌號"] == table && dic["msg"] == "已結清" { //接收Server的結清通知
+            // 是否同店同桌號不同裝置
+            let isSameTable = dic["table"] == table && dic["shopNum"] == shopNum && dic["deviceId"] != SystemInfo.getDeviceId()
+            if dic["msg"] == "order" && isSameTable { //接收其他Client的點餐項目
+                let data = AddOrderItem(dic)
+                delegate?.clientOrderHint(data: data)
+            } else if dic["msg"] == "checkout" && isSameTable { //接收其他Client的結帳通知
+                delegate?.clientCheckout()
+            } else if dic["msg"] == "requestGetRecord" && isSameTable { //請求其他Client拿取紀錄
+                delegate?.clientRequestGetRecord()
+            } else if dic["msg"] == "sendRecord" && isSameTable { //其他Client發送的紀錄
+                delegate?.clientGetRecord(dic)
+            } else if dic["table"] == table && dic.keys.contains("min") { //接收Server的時間
+                delegate?.getMin(unwrap(dic["min"], "").toInt, unwrap(dic["numId"], ""))
+            } else if dic["table"] == table && dic["msg"] == "alreadyCheckout" { //接收Server的結清通知
                 delegate?.alreadyCheckedOut()
-            } else if dic["桌號"] == table && dic["msg"] == "已送達" { //接收Server的送達通知
+            } else if dic["table"] == table && dic["msg"] == "alreadySend" { //接收Server的送達通知
                 playTheSoundEffects(forResource: "arrived")
                 delegate?.alreadyArrived(unwrap(dic["numId"], ""), unwrap(dic["item"], ""))
             }

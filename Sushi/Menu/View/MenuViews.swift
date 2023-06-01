@@ -66,6 +66,9 @@ class MenuViews: NSObject {
                 self.menuInfoView.updateUI()
                 self.plateInfoView.updateUI()
                 self.timeInfoView.updateUI()
+                self.deleteItemBtn.setTitle("刪除".twEng(), for: .normal)
+                self.editBtn.setTitle("編輯".twEng(), for: .normal)
+                self.editBtn.setTitle("取消".twEng(), for: .selected)
             }.bind(to: languageInfoBtn.rx.isSelected).disposed(by: bag)
         }
     }
@@ -89,10 +92,26 @@ class MenuViews: NSObject {
         }
     }
     
+    @IBOutlet weak var mobileQrCode: NGSCustomizableButton! {
+        didSet {
+            //文字中英轉換
+            SuShiSingleton.share().bindIsEng().bind(to: mobileQrCode.rx.isSelected).disposed(by: bag)
+            mobileQrCode.isHidden = SuShiSingleton.share().getIsLogin().type == .administrator
+        }
+    }
+    
     @IBOutlet weak var loginLabel: UILabel! {
         didSet {
             //登入資訊
-            SuShiSingleton.share().bindIsLogin().bind(to: loginLabel.rx.labelIsHidden).disposed(by: bag)
+            let loginModel = SuShiSingleton.share().getIsLogin()
+            var text = "Version:\(SystemInfo.getVersion())"
+            if loginModel.type == .administrator {
+                text += "\nuser:\(loginModel.account)"
+                loginLabel.isHidden = false
+            } else {
+                loginLabel.isHidden = true
+            }
+            loginLabel.text = text
         }
     }
     
@@ -279,6 +298,13 @@ class MenuViews: NSObject {
             return (model, isOpen)
         }.subscribe().disposed(by: bag)
     }
+    /// 點擊Qrcode按鈕_開啟QrcodeView
+    func qrcodeBtnAddTarget(_ baseVc: MenuViewController) {
+        mobileQrCode.rx.tap.subscribe { _ in
+            let view = QRCodeView(frame: UIScreen.main.bounds)
+            baseVc.view.addSubview(view)
+        }.disposed(by: bag)
+    }
     
     /// Server點擊刪除按鈕_刪除多個品項
     func deleteItemBtnAddTarget(_ baseVc: MenuViewController) {
@@ -287,7 +313,7 @@ class MenuViews: NSObject {
             let indexPathArr = self.viewModel.deleteIndexAry.value.sorted(by: >)
             guard indexPathArr.count > 0 else { return }
             let oldModel = self.viewModel.menuModel.value
-            baseVc.addToast(txt: "刪除中...", type: .sending)
+            baseVc.addToast(txt: "刪除中...".twEng(), type: .sending)
             
             Observable.from(indexPathArr).enumerated().flatMap { [weak self] indexPath -> Observable<Int> in
                 guard let `self` = self else { return Observable.just(-1) }
@@ -343,14 +369,15 @@ class MenuViews: NSObject {
                 self.setupAdminServerView(baseVc, self.checkoutView)
             } else if self.viewModel.recordModel.value.count > 0 {
                 baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
+                let shopNum = SuShiSingleton.share().getAccount()
                 let table = SuShiSingleton.share().getPassword()
-                StarscreamWebSocketManager.shard.writeMsg(["桌號": table, "msg": "結帳"])
+                StarscreamWebSocketManager.shard.writeMsg(["table": table, "msg": "checkout", "deviceId": SystemInfo.getDeviceId(), "shopNum": shopNum])
                 SuShiSingleton.share().setIsCheckout(true)
             }
         }.disposed(by: bag)
     }
     
-    /// 點擊結帳按鈕_Server開啟服務通知View_Client傳送通知給Server
+    /// 點擊服務按鈕_Server開啟服務通知View_Client傳送通知給Server
     func serviceBtnAddTarget(_ baseVc: BaseViewController) {
         serviceView.mButton.rx.tap.subscribe { [weak self] _ in
             guard let `self` = self else { return }
@@ -359,7 +386,7 @@ class MenuViews: NSObject {
             } else {
                 baseVc.addToast(txt: "已通知服務員，請稍候".twEng())
                 let table = SuShiSingleton.share().getPassword()
-                StarscreamWebSocketManager.shard.writeMsg(["桌號": table, "msg": "服務"])
+                StarscreamWebSocketManager.shard.writeMsg(["table": table, "msg": "service"])
             }
         }.disposed(by: bag)
     }

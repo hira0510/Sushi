@@ -8,11 +8,19 @@
 import UIKit
 import WebKit
 import SnapKit
+import RxCocoa
 
 class WebViewViewController: BaseViewController {
 
     @IBOutlet weak var navBar: UINavigationBar!
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var backBtn: UIButton! {
+        didSet {
+            backBtn.rx.tap.subscribe { [weak self] event in
+                guard let `self` = self else { return }
+                self.dismissVc()
+            }.disposed(by: bag)
+        }
+    }
 
     private var wkWebView: WKWebView = WKWebView()
     public var mUrl: String = ""
@@ -35,7 +43,6 @@ class WebViewViewController: BaseViewController {
     }
 
     private func setupUIWithDelegate() {
-        backBtn.addTarget(self, action: #selector(dismissVc), for: .touchUpInside)
         navigationController?.setNavigationBarHidden(true, animated: true)
         initWebView()
 

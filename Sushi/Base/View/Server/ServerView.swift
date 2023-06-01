@@ -214,15 +214,17 @@ extension ServerView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ServiceHeaderView") as! ServiceHeaderView
+        let isEng = SuShiSingleton.share().getIsEng()
         switch getType() {
         case .service:
             return nil
         case .record(let model):
-            header.configView(model: model[section], section: section, text: "桌", delegate: self, type: getType(), selectCount: selectIndexAry.count)
+            header.configView(model: model[section], section: section, text: isEng ? "": "桌", delegate: self, type: getType(), selectCount: selectIndexAry.count)
         case .checkout(let model, let time):
             let price = model[section].item.map { $0.price.toInt }
             let resultPrice = price.reduce(0, { $0 + $1 })
-            let text = "桌 " + resultPrice.toStr + "元 " + GlobalUtil.specificTimeIntervalStr(timeInterval: time[section], format: "HH:mm:ss")
+            let time = GlobalUtil.specificTimeIntervalStr(timeInterval: time[section], format: "HH:mm:ss")
+            let text = isEng ? " $\(resultPrice.toStr) \(time)": "桌 \(resultPrice.toStr)元 \(time)"
             header.configView(model: model[section], section: section, text: text, delegate: self, type: getType(), selectCount: 0)
         }
         return header
@@ -259,7 +261,7 @@ extension ServerView: ServiceHeaderProtocol {
         case .service: break
         case .checkout(let models, _):
             let table = models[section].tableNumber
-            StarscreamWebSocketManager.shard.writeMsg(["桌號": table, "msg": "已結清"])
+            StarscreamWebSocketManager.shard.writeMsg(["table": table, "msg": "alreadyCheckout"])
             UserDefaults.standard.checkoutTableAry.removeValue(forKey: table)
             orderSqlite.delData(_tableNumber: table)
         case .record(let models):
@@ -271,7 +273,7 @@ extension ServerView: ServiceHeaderProtocol {
                 self.mTableView.deselectRow(at: indexpath, animated: false)
             }
             self.selectIndexAry = []
-            StarscreamWebSocketManager.shard.writeMsg(["桌號": model.tableNumber, "msg": "已送達", "numId": model.numId, "item": sendData.aryToStr])
+            StarscreamWebSocketManager.shard.writeMsg(["table": model.tableNumber, "msg": "alreadySend", "numId": model.numId, "item": sendData.aryToStr])
             let isComplete = model.item.compactMap { $0.isComplete }
             let isCompleteStr = isComplete.aryToStr
             self.orderSqlite.updateIsCompleteData(_id: model.id, _isComplete: isCompleteStr, success: { [weak self] in
@@ -291,7 +293,7 @@ extension ServerView: RecordFooterViewProtocol {
         case .service, .checkout(_, _): break
         case .record(let models):
             let model = models[section]
-            StarscreamWebSocketManager.shard.writeMsg(["桌號": model.tableNumber, "分鐘": min, "numId": model.numId])
+            StarscreamWebSocketManager.shard.writeMsg(["table": model.tableNumber, "min": min, "numId": model.numId])
             let timeStamp = min.toTime * 60 + GlobalUtil.getCurrentTime()
             orderSqlite.updateTimeData(_id: model.id, _timeStamp: timeStamp, success: { [weak self] in
                 guard let `self` = self else { return }

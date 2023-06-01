@@ -72,6 +72,9 @@ extension Array {
         } else if let boolAry = self as? [Bool] {
             let boolStrAry = boolAry.compactMap { return $0.toStr }
             return boolStrAry.joined(separator: ",")
+        } else if let TimeIntervalAry = self as? [TimeInterval] {
+            let TimeIntervalStrAry = TimeIntervalAry.compactMap { return $0.toStr }
+            return TimeIntervalStrAry.joined(separator: ",")
         }
         return ""
     }
@@ -149,6 +152,11 @@ extension String {
         return self.components(separatedBy: ",")
     }
     
+    var toTimeIntervalAry: [TimeInterval] {
+        let strAry = self.components(separatedBy: ",")
+        return strAry.map { $0.toTime }
+    }
+    
     var htmlToAttributedString: NSAttributedString? {
         guard let data = data(using: .utf8) else { return NSAttributedString() }
         do {
@@ -159,6 +167,21 @@ extension String {
     }
     var htmlToString: String {
         return unwrap(htmlToAttributedString?.string, "")
+    }
+    
+    var addSpacesToCamelCase: String {
+        let pattern = "([a-z])([A-Z])"
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        let range = NSRange(location: 0, length: self.utf16.count)
+        
+        let modifiedString = regex.stringByReplacingMatches(
+            in: self,
+            options: [],
+            range: range,
+            withTemplate: "$1 $2"
+        )
+        
+        return modifiedString
     }
     
     func urlDecoded() -> String {

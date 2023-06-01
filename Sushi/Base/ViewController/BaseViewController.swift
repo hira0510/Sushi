@@ -70,7 +70,40 @@ class BaseViewController: UIViewController {
         default: break
         }
     }
-
+    
+    /// 下方提示窗開啟相簿、相機/掃描
+    func bottomAlert(delegate: (UIImagePickerControllerDelegate & UINavigationControllerDelegate)?, btn1Title: String, btn1func: @escaping (UIAlertAction) -> Void) {
+        let alertController = UIAlertController(
+            title: "",
+            message: "請選擇開啟方式".twEng(),
+            preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(
+          title: "取消".twEng(),
+          style: .cancel,
+          handler: nil)
+        alertController.addAction(cancelAction)
+        
+        let scanAction = UIAlertAction(title: btn1Title.twEng(), style: .default, handler: btn1func)
+        alertController.addAction(scanAction)
+        
+        let albumAction = UIAlertAction(title: "相簿".twEng(), style: .default) { [weak self] _ in
+            guard let `self` = self else { return }
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = delegate
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = .photoLibrary
+            if #available(iOS 13.0, *) {
+                imagePicker.modalPresentationStyle = .automatic
+            } else {
+                imagePicker.modalPresentationStyle = .overFullScreen
+            }
+            self.present(imagePicker, animated: true)
+        }
+        alertController.addAction(albumAction)
+  
+        self.present(alertController, animated: true)
+    }
     
     // MARK: - private
     /// 加入返回上一頁的手勢

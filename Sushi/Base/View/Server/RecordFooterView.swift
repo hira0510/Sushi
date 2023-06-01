@@ -13,6 +13,7 @@ protocol RecordFooterViewProtocol: AnyObject {
 
 class RecordFooterView: UITableViewHeaderFooterView {
   
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var min3Btn: UIButton!
     @IBOutlet weak var min5Btn: UIButton!
     @IBOutlet weak var min10Btn: UIButton!
@@ -29,6 +30,12 @@ class RecordFooterView: UITableViewHeaderFooterView {
         self.delegate = delegate
         self.mSection = section
         self.textLabel?.isHidden = true
+         
+        timeLabel.text = "時間".twEng()
+        min3Btn.setTitle("3" + "分鐘".twEng(), for: .normal)
+        min5Btn.setTitle("5" + "分鐘".twEng(), for: .normal)
+        min10Btn.setTitle("10" + "分鐘".twEng(), for: .normal)
+        min15Btn.setTitle("15" + "分鐘".twEng(), for: .normal)
         
         let btnAry = [min3Btn, min5Btn, min10Btn, min15Btn]
         btnAry.forEach { btn in
@@ -38,7 +45,7 @@ class RecordFooterView: UITableViewHeaderFooterView {
     }
     
     @objc private func clickTime(sender: NGSCustomizableButton) {
-        guard let min = sender.titleLabel?.text?.replacingOccurrences(of: "分鐘", with: "") else { return }
+        guard let min = sender.titleLabel?.text?.replacingOccurrences(of: "分鐘".twEng(), with: "") else { return }
         delegate?.clickMinBtn(min, mSection)
     }
 }

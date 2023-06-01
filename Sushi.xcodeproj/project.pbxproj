@@ -29,7 +29,6 @@
 		849B471B29F0E888002E4C60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471A29F0E888002E4C60 /* AppDelegate.swift */; };
 		849B471D29F0E888002E4C60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471C29F0E888002E4C60 /* SceneDelegate.swift */; };
 		849B471F29F0E888002E4C60 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B471E29F0E888002E4C60 /* ViewController.swift */; };
-		849B472229F0E888002E4C60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 849B472029F0E888002E4C60 /* Main.storyboard */; };
 		849B472429F0E889002E4C60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 849B472329F0E889002E4C60 /* Assets.xcassets */; };
 		849B472729F0E889002E4C60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 849B472529F0E889002E4C60 /* LaunchScreen.storyboard */; };
 		849B473229F0E889002E4C60 /* SushiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B473129F0E889002E4C60 /* SushiTests.swift */; };
@@ -62,7 +61,6 @@
 		849FB4E629F22765002340F9 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4E529F22765002340F9 /* LoginModel.swift */; };
 		849FB4EE29F23FF9002340F9 /* SuShiSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */; };
 		849FB4F029F24151002340F9 /* Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4EF29F24151002340F9 /* Validations.swift */; };
-		849FB4F229F27A44002340F9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849FB4F129F27A44002340F9 /* LoginViewController.xib */; };
 		849FB4F429F280FA002340F9 /* SystemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FB4F329F280FA002340F9 /* SystemInfo.swift */; };
 		849FC3EE29FB53F600A86794 /* TwToEng.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FC3ED29FB53F600A86794 /* TwToEng.swift */; };
 		849FC3FD29FB6DA400A86794 /* ExtensionRx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FC3FC29FB6DA400A86794 /* ExtensionRx.swift */; };
@@ -74,8 +72,6 @@
 		84A013612A02594300D4139E /* checkout.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A0135E2A02594300D4139E /* checkout.mp3 */; };
 		84A013622A02594300D4139E /* service.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A0135F2A02594300D4139E /* service.mp3 */; };
 		84A013642A025A9400D4139E /* arrived.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A013632A025A9400D4139E /* arrived.mp3 */; };
-		84A013682A025BE400D4139E /* RecordFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A013672A025BE400D4139E /* RecordFooterView.swift */; };
-		84A0136A2A025BEC00D4139E /* RecordFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A013692A025BEB00D4139E /* RecordFooterView.xib */; };
 		84A25FAB2A04C70C0079996E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25FAA2A04C70C0079996E /* BaseView.swift */; };
 		84A332822A132A23005E9042 /* ZLCollectionBaseDecorationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A332702A132A23005E9042 /* ZLCollectionBaseDecorationView.m */; };
 		84A332832A132A23005E9042 /* ZLCellFakeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A332712A132A23005E9042 /* ZLCellFakeView.m */; };
@@ -97,7 +93,7 @@
 		84A85FD52A0CD8E600E81D0C /* UrlSchemeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A85FD42A0CD8E600E81D0C /* UrlSchemeFactory.swift */; };
 		84A85FD92A0CEC1F00E81D0C /* BannerTYCycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A85FD82A0CEC1F00E81D0C /* BannerTYCycleView.swift */; };
 		84A85FDB2A0CEC2A00E81D0C /* BannerTYCycleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A85FDA2A0CEC2A00E81D0C /* BannerTYCycleView.xib */; };
-		84AA819529F7A2C3009DA56D /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */; };
+		84AA819529F7A2C3009DA56D /* Zip3Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA819429F7A2C3009DA56D /* Zip3Sequence.swift */; };
 		84AC6A1C2A08FAE500E629E8 /* SushiLinearCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AC6A1A2A08FAE500E629E8 /* SushiLinearCollectionViewCell.swift */; };
 		84AC6A1D2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AC6A1B2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib */; };
 		84B2AF0429FB911000ABC4D9 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2AF0329FB911000ABC4D9 /* Operators.swift */; };
@@ -105,9 +101,6 @@
 		84B2AF0B29FBAB4900ABC4D9 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2AF0929FBAB4900ABC4D9 /* WebViewViewController.swift */; };
 		84B2AF0C29FBAB4900ABC4D9 /* WebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */; };
 		84C0EB5829F28F0B00B7D2CE /* AddSushiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */; };
-		84C0EB5929F28F0B00B7D2CE /* AddSushiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */; };
-		84C0EB5B29F28FE600B7D2CE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5A29F28FE600B7D2CE /* CameraView.swift */; };
-		84C0EB5D29F2900100B7D2CE /* CameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C0EB5C29F2900100B7D2CE /* CameraView.xib */; };
 		84C0EB5F29F2967000B7D2CE /* AddSushiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0EB5E29F2967000B7D2CE /* AddSushiViewModel.swift */; };
 		84DDFE7B29FA3A2200EABFEE /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DDFE7929FA3A2200EABFEE /* RecordViewController.swift */; };
 		84DDFE7C29FA3A2200EABFEE /* RecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84DDFE7A29FA3A2200EABFEE /* RecordViewController.xib */; };
@@ -117,6 +110,16 @@
 		B9E5FCDD0539B79B73547A2E /* Pods_Sushi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1789481A2B1D64D36D2B93 /* Pods_Sushi.framework */; };
 		C07CC5796BFB25B329B0C5D7 /* Pods_SushiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381382C7FC6030484D9A4C99 /* Pods_SushiTests.framework */; };
 		FE6CE30C2A20A3F70074E1E3 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6CE30B2A20A3F70074E1E3 /* CustomFlowLayout.swift */; };
+		FE96E8792A28744F006CB3E6 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E8782A28744F006CB3E6 /* ScannerViewController.swift */; };
+		FE96E87C2A287988006CB3E6 /* RecordFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E87A2A287987006CB3E6 /* RecordFooterView.swift */; };
+		FE96E87D2A287988006CB3E6 /* RecordFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE96E87B2A287988006CB3E6 /* RecordFooterView.xib */; };
+		FE96E8802A287995006CB3E6 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E87E2A287994006CB3E6 /* QRCodeView.swift */; };
+		FE96E8812A287995006CB3E6 /* QRCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE96E87F2A287994006CB3E6 /* QRCodeView.xib */; };
+		FE96E8832A287B46006CB3E6 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE96E8822A287B46006CB3E6 /* LoginViewController.xib */; };
+		FE96E8852A287D1B006CB3E6 /* AddSushiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE96E8842A287D1B006CB3E6 /* AddSushiViewController.xib */; };
+		FE96E8882A287DDE006CB3E6 /* Zip5Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E8862A287DDE006CB3E6 /* Zip5Sequence.swift */; };
+		FE96E8892A287DDE006CB3E6 /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E8872A287DDE006CB3E6 /* Zip4Sequence.swift */; };
+		FE96E88D2A2883CE006CB3E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE96E88C2A2883CB006CB3E6 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,7 +168,6 @@
 		849B471A29F0E888002E4C60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		849B471C29F0E888002E4C60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		849B471E29F0E888002E4C60 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		849B472129F0E888002E4C60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		849B472329F0E889002E4C60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		849B472629F0E889002E4C60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		849B472829F0E889002E4C60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -201,7 +203,6 @@
 		849FB4E529F22765002340F9 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		849FB4ED29F23FF9002340F9 /* SuShiSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuShiSingleton.swift; sourceTree = "<group>"; };
 		849FB4EF29F24151002340F9 /* Validations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validations.swift; sourceTree = "<group>"; };
-		849FB4F129F27A44002340F9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		849FB4F329F280FA002340F9 /* SystemInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemInfo.swift; sourceTree = "<group>"; };
 		849FC3ED29FB53F600A86794 /* TwToEng.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwToEng.swift; sourceTree = "<group>"; };
 		849FC3FC29FB6DA400A86794 /* ExtensionRx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionRx.swift; sourceTree = "<group>"; };
@@ -213,8 +214,6 @@
 		84A0135E2A02594300D4139E /* checkout.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = checkout.mp3; sourceTree = "<group>"; };
 		84A0135F2A02594300D4139E /* service.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = service.mp3; sourceTree = "<group>"; };
 		84A013632A025A9400D4139E /* arrived.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = arrived.mp3; sourceTree = "<group>"; };
-		84A013672A025BE400D4139E /* RecordFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFooterView.swift; sourceTree = "<group>"; };
-		84A013692A025BEB00D4139E /* RecordFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordFooterView.xib; sourceTree = "<group>"; };
 		84A25FAA2A04C70C0079996E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		84A332702A132A23005E9042 /* ZLCollectionBaseDecorationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLCollectionBaseDecorationView.m; sourceTree = "<group>"; };
 		84A332712A132A23005E9042 /* ZLCellFakeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLCellFakeView.m; sourceTree = "<group>"; };
@@ -246,7 +245,7 @@
 		84A85FD42A0CD8E600E81D0C /* UrlSchemeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSchemeFactory.swift; sourceTree = "<group>"; };
 		84A85FD82A0CEC1F00E81D0C /* BannerTYCycleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerTYCycleView.swift; sourceTree = "<group>"; };
 		84A85FDA2A0CEC2A00E81D0C /* BannerTYCycleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerTYCycleView.xib; sourceTree = "<group>"; };
-		84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip4Sequence.swift; sourceTree = "<group>"; };
+		84AA819429F7A2C3009DA56D /* Zip3Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zip3Sequence.swift; sourceTree = "<group>"; };
 		84AC6A1A2A08FAE500E629E8 /* SushiLinearCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SushiLinearCollectionViewCell.swift; sourceTree = "<group>"; };
 		84AC6A1B2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SushiLinearCollectionViewCell.xib; sourceTree = "<group>"; };
 		84B2AF0329FB911000ABC4D9 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
@@ -254,9 +253,6 @@
 		84B2AF0929FBAB4900ABC4D9 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewViewController.xib; sourceTree = "<group>"; };
 		84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSushiViewController.swift; sourceTree = "<group>"; };
-		84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddSushiViewController.xib; sourceTree = "<group>"; };
-		84C0EB5A29F28FE600B7D2CE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		84C0EB5C29F2900100B7D2CE /* CameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraView.xib; sourceTree = "<group>"; };
 		84C0EB5E29F2967000B7D2CE /* AddSushiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSushiViewModel.swift; sourceTree = "<group>"; };
 		84DDFE7929FA3A2200EABFEE /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		84DDFE7A29FA3A2200EABFEE /* RecordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordViewController.xib; sourceTree = "<group>"; };
@@ -267,6 +263,16 @@
 		B76EC51EFCEFA6B4455C0384 /* Pods-Sushi-SushiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi-SushiUITests.debug.xcconfig"; path = "Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C85A19EA684BBF897C4BEBEF /* Pods-Sushi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi.release.xcconfig"; path = "Target Support Files/Pods-Sushi/Pods-Sushi.release.xcconfig"; sourceTree = "<group>"; };
 		FE6CE30B2A20A3F70074E1E3 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
+		FE96E8782A28744F006CB3E6 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		FE96E87A2A287987006CB3E6 /* RecordFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordFooterView.swift; sourceTree = "<group>"; };
+		FE96E87B2A287988006CB3E6 /* RecordFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordFooterView.xib; sourceTree = "<group>"; };
+		FE96E87E2A287994006CB3E6 /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
+		FE96E87F2A287994006CB3E6 /* QRCodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeView.xib; sourceTree = "<group>"; };
+		FE96E8822A287B46006CB3E6 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		FE96E8842A287D1B006CB3E6 /* AddSushiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddSushiViewController.xib; sourceTree = "<group>"; };
+		FE96E8862A287DDE006CB3E6 /* Zip5Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zip5Sequence.swift; sourceTree = "<group>"; };
+		FE96E8872A287DDE006CB3E6 /* Zip4Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Zip4Sequence.swift; path = ../../../../../../Downloads/Sushi/Sushi/Other/Tool/Zip4Sequence.swift; sourceTree = "<group>"; };
+		FE96E88C2A2883CB006CB3E6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -388,7 +394,7 @@
 		849B474E29F10E0E002E4C60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				849B472029F0E888002E4C60 /* Main.storyboard */,
+				FE96E88C2A2883CB006CB3E6 /* Main.storyboard */,
 				849B476129F11E75002E4C60 /* MenuViews.swift */,
 				849B474A29F10E01002E4C60 /* MenuInfoView.swift */,
 				849B474C29F10E0A002E4C60 /* MenuInfoView.xib */,
@@ -464,8 +470,8 @@
 				849CA94C2A01020E008779B0 /* ServerView.xib */,
 				84A013582A022A4300D4139E /* ServiceHeaderView.swift */,
 				84A0135A2A022B5900D4139E /* ServiceHeaderView.xib */,
-				84A013672A025BE400D4139E /* RecordFooterView.swift */,
-				84A013692A025BEB00D4139E /* RecordFooterView.xib */,
+				FE96E87A2A287987006CB3E6 /* RecordFooterView.swift */,
+				FE96E87B2A287988006CB3E6 /* RecordFooterView.xib */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -518,7 +524,9 @@
 			isa = PBXGroup;
 			children = (
 				849FB4EF29F24151002340F9 /* Validations.swift */,
-				84AA819429F7A2C3009DA56D /* Zip4Sequence.swift */,
+				84AA819429F7A2C3009DA56D /* Zip3Sequence.swift */,
+				FE96E8872A287DDE006CB3E6 /* Zip4Sequence.swift */,
+				FE96E8862A287DDE006CB3E6 /* Zip5Sequence.swift */,
 				84B2AF0329FB911000ABC4D9 /* Operators.swift */,
 				849FC3ED29FB53F600A86794 /* TwToEng.swift */,
 				849B23FD2A0E1FE3008C86C8 /* YouTubePlayer.swift */,
@@ -579,7 +587,7 @@
 			isa = PBXGroup;
 			children = (
 				849FB4DB29F2195B002340F9 /* LoginViewController.swift */,
-				849FB4F129F27A44002340F9 /* LoginViewController.xib */,
+				FE96E8822A287B46006CB3E6 /* LoginViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -626,12 +634,12 @@
 				84A4645B2A0A2863003ED6E0 /* BaseCollectionViewCell.swift */,
 				84A25FAA2A04C70C0079996E /* BaseView.swift */,
 				84A5FAB329F6352500781C03 /* ToastView.swift */,
-				84C0EB5A29F28FE600B7D2CE /* CameraView.swift */,
-				84C0EB5C29F2900100B7D2CE /* CameraView.xib */,
 				84A85FD82A0CEC1F00E81D0C /* BannerTYCycleView.swift */,
 				84A85FDA2A0CEC2A00E81D0C /* BannerTYCycleView.xib */,
 				849B23EF2A0DDECB008C86C8 /* TYCycleCell.swift */,
 				849B23F02A0DDECB008C86C8 /* TYCycleCell.xib */,
+				FE96E87E2A287994006CB3E6 /* QRCodeView.swift */,
+				FE96E87F2A287994006CB3E6 /* QRCodeView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -643,6 +651,7 @@
 				849FB4DF29F21B1C002340F9 /* BaseViewController.swift */,
 				84B2AF0929FBAB4900ABC4D9 /* WebViewViewController.swift */,
 				84B2AF0A29FBAB4900ABC4D9 /* WebViewViewController.xib */,
+				FE96E8782A28744F006CB3E6 /* ScannerViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -710,7 +719,7 @@
 			isa = PBXGroup;
 			children = (
 				84C0EB5629F28F0B00B7D2CE /* AddSushiViewController.swift */,
-				84C0EB5729F28F0B00B7D2CE /* AddSushiViewController.xib */,
+				FE96E8842A287D1B006CB3E6 /* AddSushiViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -886,37 +895,37 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE96E8832A287B46006CB3E6 /* LoginViewController.xib in Resources */,
 				84A85FDB2A0CEC2A00E81D0C /* BannerTYCycleView.xib in Resources */,
 				84A013622A02594300D4139E /* service.mp3 in Resources */,
+				FE96E87D2A287988006CB3E6 /* RecordFooterView.xib in Resources */,
 				849B472729F0E889002E4C60 /* LaunchScreen.storyboard in Resources */,
 				843B3E8229F9019800FB3969 /* OrderListView.xib in Resources */,
 				84A0135B2A022B5900D4139E /* ServiceHeaderView.xib in Resources */,
 				84B2AF0C29FBAB4900ABC4D9 /* WebViewViewController.xib in Resources */,
 				849B474D29F10E0A002E4C60 /* MenuInfoView.xib in Resources */,
-				84C0EB5D29F2900100B7D2CE /* CameraView.xib in Resources */,
 				849CA9392A009F89008779B0 /* MenuServiceView.xib in Resources */,
+				FE96E88D2A2883CE006CB3E6 /* Main.storyboard in Resources */,
 				849B472429F0E889002E4C60 /* Assets.xcassets in Resources */,
 				849B475C29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib in Resources */,
 				84AC6A1D2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib in Resources */,
 				843B3E7929F8F06100FB3969 /* OrderViewController.xib in Resources */,
-				849B472229F0E888002E4C60 /* Main.storyboard in Resources */,
 				84DDFE8229FA5EDD00EABFEE /* RecordTableViewCell.xib in Resources */,
 				84A013642A025A9400D4139E /* arrived.mp3 in Resources */,
-				84A0136A2A025BEC00D4139E /* RecordFooterView.xib in Resources */,
 				849B23F82A0E0579008C86C8 /* PlayerViewController.xib in Resources */,
-				849FB4F229F27A44002340F9 /* LoginViewController.xib in Resources */,
 				84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */,
 				843B3E8829F90AEA00FB3969 /* OrderListCollectionViewCell.xib in Resources */,
 				84A4645A2A0A0CF4003ED6E0 /* SushiContanerCollectionViewCell.xib in Resources */,
 				84A013602A02594300D4139E /* record.mp3 in Resources */,
 				849CA94D2A01020E008779B0 /* ServerView.xib in Resources */,
+				FE96E8812A287995006CB3E6 /* QRCodeView.xib in Resources */,
 				84DDFE7C29FA3A2200EABFEE /* RecordViewController.xib in Resources */,
 				849B477029F1344E002E4C60 /* SushiCollectionViewCell.xib in Resources */,
 				849B23F22A0DDECB008C86C8 /* TYCycleCell.xib in Resources */,
 				841A7B4E2A0E21D7006330A8 /* YTPlayer.html in Resources */,
-				84C0EB5929F28F0B00B7D2CE /* AddSushiViewController.xib in Resources */,
 				84A013612A02594300D4139E /* checkout.mp3 in Resources */,
 				849B23FC2A0E127E008C86C8 /* PlayerView.xib in Resources */,
+				FE96E8852A287D1B006CB3E6 /* AddSushiViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1046,9 +1055,10 @@
 			files = (
 				849B475229F10E4C002E4C60 /* GlobalUtil.swift in Sources */,
 				84B2AF0829FB9ED000ABC4D9 /* BaseViewModel.swift in Sources */,
+				FE96E8882A287DDE006CB3E6 /* Zip5Sequence.swift in Sources */,
 				849CA93F2A00A754008779B0 /* OrderSQLite.swift in Sources */,
 				8498F5CC29FBC41000FC23EB /* StarscreamWebSocketManager.swift in Sources */,
-				84AA819529F7A2C3009DA56D /* Zip4Sequence.swift in Sources */,
+				84AA819529F7A2C3009DA56D /* Zip3Sequence.swift in Sources */,
 				84DDFE8129FA5EDD00EABFEE /* RecordTableViewCell.swift in Sources */,
 				849B23F12A0DDECB008C86C8 /* TYCycleCell.swift in Sources */,
 				84A332862A132A23005E9042 /* ZLCollectionReusableView.m in Sources */,
@@ -1060,9 +1070,12 @@
 				84C0EB5F29F2967000B7D2CE /* AddSushiViewModel.swift in Sources */,
 				849CA9412A00D597008779B0 /* ExtensionUserDefaults.swift in Sources */,
 				849B475429F10E54002E4C60 /* Extension.swift in Sources */,
+				FE96E87C2A287988006CB3E6 /* RecordFooterView.swift in Sources */,
 				84AC6A1C2A08FAE500E629E8 /* SushiLinearCollectionViewCell.swift in Sources */,
+				FE96E8792A28744F006CB3E6 /* ScannerViewController.swift in Sources */,
 				84A85FD52A0CD8E600E81D0C /* UrlSchemeFactory.swift in Sources */,
 				849FB4E629F22765002340F9 /* LoginModel.swift in Sources */,
+				FE96E8892A287DDE006CB3E6 /* Zip4Sequence.swift in Sources */,
 				849FC3FF29FB6E3400A86794 /* ExtensionStoryboard.swift in Sources */,
 				849B474B29F10E01002E4C60 /* MenuInfoView.swift in Sources */,
 				84A332842A132A23005E9042 /* ZLCollectionViewLayoutAttributes.m in Sources */,
@@ -1099,11 +1112,11 @@
 				849B471D29F0E888002E4C60 /* SceneDelegate.swift in Sources */,
 				849B476C29F1272A002E4C60 /* MenuModel.swift in Sources */,
 				843B3E8029F9019000FB3969 /* OrderListView.swift in Sources */,
+				FE96E8802A287995006CB3E6 /* QRCodeView.swift in Sources */,
 				84A5FAB429F6352500781C03 /* ToastView.swift in Sources */,
 				849B475E29F11D8A002E4C60 /* NGSCustomizableButton.swift in Sources */,
 				84A55DCF2A03B5A80055C5A7 /* RecordViewModel.swift in Sources */,
 				84A3328A2A132A23005E9042 /* ZLCollectionViewVerticalLayout.m in Sources */,
-				84C0EB5B29F28FE600B7D2CE /* CameraView.swift in Sources */,
 				84C0EB5829F28F0B00B7D2CE /* AddSushiViewController.swift in Sources */,
 				849FB4DD29F2195B002340F9 /* LoginViewController.swift in Sources */,
 				849FB4EE29F23FF9002340F9 /* SuShiSingleton.swift in Sources */,
@@ -1113,7 +1126,6 @@
 				849FB4E429F2274F002340F9 /* LoginViewModel.swift in Sources */,
 				849CA9372A009F82008779B0 /* MenuServiceView.swift in Sources */,
 				849FB4F029F24151002340F9 /* Validations.swift in Sources */,
-				84A013682A025BE400D4139E /* RecordFooterView.swift in Sources */,
 				849B475029F10E44002E4C60 /* NibOwnerLoadable.swift in Sources */,
 				843B3E7729F8F06100FB3969 /* OrderViewModel.swift in Sources */,
 				84A85FD92A0CEC1F00E81D0C /* BannerTYCycleView.swift in Sources */,
@@ -1153,14 +1165,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		849B472029F0E888002E4C60 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				849B472129F0E888002E4C60 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		849B472529F0E889002E4C60 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
