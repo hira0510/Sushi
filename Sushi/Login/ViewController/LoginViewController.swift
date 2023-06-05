@@ -122,9 +122,10 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
 extension LoginViewController: ScannerVcProtocol {
     /// 拿到QRCode之後的處理
     func getQrCodeStringToDic(_ str: String) {
-        let strToDic = str.toMsgDic(",", ":")
-        self.viewModel.account.accept(unwrap(strToDic["shopNum"], ""))
-        self.viewModel.password.accept(unwrap(strToDic["table"], ""))
+        guard let url = URL(string: str) else { return }
+        let dic = url.queryParameters
+        self.viewModel.account.accept(unwrap(dic?["shopNum"], ""))
+        self.viewModel.password.accept(unwrap(dic?["table"], ""))
         viewModel.accountType.accept(.normal)
         didClickLoginBtn()
     }

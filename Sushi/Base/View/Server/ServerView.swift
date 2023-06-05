@@ -11,6 +11,15 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+class SelectModel {
+    var id: Int64 = 0
+    var row: Int = 0
+    init(_ id: Int64, _ row: Int) {
+        self.id = id
+        self.row = row
+    }
+}
+
 enum ServerViewType {
     case service(_ model: [(String, TimeInterval)] = [])
     case record(_ model: [RecordModel] = [])
@@ -47,7 +56,7 @@ class ServerView: BaseView {
     private var triangleImgViewConstraints: Constraint? = nil
     private var orderTimer: Timer?
     /// 已選取的項目
-    private var selectIndexAry: [IndexPath] = []
+    private var selectIndexAry: [SelectModel] = []
 
     override class func awakeFromNib() {
         super.awakeFromNib()
@@ -179,9 +188,14 @@ extension ServerView: UITableViewDelegate, UITableViewDataSource {
         case .record(let models):
             let model = models[indexPath.section]
             let item = model.item[indexPath.row]
-            let isSelect = selectIndexAry.contains(indexPath)
+            let isSelect = selectIndexAry.filter { $0.id == model.id && $0.row == indexPath.row }
+            if isSelect.count > 0 {
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            } else {
+                tableView.deselectRow(at: indexPath, animated: false)
+            }
             let type: RecordType = RecordType.getType(model.timestamp, item.isComplete)
-            cell.adminRecordCellConfig(item, type: type, isSelect: isSelect)
+            cell.adminRecordCellConfig(item, type: type, isSelect: isSelect.count > 0)
         case .checkout(let model, _):
             cell.adminCheckoutCellConfig(model[indexPath.section].item[indexPath.row])
         }
@@ -192,9 +206,14 @@ extension ServerView: UITableViewDelegate, UITableViewDataSource {
         switch getType() {
         case .service, .checkout: return
         case .record(let model):
-            guard !model[indexPath.section].item[indexPath.row].isComplete, let cell = tableView.cellForRow(at: indexPath) as? RecordTableViewCell else { return }
+            let newIndexAry = SelectModel(model[indexPath.section].id, indexPath.row)
+            let isSelect = selectIndexAry.filter { $0.id == newIndexAry.id && $0.row == newIndexAry.row }
+            guard !model[indexPath.section].item[indexPath.row].isComplete,
+                  model[indexPath.section].timestamp > 0,
+                  let cell = tableView.cellForRow(at: indexPath) as? RecordTableViewCell,
+                  isSelect.count == 0 else { return }
             cell.isSelectChangeBg(true, false)
-            selectIndexAry = unwrap(tableView.indexPathsForSelectedRows, [])
+            selectIndexAry.append(newIndexAry)
             guard let header = tableView.headerView(forSection: indexPath.section) as? ServiceHeaderView else { return }
             header.completeBtn.isEnabled = selectIndexAry.count > 0
         }
@@ -204,9 +223,16 @@ extension ServerView: UITableViewDelegate, UITableViewDataSource {
         switch getType() {
         case .service, .checkout: return
         case .record(let model):
-            guard !model[indexPath.section].item[indexPath.row].isComplete, let cell = tableView.cellForRow(at: indexPath) as? RecordTableViewCell else { return }
+            guard !model[indexPath.section].item[indexPath.row].isComplete,
+                  model[indexPath.section].timestamp > GlobalUtil.getCurrentTime(),
+                  let cell = tableView.cellForRow(at: indexPath) as? RecordTableViewCell else { return }
             cell.isSelectChangeBg(false, false)
-            selectIndexAry = unwrap(tableView.indexPathsForSelectedRows, [])
+            let index = selectIndexAry.firstIndex { data in
+                return data.id == model[indexPath.section].id && data.row == indexPath.row
+            }
+            if let index = index {
+                selectIndexAry.remove(at: index)
+            }
             guard let header = tableView.headerView(forSection: indexPath.section) as? ServiceHeaderView else { return }
             header.completeBtn.isEnabled = selectIndexAry.count > 0
         }
@@ -267,12 +293,13 @@ extension ServerView: ServiceHeaderProtocol {
         case .record(let models):
             let model = models[section]
             var sendData: [String] = []
-            self.selectIndexAry.forEach { indexpath in
-                model.item[indexpath.item].isComplete = true
-                sendData.append(model.item[indexpath.item].name)
-                self.mTableView.deselectRow(at: indexpath, animated: false)
+            let sectionIndexAry = self.selectIndexAry.filter { $0.id == model.id }
+            sectionIndexAry.forEach { data in
+                model.item[data.row].isComplete = true
+                sendData.append(model.item[data.row].name)
+                self.mTableView.deselectRow(at: IndexPath(row: data.row, section: section), animated: false)
             }
-            self.selectIndexAry = []
+            self.selectIndexAry = self.selectIndexAry.filter { $0.id != model.id }
             StarscreamWebSocketManager.shard.writeMsg(["table": model.tableNumber, "msg": "alreadySend", "numId": model.numId, "item": sendData.aryToStr])
             let isComplete = model.item.compactMap { $0.isComplete }
             let isCompleteStr = isComplete.aryToStr

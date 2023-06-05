@@ -9,6 +9,7 @@ import UIKit
 
 enum RecordType {
     case suc
+    case fail
     case wait(_ min: Int = 0)
     case waitForAdmin
     case adminPreparing(_ min: Int = 0)
@@ -16,6 +17,7 @@ enum RecordType {
     var stringValue: String {
         switch self {
         case .suc: return "已送達".twEng()
+        case .fail: return "尚未送達".twEng()
         case .wait(let min): return min.toStr + " 分鐘".twEng()
         case .waitForAdmin: return "等待中..".twEng()
         case .adminPreparing(let min): return min.toStr + " 分鐘".twEng()
@@ -28,6 +30,7 @@ enum RecordType {
         case .wait: return 1
         case .waitForAdmin: return 2
         case .adminPreparing: return 3
+        case .fail: return 4
         }
     }
      
@@ -42,7 +45,7 @@ enum RecordType {
             let waitMin = ((timestamp - GlobalUtil.getCurrentTime()) / 60) + 1
             return SuShiSingleton.share().getIsAdmin() ? .adminPreparing(waitMin.toInt): .wait(waitMin.toInt)
         } else {
-            return .suc
+            return isComplete ? .suc: .fail
         }
     }
 }
@@ -73,7 +76,7 @@ class RecordTableViewCell: UITableViewCell {
     func cellConfig(_ model: SushiRecordModel) {
         priceLabel.text = SuShiSingleton.share().getIsEng() ? "$" + model.money : model.money + "元"
         titleLabel.text = SuShiSingleton.share().getIsEng() ? model.titleEng: model.title
-        let type: RecordType = RecordType.getType(model.arrivedTime, false)
+        let type: RecordType = RecordType.getType(model.arrivedTime, model.isComplete)
         statusLabel.text = type.stringValue
         statusLabel.textColor = type == .wait() ? .red: .black
         statusLabel.isHidden = false

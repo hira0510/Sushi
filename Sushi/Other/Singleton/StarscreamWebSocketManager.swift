@@ -9,7 +9,7 @@ import UIKit
 import Starscream
 import MediaPlayer
 
-#warning("測試Server端網址：https://www.piesocket.com/websocket-tester")
+#warning("測試Server端網址：https://socketsbay.com/test-websockets")
 
 enum ServiceType {
     case service
@@ -27,6 +27,7 @@ protocol StarscreamWebSocketManagerProtocol: AnyObject {
     func alreadyArrived(_ numId: String, _ sendItem: String)
     func alreadyCheckedOut()
     func updateMenu(_ menuName: String)
+    func isFirstConnectGetRecord()
 }
 
 class StarscreamWebSocketManager: NSObject {
@@ -49,6 +50,7 @@ class StarscreamWebSocketManager: NSObject {
 //    private let testPort = "8888"
     private let testWebSocketIP = "wss://socketsbay.com/wss/v2/1/demo/"
     private var timer: Timer?
+    private var isFirstConnect: Bool = true
     
     // MARK: - public
     public func connect() {
@@ -144,6 +146,9 @@ extension StarscreamWebSocketManager: WebSocketDelegate {
         switch event {
         case .connected(_):
             print("🟢🟢連線成功\n===========================")
+            guard isFirstConnect else { return }
+            isFirstConnect = false
+            delegate?.isFirstConnectGetRecord()
         case .disconnected(let reason, _):
             print("🟢🟢結束\(reason)")
             print(GlobalUtil.dateStr() + "\n🟢Server: " + "結束連接" + "\n===========================")

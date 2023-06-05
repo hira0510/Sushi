@@ -172,6 +172,7 @@ class SushiRecordModel: NSObject {
     var titleEng: String = ""
     var img: String = ""
     var money: String = ""
+    var isComplete: Bool = false
 
     init(_ numId: String = "", _ arrivedTime: TimeInterval = 0, _ model: SushiModel) {
         self.numId = numId
@@ -180,15 +181,17 @@ class SushiRecordModel: NSObject {
         self.titleEng = model.eng
         self.img = model.img
         self.money = model.price
+        self.isComplete = false
     }
     
-    init(_ numId: String = "", _ arrivedTime: TimeInterval = 0, _ title: String, _ price: String, _ titleEng: String) {
+    init(_ numId: String = "", _ arrivedTime: TimeInterval = 0, _ title: String, _ price: String, _ titleEng: String, _ isComplete: Bool = false) {
         self.numId = numId
         self.arrivedTime = arrivedTime
         self.title = title
         self.titleEng = titleEng
         self.img = ""
         self.money = price
+        self.isComplete = isComplete
     }
 }
 

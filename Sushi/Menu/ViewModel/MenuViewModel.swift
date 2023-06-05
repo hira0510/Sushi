@@ -107,9 +107,10 @@ class MenuViewModel: BaseViewModel {
                     model.arrivedTime = timeStamp
                 } else if sendItem.count > 0 {
                     for (i, title) in sendItem.enumerated() {
-                        if model.title == title && model.arrivedTime > timeStamp {
+                        if model.title == title && !model.isComplete {
                             sendItem.remove(at: i)
                             model.arrivedTime = timeStamp
+                            model.isComplete = true
                             break
                         }
                     }
@@ -151,8 +152,9 @@ class MenuViewModel: BaseViewModel {
         let itemAryStr = (recordModel.value.compactMap { $0.title }).aryToStr
         let priceAryStr = (recordModel.value.compactMap { $0.money }).aryToStr
         let arrivedTimeAryStr = (recordModel.value.compactMap { $0.arrivedTime }).aryToStr
+        let isCompleteAryStr = (recordModel.value.compactMap { $0.isComplete }).aryToStr
         let titleEngAryStr = (recordModel.value.compactMap { $0.titleEng.replacingOccurrences(of: " ", with: "") }).aryToStr
-        return ["table": table, "msg": "sendRecord", "order": itemAryStr, "price": priceAryStr, "titleEng": titleEngAryStr, "arrivedTime": arrivedTimeAryStr, "numId": numIdAryStr, "numIdStr": numIdStr, "deviceId": SystemInfo.getDeviceId(), "shopNum": shopNum]
+        return ["table": table, "msg": "sendRecord", "order": itemAryStr, "price": priceAryStr, "titleEng": titleEngAryStr, "arrivedTime": arrivedTimeAryStr, "numId": numIdAryStr, "numIdStr": numIdStr, "isComplete": isCompleteAryStr, "deviceId": SystemInfo.getDeviceId(), "shopNum": shopNum]
     }
     
     /// 拿到別的Client送出的紀錄資訊
@@ -164,9 +166,10 @@ class MenuViewModel: BaseViewModel {
         let priceAry = unwrap(data["price"]?.toAry, [])
         let arrivedTimeAry = unwrap(data["arrivedTime"]?.toTimeIntervalAry, [])
         let titleEngAry = unwrap(data["titleEng"]?.toAry, [])
+        let isCompleteAry = unwrap(data["isComplete"]?.toBoolAry, [])
         
-        for (numId, item, price, arrived, titleEng) in zip(numIdAry, itemAry, priceAry, arrivedTimeAry, titleEngAry) {
-            resultAry.append(SushiRecordModel(numId, arrived, item, price, titleEng.addSpacesToCamelCase))
+        for (numId, item, price, arrived, titleEng, isComplete) in zip(numIdAry, itemAry, priceAry, arrivedTimeAry, titleEngAry, isCompleteAry) {
+            resultAry.append(SushiRecordModel(numId, arrived, item, price, titleEng.addSpacesToCamelCase, isComplete))
             if arrived > GlobalUtil.getCurrentTime() {
                 orderTimeDic.accept(orderTimeDic.value.merging([numId: arrived]) { (_, new) in new })
             }

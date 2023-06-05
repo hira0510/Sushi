@@ -43,7 +43,7 @@ extension Dictionary {
             result.append("\(dic.key):\(dic.value) ")
         }
         return result
-    } 
+    }
     
     var sortTimeAry: [(String, TimeInterval)] {
         guard let dic = self as? [String: TimeInterval] else { return [] }
@@ -148,13 +148,11 @@ extension String {
         return 0
     }
     
-    var toAry: [String] {
-        return self.components(separatedBy: ",")
-    }
-    
-    var toTimeIntervalAry: [TimeInterval] {
-        let strAry = self.components(separatedBy: ",")
-        return strAry.map { $0.toTime }
+    var toBool: Bool {
+        if let bool = Bool(self) {
+            return bool
+        }
+        return false
     }
     
     var htmlToAttributedString: NSAttributedString? {
@@ -165,6 +163,21 @@ extension String {
             return NSAttributedString()
         }
     }
+    
+    var toAry: [String] {
+        return self.components(separatedBy: ",")
+    }
+    
+    var toTimeIntervalAry: [TimeInterval] {
+        let strAry = self.components(separatedBy: ",")
+        return strAry.map { $0.toTime }
+    }
+    
+    var toBoolAry: [Bool] {
+        let strAry = self.components(separatedBy: ",")
+        return strAry.map { $0.toBool }
+    }
+    
     var htmlToString: String {
         return unwrap(htmlToAttributedString?.string, "")
     }
@@ -218,5 +231,22 @@ extension String {
             return imageFormats.contains(extensi)
         }
         return false
+    }
+}
+
+extension URL {
+    /// test=1&a=b&c=d => ["test":"1","a":"b","c":"d"]
+    /// 解析網址query轉換成[String: String]數組資料
+    public var queryParameters: [String: String]? {
+        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true), let queryItems = components.queryItems else {
+            return nil
+        }
+
+        var parameters = [String: String]()
+        for item in queryItems {
+            parameters[item.name] = item.value
+        }
+
+        return parameters
     }
 }
