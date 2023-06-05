@@ -87,7 +87,6 @@
 		84A4645C2A0A2863003ED6E0 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A4645B2A0A2863003ED6E0 /* BaseCollectionViewCell.swift */; };
 		84A55DCB2A03AE630055C5A7 /* OrderSQLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A55DCA2A03AE630055C5A7 /* OrderSQLModel.swift */; };
 		84A55DCF2A03B5A80055C5A7 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A55DCE2A03B5A80055C5A7 /* RecordViewModel.swift */; };
-		84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */; };
 		84A5FAB229F6157100781C03 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB129F6157100781C03 /* FireBaseManager.swift */; };
 		84A5FAB429F6352500781C03 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5FAB329F6352500781C03 /* ToastView.swift */; };
 		84A85FD52A0CD8E600E81D0C /* UrlSchemeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A85FD42A0CD8E600E81D0C /* UrlSchemeFactory.swift */; };
@@ -110,6 +109,7 @@
 		B9E5FCDD0539B79B73547A2E /* Pods_Sushi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1789481A2B1D64D36D2B93 /* Pods_Sushi.framework */; };
 		C07CC5796BFB25B329B0C5D7 /* Pods_SushiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381382C7FC6030484D9A4C99 /* Pods_SushiTests.framework */; };
 		FE6CE30C2A20A3F70074E1E3 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6CE30B2A20A3F70074E1E3 /* CustomFlowLayout.swift */; };
+		FE953F082A2DAE860081117F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE953F072A2DAE850081117F /* GoogleService-Info.plist */; };
 		FE96E8792A28744F006CB3E6 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E8782A28744F006CB3E6 /* ScannerViewController.swift */; };
 		FE96E87C2A287988006CB3E6 /* RecordFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E87A2A287987006CB3E6 /* RecordFooterView.swift */; };
 		FE96E87D2A287988006CB3E6 /* RecordFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE96E87B2A287988006CB3E6 /* RecordFooterView.xib */; };
@@ -117,7 +117,7 @@
 		FE96E8812A287995006CB3E6 /* QRCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE96E87F2A287994006CB3E6 /* QRCodeView.xib */; };
 		FE96E8832A287B46006CB3E6 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE96E8822A287B46006CB3E6 /* LoginViewController.xib */; };
 		FE96E8852A287D1B006CB3E6 /* AddSushiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE96E8842A287D1B006CB3E6 /* AddSushiViewController.xib */; };
-		FE96E8882A287DDE006CB3E6 /* Zip5Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E8862A287DDE006CB3E6 /* Zip5Sequence.swift */; };
+		FE96E8882A287DDE006CB3E6 /* Zip6Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E8862A287DDE006CB3E6 /* Zip6Sequence.swift */; };
 		FE96E8892A287DDE006CB3E6 /* Zip4Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96E8872A287DDE006CB3E6 /* Zip4Sequence.swift */; };
 		FE96E88D2A2883CE006CB3E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE96E88C2A2883CB006CB3E6 /* Main.storyboard */; };
 /* End PBXBuildFile section */
@@ -239,7 +239,6 @@
 		84A4645B2A0A2863003ED6E0 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		84A55DCA2A03AE630055C5A7 /* OrderSQLModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSQLModel.swift; sourceTree = "<group>"; };
 		84A55DCE2A03B5A80055C5A7 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
-		84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84A5FAB129F6157100781C03 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
 		84A5FAB329F6352500781C03 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		84A85FD42A0CD8E600E81D0C /* UrlSchemeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSchemeFactory.swift; sourceTree = "<group>"; };
@@ -263,6 +262,7 @@
 		B76EC51EFCEFA6B4455C0384 /* Pods-Sushi-SushiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi-SushiUITests.debug.xcconfig"; path = "Target Support Files/Pods-Sushi-SushiUITests/Pods-Sushi-SushiUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C85A19EA684BBF897C4BEBEF /* Pods-Sushi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sushi.release.xcconfig"; path = "Target Support Files/Pods-Sushi/Pods-Sushi.release.xcconfig"; sourceTree = "<group>"; };
 		FE6CE30B2A20A3F70074E1E3 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
+		FE953F072A2DAE850081117F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FE96E8782A28744F006CB3E6 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		FE96E87A2A287987006CB3E6 /* RecordFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordFooterView.swift; sourceTree = "<group>"; };
 		FE96E87B2A287988006CB3E6 /* RecordFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordFooterView.xib; sourceTree = "<group>"; };
@@ -270,7 +270,7 @@
 		FE96E87F2A287994006CB3E6 /* QRCodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeView.xib; sourceTree = "<group>"; };
 		FE96E8822A287B46006CB3E6 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		FE96E8842A287D1B006CB3E6 /* AddSushiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddSushiViewController.xib; sourceTree = "<group>"; };
-		FE96E8862A287DDE006CB3E6 /* Zip5Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zip5Sequence.swift; sourceTree = "<group>"; };
+		FE96E8862A287DDE006CB3E6 /* Zip6Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zip6Sequence.swift; sourceTree = "<group>"; };
 		FE96E8872A287DDE006CB3E6 /* Zip4Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Zip4Sequence.swift; path = ../../../../../../Downloads/Sushi/Sushi/Other/Tool/Zip4Sequence.swift; sourceTree = "<group>"; };
 		FE96E88C2A2883CB006CB3E6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -368,7 +368,7 @@
 				84A3328B2A132A5E005E9042 /* SushiBridgeHeader.h */,
 				849B472329F0E889002E4C60 /* Assets.xcassets */,
 				849B472529F0E889002E4C60 /* LaunchScreen.storyboard */,
-				84A5FAAF29F6140100781C03 /* GoogleService-Info.plist */,
+				FE953F072A2DAE850081117F /* GoogleService-Info.plist */,
 				849B472829F0E889002E4C60 /* Info.plist */,
 			);
 			path = Sushi;
@@ -526,7 +526,7 @@
 				849FB4EF29F24151002340F9 /* Validations.swift */,
 				84AA819429F7A2C3009DA56D /* Zip3Sequence.swift */,
 				FE96E8872A287DDE006CB3E6 /* Zip4Sequence.swift */,
-				FE96E8862A287DDE006CB3E6 /* Zip5Sequence.swift */,
+				FE96E8862A287DDE006CB3E6 /* Zip6Sequence.swift */,
 				84B2AF0329FB911000ABC4D9 /* Operators.swift */,
 				849FC3ED29FB53F600A86794 /* TwToEng.swift */,
 				849B23FD2A0E1FE3008C86C8 /* YouTubePlayer.swift */,
@@ -910,10 +910,10 @@
 				849B475C29F11C8D002E4C60 /* MenuTitleCollectionViewCell.xib in Resources */,
 				84AC6A1D2A08FAE500E629E8 /* SushiLinearCollectionViewCell.xib in Resources */,
 				843B3E7929F8F06100FB3969 /* OrderViewController.xib in Resources */,
+				FE953F082A2DAE860081117F /* GoogleService-Info.plist in Resources */,
 				84DDFE8229FA5EDD00EABFEE /* RecordTableViewCell.xib in Resources */,
 				84A013642A025A9400D4139E /* arrived.mp3 in Resources */,
 				849B23F82A0E0579008C86C8 /* PlayerViewController.xib in Resources */,
-				84A5FAB029F6140100781C03 /* GoogleService-Info.plist in Resources */,
 				843B3E8829F90AEA00FB3969 /* OrderListCollectionViewCell.xib in Resources */,
 				84A4645A2A0A0CF4003ED6E0 /* SushiContanerCollectionViewCell.xib in Resources */,
 				84A013602A02594300D4139E /* record.mp3 in Resources */,
@@ -1055,7 +1055,7 @@
 			files = (
 				849B475229F10E4C002E4C60 /* GlobalUtil.swift in Sources */,
 				84B2AF0829FB9ED000ABC4D9 /* BaseViewModel.swift in Sources */,
-				FE96E8882A287DDE006CB3E6 /* Zip5Sequence.swift in Sources */,
+				FE96E8882A287DDE006CB3E6 /* Zip6Sequence.swift in Sources */,
 				849CA93F2A00A754008779B0 /* OrderSQLite.swift in Sources */,
 				8498F5CC29FBC41000FC23EB /* StarscreamWebSocketManager.swift in Sources */,
 				84AA819529F7A2C3009DA56D /* Zip3Sequence.swift in Sources */,

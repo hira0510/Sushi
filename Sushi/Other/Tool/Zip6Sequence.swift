@@ -6,7 +6,9 @@
 //
 /// Creates a sequence of tuples built out of 5 underlying sequences.
 ///
-/// In the `Zip5Sequence` instance returned by this function, the elements of
+/// Creates a sequence of tuples built out of 6 underlying sequences.
+///
+/// In the `Zip6Sequence` instance returned by this function, the elements of
 /// the *i*th tuple are the *i*th elements of each underlying sequence. The
 /// following example uses the `zip(_:_:)` function to iterate over an array
 /// of strings and a countable range at the same time:
@@ -22,7 +24,7 @@
 ///     // Prints "three: 3"
 ///     // Prints "four: 4"
 ///
-/// If the 5 sequences passed to `zip(_:_:_:_:_:)` are different lengths, the
+/// If the 6 sequences passed to `zip(_:_:_:_:_:_:)` are different lengths, the
 /// resulting sequence is the same length as the shortest sequence. In this
 /// example, the resulting array is the same length as `words`:
 ///
@@ -36,6 +38,7 @@
 ///   - sequence3: The sequence or collection in position 3 of each tuple.
 ///   - sequence4: The sequence or collection in position 4 of each tuple.
 ///   - sequence5: The sequence or collection in position 5 of each tuple.
+///   - sequence6: The sequence or collection in position 6 of each tuple.
 /// - Returns: A sequence of tuple pairs, where the elements of each pair are
 ///   corresponding elements of `sequence1` and `sequence2`.
 public func zip<
@@ -43,37 +46,42 @@ Sequence1 : Sequence,
 Sequence2 : Sequence,
 Sequence3 : Sequence,
 Sequence4 : Sequence,
-Sequence5 : Sequence
+Sequence5 : Sequence,
+Sequence6 : Sequence
 >(
   _ sequence1: Sequence1,
   _ sequence2: Sequence2,
   _ sequence3: Sequence3,
   _ sequence4: Sequence4,
-  _ sequence5: Sequence5
+  _ sequence5: Sequence5,
+  _ sequence6: Sequence6
 
-) -> Zip5Sequence<
+) -> Zip6Sequence<
 Sequence1,
 Sequence2,
 Sequence3,
 Sequence4,
-Sequence5
+Sequence5,
+Sequence6
 > {
-  return Zip5Sequence(
+  return Zip6Sequence(
     _sequence1: sequence1,
     _sequence2: sequence2,
     _sequence3: sequence3,
     _sequence4: sequence4,
-    _sequence5: sequence5
+    _sequence5: sequence5,
+    _sequence6: sequence6
   )
 }
 
-/// An iterator for `Zip5Sequence`.
-public struct Zip5Iterator<
+/// An iterator for `Zip6Sequence`.
+public struct Zip6Iterator<
   Iterator1 : IteratorProtocol,
   Iterator2 : IteratorProtocol,
   Iterator3 : IteratorProtocol,
   Iterator4 : IteratorProtocol,
-  Iterator5 : IteratorProtocol
+  Iterator5 : IteratorProtocol,
+  Iterator6 : IteratorProtocol
 > : IteratorProtocol {
   /// The type of element returned by `next()`.
   public typealias Element = (
@@ -81,7 +89,8 @@ public struct Zip5Iterator<
       Iterator2.Element,
       Iterator3.Element,
       Iterator4.Element,
-      Iterator5.Element
+      Iterator5.Element,
+      Iterator6.Element
   )
 
   /// Creates an instance around the underlying iterators.
@@ -90,13 +99,15 @@ public struct Zip5Iterator<
       _ iterator2: Iterator2,
       _ iterator3: Iterator3,
       _ iterator4: Iterator4,
-      _ iterator5: Iterator5
+      _ iterator5: Iterator5,
+      _ iterator6: Iterator6
   ) {
     _baseStream1 = iterator1
     _baseStream2 = iterator2
     _baseStream3 = iterator3
     _baseStream4 = iterator4
     _baseStream5 = iterator5
+    _baseStream6 = iterator6
   }
 
   /// Advances to the next element and returns it, or `nil` if no next element
@@ -119,7 +130,8 @@ public struct Zip5Iterator<
         let element2 = _baseStream2.next(),
         let element3 = _baseStream3.next(),
         let element4 = _baseStream4.next(),
-        let element5 = _baseStream5.next()
+        let element5 = _baseStream5.next(),
+        let element6 = _baseStream6.next()
     else {
       _reachedEnd = true
       return nil
@@ -130,7 +142,8 @@ public struct Zip5Iterator<
         element2,
         element3,
         element4,
-        element5
+        element5,
+        element6
     )
   }
 
@@ -139,14 +152,15 @@ public struct Zip5Iterator<
   internal var _baseStream3: Iterator3
   internal var _baseStream4: Iterator4
   internal var _baseStream5: Iterator5
+  internal var _baseStream6: Iterator6
   internal var _reachedEnd: Bool = false
 }
 
 /// A sequence of pairs built out of two underlying sequences.
 ///
-/// In a `Zip5Sequence` instance, the elements of the *i*th pair are the *i*th
-/// elements of each underlying sequence. To create a `Zip5Sequence` instance,
-/// use the `zip(_:_:_:_:_:)` function.
+/// In a `Zip6Sequence` instance, the elements of the *i*th pair are the *i*th
+/// elements of each underlying sequence. To create a `Zip6Sequence` instance,
+/// use the `zip(_:_:_:_:_:_:)` function.
 ///
 /// The following example uses the `zip(_:_:)` function to iterate over an
 /// array of strings and a countable range at the same time:
@@ -162,13 +176,14 @@ public struct Zip5Iterator<
 ///     // Prints "three: 3"
 ///     // Prints "four: 4"
 ///
-/// - SeeAlso: `zip(_:_:_:_:_:)`
-public struct Zip5Sequence<
+/// - SeeAlso: `zip(_:_:_:_:_:_:)`
+public struct Zip6Sequence<
 Sequence1 : Sequence,
 Sequence2 : Sequence,
 Sequence3 : Sequence,
 Sequence4 : Sequence,
-Sequence5 : Sequence
+Sequence5 : Sequence,
+Sequence6 : Sequence
 >
   : Sequence {
 
@@ -177,15 +192,17 @@ Sequence5 : Sequence
   public typealias Stream3 = Sequence3.Iterator
   public typealias Stream4 = Sequence4.Iterator
   public typealias Stream5 = Sequence5.Iterator
+  public typealias Stream6 = Sequence6.Iterator
 
   /// A type whose instances can produce the elements of this
   /// sequence, in order.
-  public typealias Iterator = Zip5Iterator<
+  public typealias Iterator = Zip6Iterator<
     Stream1,
     Stream2,
     Stream3,
     Stream4,
-    Stream5
+    Stream5,
+    Stream6
 >
 
   @available(*, unavailable, renamed: "Iterator")
@@ -199,13 +216,15 @@ Sequence5 : Sequence
     _sequence2 sequence2: Sequence2,
     _sequence3 sequence3: Sequence3,
     _sequence4 sequence4: Sequence4,
-    _sequence5 sequence5: Sequence5
+    _sequence5 sequence5: Sequence5,
+    _sequence6 sequence6: Sequence6
   ) {
     _sequence1 = sequence1
     _sequence2 = sequence2
     _sequence3 = sequence3
     _sequence4 = sequence4
     _sequence5 = sequence5
+    _sequence6 = sequence6
   }
 
   /// Returns an iterator over the elements of this sequence.
@@ -215,7 +234,8 @@ Sequence5 : Sequence
       _sequence2.makeIterator(),
       _sequence3.makeIterator(),
       _sequence4.makeIterator(),
-      _sequence5.makeIterator()
+      _sequence5.makeIterator(),
+      _sequence6.makeIterator()
     )
   }
 
@@ -224,4 +244,5 @@ Sequence5 : Sequence
   internal let _sequence3: Sequence3
   internal let _sequence4: Sequence4
   internal let _sequence5: Sequence5
+  internal let _sequence6: Sequence6
 }

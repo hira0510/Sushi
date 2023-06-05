@@ -13,8 +13,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let loginVc = UIStoryboard.loadLoginVC()
-        changeRootVc(vc: loginVc)
+        if let urlContexts = connectionOptions.urlContexts.first {
+            if urlContexts.url.scheme == "Sushi", let params = urlContexts.url.queryParameters {
+                if let account = params["shopNum"], let psw = params["table"] {
+                    SuShiSingleton.share().setIsLoginModel(account, psw, .normal)
+                }
+            }
+        } else {
+            if #available(iOS 10.0, *) {
+                let loginVc = UIStoryboard.loadLoginVC()
+                changeRootVc(vc: loginVc)
+            } else {
+                if UIPasteboard.general.hasURLs,
+                let pasteData = UIPasteboard.general.string,
+                let url = URL(string: pasteData),
+                let params = url.queryParameters,
+                url.scheme == "Sushi" {
+                    if let account = params["shopNum"], let psw = params["table"] {
+                        SuShiSingleton.share().setIsLoginModel(account, psw, .normal)
+                    }
+                }
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

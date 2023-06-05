@@ -23,7 +23,7 @@ class QRCodeView: BaseView {
             let singleton = SuShiSingleton.share()
             let shopNum = singleton.getAccount()
             let table = singleton.getPassword()
-            let string = "shopNum:\(shopNum),table:\(table)"
+            let string = "Sushi://login?shopNum=\(shopNum)&table=\(table)"
             self.qrcodeImageView.generateQRCode(from: string)
         }
     }

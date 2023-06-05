@@ -23,7 +23,7 @@ class MenuViewController: BaseViewController {
         super.viewDidLoad()
         StarscreamWebSocketManager.shard.delegate = self
         getAllMenu()
-        viewModel.getRecordData()
+        isFirstConnectGetRecord()
         setupUI()
     }
     
@@ -314,6 +314,12 @@ extension MenuViewController: OrderListCellProtocol {
 
 // MARK: - WebSocket訊息處理
 extension MenuViewController: StarscreamWebSocketManagerProtocol {
+    
+    /// 第一次連線成功先拿紀錄
+    func isFirstConnectGetRecord() {
+        viewModel.getRecordData()
+    }
+    
     /// Client接收到其他的裝置請求紀錄資料
     func clientRequestGetRecord() {
         if !viewModel.recordModel.value.isEmpty {
