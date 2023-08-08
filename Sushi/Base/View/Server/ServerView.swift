@@ -80,6 +80,7 @@ class ServerView: BaseView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
+        print("test1")
     }
     
     // MARK: - public
