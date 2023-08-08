@@ -75,6 +75,7 @@ class ServerView: BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        print("test2")
     }
 
     required init?(coder: NSCoder) {
